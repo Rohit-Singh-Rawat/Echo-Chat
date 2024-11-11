@@ -2,8 +2,8 @@ import type { Metadata } from 'next';
 import localFont from 'next/font/local';
 import './globals.css';
 import '@repo/ui/globals.css';
+import { Button } from '@repo/ui/components/ui/button';
 
-import { Button } from '@repo/ui/button';
 
 const geistSans = localFont({
 	src: './fonts/GeistVF.woff',
@@ -29,7 +29,7 @@ export default function RootLayout({
 	return (
 		<html lang='en'>
 			<body className={`${geistSans.variable} ${geistMono.variable} antialiased`}>
-				<Button appName='h'>d</Button>
+				<Button >d</Button>
 				{children}
 			</body>
 		</html>
