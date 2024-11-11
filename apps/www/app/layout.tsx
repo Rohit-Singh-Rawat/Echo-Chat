@@ -4,7 +4,6 @@ import './globals.css';
 import '@repo/ui/globals.css';
 import { Button } from '@repo/ui/components/ui/button';
 
-
 const geistSans = localFont({
 	src: './fonts/GeistVF.woff',
 	variable: '--font-geist-sans',
@@ -28,8 +27,8 @@ export default function RootLayout({
 }>) {
 	return (
 		<html lang='en'>
-			<body className={`${geistSans.variable} ${geistMono.variable} antialiased`}>
-				<Button >d</Button>
+			<body className={`${geistSans.variable} ${geistMono.variable} antialiased `}>
+				<Button>d</Button>
 				{children}
 			</body>
 		</html>
