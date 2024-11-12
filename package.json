@@ -5,15 +5,37 @@
     "build": "turbo build",
     "dev": "turbo dev",
     "lint": "turbo lint",
-    "format": "prettier --write \"**/*.{ts,tsx,md}\""
+    "prepare": "husky install",
+    "lint:fix": "eslint . --fix",
+    "format": "prettier --write './**/*.{js,jsx,ts,tsx,css,md,mdx,json,html}'",
+    "type-check": "tsc --noEmit",
+    "test": "pnpm test",
+    "commitlint": "commitlint --edit"
   },
   "devDependencies": {
-    "prettier": "^3.2.5",
+    "@commitlint/cli": "^19.5.0",
+    "@commitlint/config-conventional": "^19.5.0",
+    "husky": "^8.0.0",
+    "lint-staged": "^15.2.10",
+    "prettier": "^3.3.3",
+    "prettier-plugin-tailwindcss": "^0.6.8",
     "turbo": "^2.2.3",
     "typescript": "5.5.4"
   },
   "packageManager": "pnpm@8.15.6",
   "engines": {
     "node": ">=18"
+  },
+  "lint-staged": {
+    "apps/**/*.{js,ts,jsx,tsx}": [
+      "eslint --fix"
+    ],
+    "packages/ui/**/*.{js,ts,jsx,tsx}": [
+      "eslint --fix"
+    ],
+    "packages/utils/**/*.{js,ts}": [
+      "eslint --fix"
+    ],
+    "*.{css,md,mdx,json,html}": "pnpm format"
   }
 }

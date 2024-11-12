@@ -1,0 +1,13 @@
+# Dependencies and build output
+node_modules
+.next/
+out/
+coverage/
+.github
+
+# Static files and logs
+public/static/
+*.log
+
+# ESLint config files
+.eslintrc.json
