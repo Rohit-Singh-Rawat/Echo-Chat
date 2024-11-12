@@ -7,7 +7,6 @@ const config: Config = {
     './src/**/*.{ts,tsx}',
     '../../packages/ui/src/**/*.{ts,tsx}',
   ],
-  prefix: 'ui-',
   darkMode: ['class'],
   theme: {
     container: {
