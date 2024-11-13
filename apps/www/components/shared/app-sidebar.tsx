@@ -55,7 +55,7 @@ export function AppSidebar() {
             }}
           />
         </SidebarHeader>
-        <SidebarGroup className="flex-1">
+        <SidebarGroup className="mt-10 flex-1">
           <SidebarGroupContent>
             <SidebarMenu className="space-y-2">
               {items.map((item) => (

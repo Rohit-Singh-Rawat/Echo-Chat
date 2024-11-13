@@ -2,6 +2,7 @@ import { Button } from '@echo/ui/components/ui/button.tsx'
 
 import CreateRoomButton from '@/components/dashboard/CreateRoomButton'
 import DisplaySwitch from '@/components/dashboard/DisplayRadio'
+import DisplayRooms from '@/components/dashboard/DisplayRooms'
 import SearchBar from '@/components/dashboard/SearchBar'
 
 const page = () => {
@@ -18,6 +19,7 @@ const page = () => {
           <CreateRoomButton />
         </div>
       </div>
+      <DisplayRooms />
     </div>
   )
 }
