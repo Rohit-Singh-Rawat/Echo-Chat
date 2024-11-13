@@ -47,6 +47,10 @@ module.exports = {
     'build/',
   ],
   rules: {
+    "import/no-unresolved": [
+      "warn",
+      { "caseSensitive": false }
+    ],
     'prettier/prettier': ['error', { endOfLine: 'auto' }],
     'tailwindcss/no-custom-classname': 'off',
     '@typescript-eslint/explicit-module-boundary-types': 'off',
