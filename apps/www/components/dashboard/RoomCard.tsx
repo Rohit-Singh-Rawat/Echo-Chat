@@ -72,7 +72,7 @@ const RoomHeader = ({
   </div>
 )
 
-const ParticipantAvatar = ({
+export const ParticipantAvatar = ({
   participant,
 }: {
   participant: { name: string; avatar: string }
@@ -93,7 +93,7 @@ const ParticipantAvatar = ({
   </Avatar>
 )
 
-const ParticipantsList = ({
+export const ParticipantsList = ({
   displayParticipants,
   remainingParticipants,
   knownParticipants,
@@ -133,7 +133,7 @@ const ParticipantsList = ({
   </HoverCard>
 )
 
-const RoomStats = ({
+export const RoomStats = ({
   messageCount,
   userCount,
   timeLeft,

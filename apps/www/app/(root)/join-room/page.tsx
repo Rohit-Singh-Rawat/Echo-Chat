@@ -4,7 +4,7 @@ import { JoinRoomForm } from '@/components/Join-Room/JoinRoomForm'
 const Page = async ({
   searchParams,
 }: {
-  searchParams: { roomId: string; anonymous: string }
+  searchParams: Promise<{ roomId: string; anonymous: string }>
 }) => {
   const { roomId, anonymous } = await searchParams
   return (

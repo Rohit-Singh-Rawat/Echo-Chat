@@ -1,6 +1,9 @@
+'use client'
 import { Input } from '@echo/ui/components/ui/input.tsx'
 import { Label } from '@echo/ui/components/ui/label.tsx'
 import { Hash } from 'lucide-react'
+import { useRouter } from 'next/navigation'
+import { useState } from 'react'
 
 import { Button } from '../shared/Button'
 
@@ -14,6 +17,15 @@ export const JoinRoomForm = ({
   roomId?: string
   anonymous?: string
 }) => {
+  const router = useRouter()
+  const [formData, setFormData] = useState({
+    roomId: roomId,
+    anonymous: anonymous == 'true' ?? false,
+  })
+
+  const submitForm = () => {
+    router.push(`/room/${formData.roomId}`)
+  }
   return (
     <div className="flex flex-col items-center">
       <div className="rounded-full border border-gray-200 bg-white p-2 shadow-sm">
@@ -28,9 +40,11 @@ export const JoinRoomForm = ({
         <div className="relative">
           <Input
             id="room-id"
-            readOnly
+            onChange={(e) =>
+              setFormData((data) => ({ ...data, roomId: e.target.value }))
+            }
             className="peer ps-9"
-            value={roomId ?? ''}
+            value={formData.roomId ?? ''}
             placeholder="Enter room ID"
             type="text"
           />
@@ -41,10 +55,17 @@ export const JoinRoomForm = ({
       </div>
 
       <div className="mb-6">
-        <IdentityToggler defaultChecked={anonymous == 'true' ?? false} />
+        <IdentityToggler
+          onChange={(anonymous) =>
+            setFormData((data) => ({ ...data, anonymous: anonymous }))
+          }
+          defaultChecked={formData.anonymous ?? false}
+        />
       </div>
 
-      <Button className="w-full">Join Room</Button>
+      <Button className="w-full" onClick={submitForm}>
+        Join Room
+      </Button>
     </div>
   )
 }

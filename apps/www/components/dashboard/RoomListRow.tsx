@@ -24,6 +24,8 @@ import { ClockIcon } from '../icons/animated/clock'
 import { MessageCircleMoreIcon } from '../icons/animated/message-circle-more'
 import { UsersIcon } from '../icons/animated/users'
 
+import { ParticipantsList, RoomStats } from './RoomCard'
+
 interface RoomListRowProps {
   id: string
   title: string
@@ -37,67 +39,6 @@ interface RoomListRowProps {
   }
   onJoin: () => void
 }
-
-const ParticipantAvatar = ({
-  participant,
-}: {
-  participant: { name: string; avatar: string }
-}) => (
-  <Avatar className="border-background size-6 border-2">
-    <AvatarImage
-      src={participant.avatar}
-      alt={`${participant.name}'s avatar`}
-    />
-    <AvatarFallback className="bg-gradient-to-br from-neutral-50 to-neutral-200 font-medium text-white">
-      {participant.name
-        .split(' ')
-        .map((name) => name[0])
-        .slice(0, 2)
-        .join('')
-        .toUpperCase()}
-    </AvatarFallback>
-  </Avatar>
-)
-
-const ParticipantsList = ({
-  displayParticipants,
-  remainingParticipants,
-  knownParticipants,
-}: {
-  displayParticipants: { name: string; avatar: string }[]
-  remainingParticipants: number
-  knownParticipants: { name: string; avatar: string }[]
-}) => (
-  <HoverCard>
-    <HoverCardTrigger>
-      <div className="flex -space-x-2">
-        {displayParticipants.map((participant, index) => (
-          <ParticipantAvatar key={index} participant={participant} />
-        ))}
-        {remainingParticipants > 0 && (
-          <button className="border-background bg-muted text-muted-foreground z-20 flex size-6 items-center justify-center rounded-full border-2 text-[10px] font-medium">
-            +{remainingParticipants}
-          </button>
-        )}
-      </div>
-    </HoverCardTrigger>
-    <HoverCardContent>
-      <div className="flex flex-wrap gap-2 overflow-y-auto">
-        {knownParticipants.map((participant, index) => (
-          <div
-            key={index}
-            className="flex items-center gap-2 rounded-2xl bg-black p-1 pr-2"
-          >
-            <ParticipantAvatar participant={participant} />
-            <span className="whitespace-nowrap text-sm font-semibold text-white">
-              @{participant.name}
-            </span>
-          </div>
-        ))}
-      </div>
-    </HoverCardContent>
-  </HoverCard>
-)
 
 export default function RoomListRow({
   id = '1',
@@ -147,20 +88,11 @@ export default function RoomListRow({
         />
       </TableCell>
       <TableCell>
-        <div className="text-muted-foreground flex items-center gap-3">
-          <div className="flex items-center gap-1">
-            <MessageCircleMoreIcon className="size-4" />
-            <span>{messageCount}</span>
-          </div>
-          <div className="flex items-center gap-1">
-            <UsersIcon className="size-4" />
-            <span>{totalParticipants}</span>
-          </div>
-          <div className="flex items-center gap-1">
-            <ClockIcon className="size-4" />
-            <span>{formatTime(timeLeft)}</span>
-          </div>
-        </div>
+        <RoomStats
+          messageCount={messageCount}
+          userCount={totalParticipants}
+          timeLeft={timeLeft}
+        />
       </TableCell>
       <TableCell className="text-right">
         <div className="flex items-center justify-end gap-2">
