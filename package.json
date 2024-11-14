@@ -23,7 +23,7 @@
     "turbo": "^2.2.3",
     "typescript": "5.5.4"
   },
-  "packageManager": "pnpm@8.15.6",
+  "packageManager": "pnpm@8.15.9+sha256.daa27a0b541bc635323ff96c2ded995467ff9fe6d69ff67021558aa9ad9dcc36",
   "engines": {
     "node": ">=18"
   },
