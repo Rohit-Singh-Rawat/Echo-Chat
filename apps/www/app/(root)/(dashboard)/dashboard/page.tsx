@@ -1,4 +1,5 @@
 import { Button } from '@echo/ui/components/ui/button.tsx'
+import Link from 'next/link'
 
 import CreateRoomButton from '@/components/dashboard/CreateRoomButton'
 import DisplaySwitch from '@/components/dashboard/DisplayRadio'
@@ -15,7 +16,9 @@ const page = () => {
           <DisplaySwitch />
         </div>
         <div className="flex items-center gap-3">
-          <Button variant="outline">Join a Room</Button>
+          <Link href="/join-room">
+            <Button variant="outline">Join a Room</Button>
+          </Link>
           <CreateRoomButton />
         </div>
       </div>

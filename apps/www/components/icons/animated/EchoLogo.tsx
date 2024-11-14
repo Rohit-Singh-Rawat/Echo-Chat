@@ -1,13 +1,15 @@
 'use client'
 
 import { motion, useAnimation } from 'framer-motion'
+import Link from 'next/link'
 
 import Echo from '../Echo'
 
 const EchoLogo = () => {
   const controls = useAnimation()
   return (
-    <div
+    <Link
+      href={'/'}
       className="flex items-center gap-2"
       onMouseEnter={() => controls.start('animate')}
       onMouseLeave={() => controls.start('normal')}
@@ -85,7 +87,7 @@ const EchoLogo = () => {
           <path d="M22 10v3" />
         </svg>
       </div>
-    </div>
+    </Link>
   )
 }
 export default EchoLogo

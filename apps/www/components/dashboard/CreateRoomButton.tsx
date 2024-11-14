@@ -1,5 +1,4 @@
 'use client'
-import { Button as Button2 } from '@echo/ui/components/ui/button.tsx'
 import {
   Dialog,
   DialogContent,
@@ -9,10 +8,11 @@ import {
 } from '@echo/ui/components/ui/dialog.tsx'
 import { Input as Input2 } from '@echo/ui/components/ui/input.tsx'
 import { Switch } from '@echo/ui/components/ui/switch.tsx'
-import { LoadingSpinner } from '@echo/ui/icons/Spinner.tsx'
 import { ChevronDown, ChevronUp, Minus, Plus } from 'lucide-react'
 import { useState } from 'react'
 import { Button, Group, Input, Label, NumberField } from 'react-aria-components'
+
+import { Button as Button2 } from '@/components/shared/Button'
 
 export default function CreateRoomButton() {
   const [isLoading, setIsLoading] = useState(false)
@@ -23,14 +23,14 @@ export default function CreateRoomButton() {
       await new Promise((resolve) => {
         setTimeout(() => {
           resolve(true)
-        }, 30000)
+        }, 3000)
       })
     } finally {
       setIsLoading(false)
     }
   }
   return (
-    <Dialog>
+    <Dialog onOpenChange={(open) => console.log('ji', open)}>
       <DialogTrigger asChild>
         <Button2 className="">
           Create room
@@ -152,12 +152,12 @@ export default function CreateRoomButton() {
 
             <Button2
               type="submit"
-              size="lg"
-              className="mt-6 w-full"
               onClick={dummyTimeout}
               disabled={isLoading}
+              className="w-full"
+              isLoading={isLoading}
             >
-              {isLoading ? <LoadingSpinner /> : <>Create Room</>}
+              Create Room
             </Button2>
           </div>
         </DialogHeader>

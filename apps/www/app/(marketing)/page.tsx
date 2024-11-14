@@ -56,16 +56,23 @@ export default function EchoLanding() {
           and let conversations fade naturally into digital whispers.
         </p>
         <div className="flex items-center justify-center gap-4">
-          <Link
-            href="/dashboard
-          "
-          >
+          <Link href="/dashboard">
             <motion.button
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
               className="group flex items-center gap-2 rounded-full border-2 border-black px-8 py-4 font-medium transition-colors duration-300 hover:bg-black hover:text-white"
             >
               Start Chatting
+              <ArrowRight className="size-5 transition-transform group-hover:translate-x-1" />
+            </motion.button>
+          </Link>
+          <Link href="/join-room">
+            <motion.button
+              whileHover={{ scale: 1.05 }}
+              whileTap={{ scale: 0.95 }}
+              className="group flex items-center gap-2 rounded-full border-2 border-neutral-300 px-8 py-4 font-medium text-neutral-700 transition-colors duration-300 hover:border-neutral-600 hover:bg-neutral-50"
+            >
+              Join Room
               <ArrowRight className="size-5 transition-transform group-hover:translate-x-1" />
             </motion.button>
           </Link>
@@ -220,14 +227,16 @@ export default function EchoLanding() {
         <h2 className="mb-6 text-3xl font-bold">
           Ready to start a conversation?
         </h2>
-        <motion.button
-          whileHover={{ scale: 1.05 }}
-          whileTap={{ scale: 0.95 }}
-          className="group mx-auto flex items-center gap-2 rounded-full bg-black px-8 py-4 font-medium text-white transition-colors duration-300 hover:bg-neutral-800"
-        >
-          Create Free Room
-          <ArrowRight className="size-5 transition-transform group-hover:translate-x-1" />
-        </motion.button>
+        <Link href="/dashboard">
+          <motion.button
+            whileHover={{ scale: 1.05 }}
+            whileTap={{ scale: 0.95 }}
+            className="group mx-auto flex items-center gap-2 rounded-full bg-black px-8 py-4 font-medium text-white transition-colors duration-300 hover:bg-neutral-800"
+          >
+            Create Free Room
+            <ArrowRight className="size-5 transition-transform group-hover:translate-x-1" />
+          </motion.button>
+        </Link>
       </motion.section>
 
       {/* Footer */}
