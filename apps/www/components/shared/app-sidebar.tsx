@@ -4,7 +4,6 @@ import {
   SidebarFooter,
   SidebarGroup,
   SidebarGroupContent,
-  SidebarGroupLabel,
   SidebarHeader,
   SidebarMenu,
   SidebarMenuButton,
@@ -14,9 +13,7 @@ import {
 import EchoLogo from '../icons/animated/EchoLogo'
 import { History } from '../icons/animated/History'
 import { HomeIcon } from '../icons/animated/Home'
-import { Logo } from '../icons/animated/Logo'
 import { SettingsGearIcon } from '../icons/animated/Settiing'
-import Echo from '../icons/Echo'
 import { NavUser } from '../Root-user'
 
 import PremiumBox from './PremiumBox'

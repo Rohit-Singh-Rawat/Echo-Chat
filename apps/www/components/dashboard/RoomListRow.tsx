@@ -30,7 +30,6 @@ interface RoomListRowProps {
   knownParticipants: { name: string; avatar: string }[]
   totalParticipants: number
   messageCount: number
-  userCount: number
   timeLeft: {
     hours: number
     minutes: number
@@ -112,7 +111,6 @@ export default function RoomListRow({
   ],
   totalParticipants = 16,
   messageCount = 8,
-  userCount = 16,
   timeLeft = { hours: 0, minutes: 45, seconds: 0 },
   onJoin = () => console.log('Joined the room'),
 }: RoomListRowProps) {
@@ -156,7 +154,7 @@ export default function RoomListRow({
           </div>
           <div className="flex items-center gap-1">
             <UsersIcon className="size-4" />
-            <span>{userCount}</span>
+            <span>{totalParticipants}</span>
           </div>
           <div className="flex items-center gap-1">
             <ClockIcon className="size-4" />

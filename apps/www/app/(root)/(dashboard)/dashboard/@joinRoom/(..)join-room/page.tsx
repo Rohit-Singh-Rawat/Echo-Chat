@@ -3,12 +3,11 @@
 import {
   Dialog,
   DialogContent,
-  DialogHeader,
   DialogTitle,
 } from '@echo/ui/components/ui/dialog.tsx'
 import { useRouter, useSearchParams } from 'next/navigation'
 
-import { JoinRoomForm } from '@/app/(root)/join-room/page'
+import { JoinRoomForm } from '@/components/Join-Room/JoinRoomForm'
 
 const Page = () => {
   const searchParams = useSearchParams()

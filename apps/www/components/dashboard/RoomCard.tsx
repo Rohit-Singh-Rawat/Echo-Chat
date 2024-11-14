@@ -29,7 +29,6 @@ interface ChatRoomCardProps {
   knownParticipants: { name: string; avatar: string }[]
   totalParticipants: number
   messageCount: number
-  userCount: number
   timeLeft: {
     hours: number
     minutes: number
@@ -181,7 +180,6 @@ export default function ChatRoomCard({
   ],
   totalParticipants = 16,
   messageCount = 8,
-  userCount = 16,
   timeLeft = { hours: 0, minutes: 45, seconds: 0 },
   onJoin = () => console.log('Joined the room'),
 }: ChatRoomCardProps) {
@@ -201,7 +199,7 @@ export default function ChatRoomCard({
           />
           <RoomStats
             messageCount={messageCount}
-            userCount={userCount}
+            userCount={totalParticipants}
             timeLeft={timeLeft}
           />
         </div>
