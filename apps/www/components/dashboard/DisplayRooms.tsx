@@ -15,12 +15,96 @@ export default function DisplayRooms() {
         </div>
       ) : (
         <div className="my-10 grid grid-cols-2 gap-10 xl:grid-cols-3">
-          <ChatRoomCard />
-          <ChatRoomCard />
-          <ChatRoomCard />
-          <ChatRoomCard />
-          <ChatRoomCard />
-          <ChatRoomCard />
+          <ChatRoomCard
+            id={''}
+            title={''}
+            knownParticipants={[]}
+            totalParticipants={0}
+            messageCount={0}
+            timeLeft={{
+              hours: 0,
+              minutes: 0,
+              seconds: 0,
+            }}
+            onJoin={function (): void {
+              throw new Error('Function not implemented.')
+            }}
+          />
+          <ChatRoomCard
+            id={''}
+            title={''}
+            knownParticipants={[]}
+            totalParticipants={0}
+            messageCount={0}
+            timeLeft={{
+              hours: 0,
+              minutes: 0,
+              seconds: 0,
+            }}
+            onJoin={function (): void {
+              throw new Error('Function not implemented.')
+            }}
+          />
+          <ChatRoomCard
+            id={''}
+            title={''}
+            knownParticipants={[]}
+            totalParticipants={0}
+            messageCount={0}
+            timeLeft={{
+              hours: 0,
+              minutes: 0,
+              seconds: 0,
+            }}
+            onJoin={function (): void {
+              throw new Error('Function not implemented.')
+            }}
+          />
+          <ChatRoomCard
+            id={''}
+            title={''}
+            knownParticipants={[]}
+            totalParticipants={0}
+            messageCount={0}
+            timeLeft={{
+              hours: 0,
+              minutes: 0,
+              seconds: 0,
+            }}
+            onJoin={function (): void {
+              throw new Error('Function not implemented.')
+            }}
+          />
+          <ChatRoomCard
+            id={''}
+            title={''}
+            knownParticipants={[]}
+            totalParticipants={0}
+            messageCount={0}
+            timeLeft={{
+              hours: 0,
+              minutes: 0,
+              seconds: 0,
+            }}
+            onJoin={function (): void {
+              throw new Error('Function not implemented.')
+            }}
+          />
+          <ChatRoomCard
+            id={''}
+            title={''}
+            knownParticipants={[]}
+            totalParticipants={0}
+            messageCount={0}
+            timeLeft={{
+              hours: 0,
+              minutes: 0,
+              seconds: 0,
+            }}
+            onJoin={function (): void {
+              throw new Error('Function not implemented.')
+            }}
+          />
         </div>
       )}
     </>

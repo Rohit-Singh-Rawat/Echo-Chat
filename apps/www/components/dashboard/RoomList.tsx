@@ -26,7 +26,7 @@ interface Props {
   }[]
 }
 
-const RoomList = ({ rooms = [1, 2, 3, 4, 5, 6] }: Props) => {
+const RoomList = ({ rooms = [] }: Props) => {
   return (
     <Table>
       <TableHeader className="">
@@ -42,6 +42,16 @@ const RoomList = ({ rooms = [1, 2, 3, 4, 5, 6] }: Props) => {
           <RoomListRow
             key={room.id}
             onJoin={() => console.log('Join room', room.id)}
+            id={''}
+            title={''}
+            knownParticipants={[]}
+            totalParticipants={0}
+            messageCount={0}
+            timeLeft={{
+              hours: 0,
+              minutes: 0,
+              seconds: 0,
+            }}
           />
         ))}
       </TableBody>
