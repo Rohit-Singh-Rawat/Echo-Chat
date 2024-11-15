@@ -27,6 +27,7 @@ interface Props {
 }
 
 const RoomList = ({ rooms = [] }: Props) => {
+  const roomz = [1, 2, 3, 4, 5]
   return (
     <Table>
       <TableHeader className="">
@@ -38,20 +39,33 @@ const RoomList = ({ rooms = [] }: Props) => {
         </TableRow>
       </TableHeader>
       <TableBody>
-        {rooms.map((room) => (
+        {roomz.map((room) => (
           <RoomListRow
-            key={room.id}
-            onJoin={() => console.log('Join room', room.id)}
-            id={''}
-            title={''}
-            knownParticipants={[]}
-            totalParticipants={0}
-            messageCount={0}
+            key={room}
+            id="room-1"
+            title="General Discussion"
+            knownParticipants={[
+              {
+                name: 'John Doe',
+                avatar: 'https://avatar.iran.liara.run/public',
+              },
+              {
+                name: 'Alice Smith',
+                avatar: 'https://avatar.iran.liara.run/public',
+              },
+              {
+                name: 'Bob Wilson',
+                avatar: 'https://avatar.iran.liara.run/public',
+              },
+            ]}
+            totalParticipants={12}
+            messageCount={156}
             timeLeft={{
-              hours: 0,
-              minutes: 0,
+              hours: 2,
+              minutes: 30,
               seconds: 0,
             }}
+            onJoin={() => (window.location.href = '/room/room-1')}
           />
         ))}
       </TableBody>
