@@ -5,10 +5,10 @@ import { Hash } from 'lucide-react'
 import { useRouter } from 'next/navigation'
 import { useState } from 'react'
 
-import { Button } from '../shared/Button'
-
 import EchoRoom from '@/components/icons/EchoRoom'
 import IdentityToggler from '@/components/Join-Room/IdentityToggler'
+
+import { Button } from '../shared/Button'
 
 export const JoinRoomForm = ({
   roomId,
