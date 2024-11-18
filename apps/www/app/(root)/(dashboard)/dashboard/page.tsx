@@ -6,6 +6,11 @@ import DisplaySwitch from '@/components/dashboard/DisplayRadio'
 import DisplayRooms from '@/components/dashboard/DisplayRooms'
 import SearchBar from '@/components/dashboard/SearchBar'
 
+export const metadata = {
+  title: 'Dashboard',
+  description: 'View and manage your chat rooms',
+}
+
 const page = () => {
   return (
     <div className="h-screen items-center justify-center p-10">

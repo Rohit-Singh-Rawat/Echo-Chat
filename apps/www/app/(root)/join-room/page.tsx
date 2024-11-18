@@ -1,6 +1,11 @@
 import EchoLogo from '@/components/icons/animated/EchoLogo'
 import { JoinRoomForm } from '@/components/Join-Room/JoinRoomForm'
 
+export const metadata = {
+  title: 'Join Room',
+  description: 'Join an existing chat room',
+}
+
 const Page = async ({
   searchParams,
 }: {

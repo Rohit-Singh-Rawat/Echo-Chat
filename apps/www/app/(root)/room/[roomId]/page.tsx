@@ -9,6 +9,10 @@ import { UserLabel } from '@/components/dashboard/UserLabel'
 import { ClockIcon } from '@/components/icons/animated/clock'
 import EchoLogo from '@/components/icons/animated/EchoLogo'
 import { UserIcon } from '@/components/icons/animated/user'
+export const metadata = {
+  title: 'Chat Room',
+  description: 'Real-time chat room powered by Echo',
+}
 
 const page = () => {
   return (
