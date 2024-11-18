@@ -1,9 +1,10 @@
 import { cn } from '@echo/utils/src'
+import NumberFlow from '@number-flow/react'
 import React from 'react'
 
 interface MetricCardProps {
   title: string // Card title (e.g., "Top sales")
-  value: string | number // Main value to display (e.g., "72")
+  value: number // Main value to display (e.g., "72")
   icon?: React.ReactNode // Optional icon component
   label?: string // Label next to value (e.g., "Mikasa")
   className?: string // Custom classes for the card wrapper
@@ -37,7 +38,9 @@ const MetricCard = ({
                     {icon}
                   </div>
                 ) : null}
-                <span className="text-lg font-semibold">{value}</span>
+                <span className="text-lg font-semibold">
+                  <NumberFlow value={value} />
+                </span>
                 {label && <span className="font-medium">{label}</span>}
               </div>
             </div>

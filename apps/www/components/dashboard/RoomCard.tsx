@@ -23,6 +23,8 @@ import { ClockIcon } from '../icons/animated/clock'
 import { MessageCircleMoreIcon } from '../icons/animated/message-circle-more'
 import { UsersIcon } from '../icons/animated/users'
 
+import { UserLabel } from './UserLabel'
+
 interface ChatRoomCardProps {
   id: string
   title: string
@@ -118,15 +120,7 @@ export const ParticipantsList = ({
     <HoverCardContent>
       <div className="flex flex-wrap gap-2 overflow-y-auto">
         {knownParticipants.map((participant, index) => (
-          <div
-            key={index}
-            className="flex items-center gap-2 rounded-2xl bg-black p-1 pr-2"
-          >
-            <ParticipantAvatar participant={participant} />
-            <span className="whitespace-nowrap text-sm font-semibold text-white">
-              @{participant.name}
-            </span>
-          </div>
+          <UserLabel key={index} participant={participant} index={index} />
         ))}
       </div>
     </HoverCardContent>

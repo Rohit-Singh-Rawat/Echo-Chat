@@ -12,7 +12,7 @@ type Props = {
 
 const Chats = ({ messages }: Props) => {
   return (
-    <div className="chat-scroll flex h-full flex-col gap-2 overflow-y-auto p-4">
+    <div className="chat-scroll z-40 flex h-full flex-col gap-2 overflow-y-auto p-4">
       {messages.map((message, index) => (
         <MessageBox
           key={index}

@@ -7,7 +7,7 @@ import FileInput from './FileInput'
 
 const ChatBoxInput = () => {
   return (
-    <div className="absolute bottom-5 right-[50%] flex w-[90%] translate-x-[50%] items-center rounded-full bg-white p-1 px-2">
+    <div className="absolute bottom-5 right-[50%] z-50 flex w-[90%] translate-x-[50%] items-center rounded-full bg-white p-1 px-2">
       <FileInput />
       <Textarea
         id="Message"

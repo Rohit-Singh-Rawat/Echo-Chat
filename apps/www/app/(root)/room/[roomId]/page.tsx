@@ -1,57 +1,63 @@
 import ChatBox from '@/components/ChatRoom/ChatBox'
 import MetricCard from '@/components/ChatRoom/MetricCard'
 import { UserButton } from '@/components/ChatRoom/UserButton'
-import { ParticipantsList } from '@/components/dashboard/RoomCard'
+import {
+  ParticipantAvatar,
+  ParticipantsList,
+} from '@/components/dashboard/RoomCard'
+import { UserLabel } from '@/components/dashboard/UserLabel'
 import { ClockIcon } from '@/components/icons/animated/clock'
 import EchoLogo from '@/components/icons/animated/EchoLogo'
 import { UserIcon } from '@/components/icons/animated/user'
 
 const page = () => {
   return (
-    <div className="items-centder relative flex h-screen w-screen justify-center bg-neutral-50">
-      <div className="grainy absolute inset-0 z-10"></div>
-      <div className="z-50 flex w-full justify-between gap-5 p-8">
-        <div className="space-y-10">
-          <div className="flex justify-between gap-10">
+    <div className="relative flex h-screen w-screen justify-center">
+      <div className="z-50 flex w-full justify-between border-2 border-neutral-200 bg-white">
+        <div className="space-y-1 border-r-2 border-neutral-200">
+          <div className="flex justify-between gap-10 p-5">
             <EchoLogo />
             <UserButton />
           </div>
-          <div>
-            <ParticipantsList
-              displayParticipants={[
-                {
-                  name: 'Alice',
-                  avatar: 'https://avatar.iran.liara.run/public',
-                },
-                { name: 'Bob', avatar: 'https://avatar.iran.liara.run/public' },
-                {
-                  name: 'Charlie',
-                  avatar: 'https://avatar.iran.liara.run/public',
-                },
-              ]}
-              remainingParticipants={2}
-              knownParticipants={[
-                {
-                  name: 'Alice',
-                  avatar: 'https://avatar.iran.liara.run/public',
-                },
-                { name: 'Bob', avatar: 'https://avatar.iran.liara.run/public' },
-                {
-                  name: 'Charlie',
-                  avatar: 'https://avatar.iran.liara.run/public',
-                },
-                {
-                  name: 'David',
-                  avatar: 'https://avatar.iran.liara.run/public',
-                },
-                { name: 'Eve', avatar: 'https://avatar.iran.liara.run/public' },
-              ]}
-            />
+          <div className="chat-scroll max-h-[90%] overflow-y-auto">
+            <div className="flex flex-col gap-2 p-4">
+              {[
+                'Alice',
+                'Bob',
+                'Charlie',
+                'David',
+                'Eve',
+                'Frank',
+                'Grace',
+                'Henry',
+                'Ivy',
+                'Jack',
+                'Kelly',
+                'Liam',
+                'Mia',
+                'Noah',
+                'Olivia',
+                'Peter',
+                'Quinn',
+                'Rachel',
+                'Sam',
+                'Tom',
+              ].map((name, index) => (
+                <UserLabel
+                  key={index}
+                  participant={{
+                    name,
+                    avatar: 'https://avatar.iran.liara.run/public',
+                  }}
+                  index={index}
+                />
+              ))}
+            </div>
           </div>
         </div>
 
         <ChatBox />
-        <div className="space-y-10">
+        <div className="flex flex-col gap-10 space-y-10 border-l-2 border-neutral-200 p-5 py-20">
           <MetricCard
             title="Users"
             value={5}
@@ -60,7 +66,7 @@ const page = () => {
           />
           <MetricCard
             title="Time"
-            value="12:00"
+            value={12 * 60}
             className="border border-gray-50 bg-black text-white"
             icon={<ClockIcon className="size-4" />}
           />

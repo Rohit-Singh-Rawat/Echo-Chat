@@ -7,12 +7,12 @@ import Chats from './Chats'
 
 const ChatBox = () => {
   return (
-    <div className="relative w-full flex-1 rounded-2xl border border-neutral-200 bg-neutral-100">
-      <div className="flex w-full items-center justify-between border-b border-neutral-200 px-6 pb-3 pt-6">
+    <div className="relative w-full flex-1">
+      <div className="flex w-full items-center justify-between border-b-2 border-neutral-200 p-4">
         <h1 className="text-xl font-semibold text-neutral-900">
           This is Room Title
         </h1>
-        <Button>
+        <Button className="">
           <ArrowLeftToLine
             className="-ms-1 me-2 opacity-60"
             size={16}
@@ -22,7 +22,9 @@ const ChatBox = () => {
           Exit
         </Button>
       </div>
-      <div className="h-[80vh] max-h-[80vh] pb-12">
+      <div className="relative h-[calc(100%-69.6px)] flex-1 overflow-hidden bg-[#f8f8f8] pb-12">
+        {' '}
+        <div className="grainy inset-0s -z-10s absolute"></div>
         <Chats
           messages={[
             {
