@@ -10,9 +10,13 @@ import {
   Shield,
   Terminal,
   Github,
+  Zap,
+  Globe,
 } from 'lucide-react'
 import Link from 'next/link'
 import React from 'react'
+
+import EchoLogo from '@/components/icons/animated/EchoLogo'
 
 const fadeIn = {
   hidden: { opacity: 0, y: 20 },
@@ -31,66 +35,102 @@ const stagger = {
   },
 }
 
+const pulse = {
+  scale: [1, 1.05, 1],
+  transition: {
+    duration: 2,
+    repeat: Infinity,
+    ease: 'easeInOut',
+  },
+}
+
 export default function EchoLanding() {
   return (
-    <div className="min-h-screen bg-gradient-to-b from-white to-neutral-50 text-black">
+    <div className="min-h-screen bg-white text-black">
+      {/* Navbar */}
+      <nav className="fixed top-0 z-50 w-full bg-white shadow-sm">
+        <div className="container mx-auto flex items-center justify-between p-4">
+          <Link href="/">
+            <EchoLogo />
+          </Link>
+          <div className="flex items-center space-x-4">
+            <Link href="/login">
+              <button className="rounded-full px-4 py-2 text-sm font-medium text-black transition-colors duration-300 hover:bg-gray-100">
+                Sign In
+              </button>
+            </Link>
+            <Link href="/register">
+              <button className="rounded-full bg-black px-4 py-2 text-sm font-medium text-white transition-colors duration-300 hover:bg-gray-800">
+                Sign Up
+              </button>
+            </Link>
+          </div>
+        </div>
+      </nav>
+
       {/* Hero Section */}
       <motion.header
         initial="hidden"
         animate="visible"
         variants={fadeIn}
-        className="container mx-auto px-4 pb-16 pt-24 text-center"
+        className="container relative mx-auto overflow-hidden px-4 pb-16 pt-32 text-center"
       >
+        <motion.div
+          animate={pulse}
+          className="absolute inset-0 z-0 bg-gradient-to-r from-gray-100 to-gray-200 opacity-50"
+        />
         <motion.div
           animate={{
             scale: [1, 1.02, 1],
             transition: { duration: 2, repeat: Infinity, ease: 'easeInOut' },
           }}
+          className="relative z-10"
         >
-          <h1 className="mb-6 bg-gradient-to-r from-black to-neutral-600 bg-clip-text text-8xl font-bold tracking-tight text-transparent">
+          <h1 className="mb-6 bg-gradient-to-r from-black to-gray-600 bg-clip-text text-6xl font-bold tracking-tight text-transparent sm:text-7xl md:text-8xl">
             Echo
           </h1>
         </motion.div>
-        <p className="mx-auto mb-8 max-w-2xl text-2xl leading-relaxed text-neutral-600">
-          Ephemeral chat rooms for moments that matter. Connect, collaborate,
-          and let conversations fade naturally into digital whispers.
+        <p className="relative z-10 mx-auto mb-8 max-w-2xl text-xl leading-relaxed text-gray-700 sm:text-2xl">
+          Secure, ephemeral chat rooms for teams and individuals. Connect,
+          collaborate, and let conversations fade naturally.
         </p>
-        <div className="flex items-center justify-center gap-4">
+        <div className="relative z-10 flex flex-col items-center justify-center gap-4 sm:flex-row">
           <Link href="/dashboard">
             <motion.button
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
-              className="group flex items-center gap-2 rounded-full border-2 border-black px-8 py-4 font-medium transition-colors duration-300 hover:bg-black hover:text-white"
+              className="group flex w-full items-center justify-center gap-2 rounded-full bg-black px-8 py-4 font-medium text-white transition-all duration-300 hover:bg-gray-800 sm:w-auto"
             >
               Start Chatting
               <ArrowRight className="size-5 transition-transform group-hover:translate-x-1" />
             </motion.button>
           </Link>
-          <Link href="/join-room">
+          <Link href="/pricing">
             <motion.button
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
-              className="group flex items-center gap-2 rounded-full border-2 border-neutral-300 px-8 py-4 font-medium text-neutral-700 transition-colors duration-300 hover:border-neutral-600 hover:bg-neutral-50"
+              className="group flex w-full items-center justify-center gap-2 rounded-full border-2 border-black bg-white px-8 py-4 font-medium text-black transition-all duration-300 hover:bg-gray-100 sm:w-auto"
             >
-              Join Room
+              View Pricing
               <ArrowRight className="size-5 transition-transform group-hover:translate-x-1" />
             </motion.button>
           </Link>
-          <motion.a
-            href="https://github.com/yourusername/echo"
-            target="_blank"
-            rel="noopener noreferrer"
-            whileHover={{ scale: 1.05 }}
-            whileTap={{ scale: 0.95 }}
-            className="group flex items-center gap-2 rounded-full border-2 border-neutral-300 px-8 py-4 font-medium text-neutral-700 transition-colors duration-300 hover:border-neutral-600 hover:bg-neutral-50"
-          >
-            <Github className="size-5" />
-            Star on GitHub
-          </motion.a>
         </div>
+        <motion.div
+          initial={{ opacity: 0, y: 50 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.5, duration: 0.8 }}
+          className="relative z-10 mt-12"
+        >
+          <img
+            src="/images/hero-mockup.png"
+            alt="Echo App Mockup"
+            className="mx-auto max-w-full rounded-lg shadow-2xl"
+          />
+        </motion.div>
       </motion.header>
 
-      {/* Features Bento Grid */}
+      {/* Features Section */}
       <motion.section
         initial="hidden"
         whileInView="visible"
@@ -98,120 +138,86 @@ export default function EchoLanding() {
         variants={stagger}
         className="container mx-auto px-4 py-16"
       >
-        <div className="mx-auto grid max-w-6xl grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3">
-          {/* Instant Creation */}
-          <motion.div
-            variants={fadeIn}
-            whileHover={{ scale: 1.02 }}
-            className="group rounded-3xl border-2 border-neutral-200 bg-white p-8 transition-all duration-300 hover:border-black hover:shadow-lg"
-          >
-            <MessageSquare className="mb-6 size-10 transition-transform group-hover:scale-110" />
-            <h3 className="mb-3 text-2xl font-semibold">Instant Creation</h3>
-            <p className="leading-relaxed text-neutral-600">
-              Create private rooms in seconds. No signup required. Share the
-              link and start your conversation immediately.
-            </p>
-          </motion.div>
-
-          {/* Time-Bound Privacy */}
-          <motion.div
-            variants={fadeIn}
-            whileHover={{ scale: 1.02 }}
-            className="group rounded-3xl border-2 border-neutral-200 bg-white p-8 transition-all duration-300 hover:border-black hover:shadow-lg"
-          >
-            <Clock className="mb-6 size-10 transition-transform group-hover:scale-110" />
-            <h3 className="mb-3 text-2xl font-semibold">Time-Bound Privacy</h3>
-            <p className="leading-relaxed text-neutral-600">
-              Rooms automatically expire after their set duration. Your
-              conversations remain truly temporary.
-            </p>
-          </motion.div>
-
-          {/* Zero Traces */}
-          <motion.div
-            variants={fadeIn}
-            whileHover={{ scale: 1.02 }}
-            className="group rounded-3xl border-2 border-neutral-200 bg-white p-8 transition-all duration-300 hover:border-black hover:shadow-lg"
-          >
-            <Lock className="mb-6 size-10 transition-transform group-hover:scale-110" />
-            <h3 className="mb-3 text-2xl font-semibold">Zero Traces</h3>
-            <p className="leading-relaxed text-neutral-600">
-              Messages vanish completely after expiration. No logs, no history,
-              just pure ephemeral communication.
-            </p>
-          </motion.div>
-
-          {/* Team Collaboration */}
-          <motion.div
-            variants={fadeIn}
-            whileHover={{ scale: 1.02 }}
-            className="group rounded-3xl border-2 border-neutral-200 bg-white p-8 transition-all duration-300 hover:border-black hover:shadow-lg md:col-span-2"
-          >
-            <Users className="mb-6 size-10 transition-transform group-hover:scale-110" />
-            <h3 className="mb-3 text-2xl font-semibold">Team Collaboration</h3>
-            <p className="leading-relaxed text-neutral-600">
-              Perfect for quick team huddles and brainstorming sessions. Share
-              files, code snippets, and ideas in a space that encourages open
-              discussion.
-            </p>
-          </motion.div>
-
-          {/* Premium Features */}
-          <motion.div
-            variants={fadeIn}
-            whileHover={{ scale: 1.02 }}
-            className="group rounded-3xl border-2 border-neutral-200 bg-white p-8 transition-all duration-300 hover:border-black hover:shadow-lg"
-          >
-            <Sparkles className="mb-6 size-10 transition-transform group-hover:scale-110" />
-            <h3 className="mb-3 text-2xl font-semibold">Premium Features</h3>
-            <p className="leading-relaxed text-neutral-600">
-              Extend room duration, increase participant limits, and access
-              advanced moderation tools.
-            </p>
-          </motion.div>
+        <h2 className="mb-12 bg-gradient-to-r from-black to-gray-600 bg-clip-text text-center text-3xl font-bold text-transparent sm:text-4xl">
+          Key Features
+        </h2>
+        <div className="mx-auto grid max-w-6xl grid-cols-1 gap-8 sm:grid-cols-2 lg:grid-cols-3">
+          <FeatureCard
+            icon={<MessageSquare className="size-8 text-black" />}
+            title="Instant Creation"
+            description="Create private rooms in seconds. No signup required."
+          />
+          <FeatureCard
+            icon={<Clock className="size-8 text-black" />}
+            title="Time-Bound Privacy"
+            description="Rooms automatically expire after their set duration."
+          />
+          <FeatureCard
+            icon={<Lock className="size-8 text-black" />}
+            title="Zero Traces"
+            description="Messages vanish completely after expiration."
+          />
+          <FeatureCard
+            icon={<Users className="size-8 text-black" />}
+            title="Team Collaboration"
+            description="Perfect for quick team huddles and brainstorming sessions."
+          />
+          <FeatureCard
+            icon={<Sparkles className="size-8 text-black" />}
+            title="Premium Features"
+            description="Extend room duration and increase participant limits."
+          />
+          <FeatureCard
+            icon={<Shield className="size-8 text-black" />}
+            title="Enterprise-Grade Security"
+            description="End-to-end encryption and advanced security features."
+          />
         </div>
       </motion.section>
 
-      {/* Security Section */}
+      {/* Grid Section */}
       <motion.section
         initial="hidden"
         whileInView="visible"
-        viewport={{ once: true, margin: '-100px' }}
-        variants={stagger}
-        className="container mx-auto border-y border-neutral-200 bg-white px-4 py-16"
+        viewport={{ once: true }}
+        variants={fadeIn}
+        className="bg-gradient-to-r from-gray-100 to-gray-200 py-24"
       >
-        <div className="mx-auto max-w-4xl">
-          <motion.div variants={fadeIn} className="mb-12 text-center">
-            <h2 className="mb-4 bg-gradient-to-r from-black to-neutral-600 bg-clip-text text-4xl font-bold text-transparent">
-              Security First
-            </h2>
-            <p className="text-lg text-neutral-600">
-              Built with privacy and security at its core
-            </p>
-          </motion.div>
-
-          <div className="grid gap-8 md:grid-cols-3">
-            <motion.div variants={fadeIn} className="text-center">
-              <Shield className="mx-auto mb-4 size-8" />
-              <h3 className="mb-2 font-semibold">End-to-End Encryption</h3>
-              <p className="text-neutral-600">
-                Messages are encrypted in transit and at rest
-              </p>
-            </motion.div>
-
-            <motion.div variants={fadeIn} className="text-center">
-              <Terminal className="mx-auto mb-4 size-8" />
-              <h3 className="mb-2 font-semibold">Open Source</h3>
-              <p className="text-neutral-600">
-                Transparent, auditable codebase
-              </p>
-            </motion.div>
-
-            <motion.div variants={fadeIn} className="text-center">
-              <Lock className="mx-auto mb-4 size-8" />
-              <h3 className="mb-2 font-semibold">No Data Storage</h3>
-              <p className="text-neutral-600">Messages exist only in memory</p>
-            </motion.div>
+        <div className="container mx-auto px-4">
+          <h2 className="mb-12 bg-gradient-to-r from-black to-gray-600 bg-clip-text text-center text-3xl font-bold text-transparent sm:text-4xl">
+            Why Choose Echo?
+          </h2>
+          <div className="grid grid-cols-1 gap-8 md:grid-cols-2 lg:grid-cols-3">
+            <GridItem
+              icon={<Zap className="size-10 text-black" />}
+              title="Lightning Fast"
+              description="Create and join rooms instantly, no waiting required."
+            />
+            <GridItem
+              icon={<Globe className="size-10 text-black" />}
+              title="Global Reach"
+              description="Connect with team members across the world seamlessly."
+            />
+            <GridItem
+              icon={<Terminal className="size-10 text-black" />}
+              title="Developer Friendly"
+              description="Robust API for easy integration with your existing tools."
+            />
+            <GridItem
+              icon={<Github className="size-10 text-black" />}
+              title="Open Source"
+              description="Contribute to our growing community of developers."
+            />
+            <GridItem
+              icon={<Users className="size-10 text-black" />}
+              title="Team-Oriented"
+              description="Built with collaboration at its core."
+            />
+            <GridItem
+              icon={<Shield className="size-10 text-black" />}
+              title="Privacy First"
+              description="Your data is yours. We ensure it stays that way."
+            />
           </div>
         </div>
       </motion.section>
@@ -222,35 +228,88 @@ export default function EchoLanding() {
         whileInView="visible"
         viewport={{ once: true }}
         variants={fadeIn}
-        className="container mx-auto px-4 py-24 text-center"
+        className="bg-black py-24 text-white"
       >
-        <h2 className="mb-6 text-3xl font-bold">
-          Ready to start a conversation?
-        </h2>
-        <Link href="/dashboard">
-          <motion.button
-            whileHover={{ scale: 1.05 }}
-            whileTap={{ scale: 0.95 }}
-            className="group mx-auto flex items-center gap-2 rounded-full bg-black px-8 py-4 font-medium text-white transition-colors duration-300 hover:bg-neutral-800"
-          >
-            Create Free Room
-            <ArrowRight className="size-5 transition-transform group-hover:translate-x-1" />
-          </motion.button>
-        </Link>
+        <div className="container mx-auto px-4 text-center">
+          <h2 className="mb-6 text-3xl font-bold sm:text-4xl">
+            Ready to elevate your team communication?
+          </h2>
+          <Link href="/register">
+            <motion.button
+              whileHover={{ scale: 1.05 }}
+              whileTap={{ scale: 0.95 }}
+              className="group mx-auto flex items-center gap-2 rounded-full bg-white px-8 py-4 font-medium text-black transition-all duration-300 hover:bg-gray-200"
+            >
+              Get Started for Free
+              <ArrowRight className="size-5 transition-transform group-hover:translate-x-1" />
+            </motion.button>
+          </Link>
+        </div>
       </motion.section>
 
       {/* Footer */}
-      <motion.footer
-        initial="hidden"
-        whileInView="visible"
-        viewport={{ once: true }}
-        variants={fadeIn}
-        className="container mx-auto border-t border-neutral-200 px-4 py-8 text-center"
-      >
-        <p className="text-sm text-neutral-500">
-          © 2024 Echo · Privacy Policy · Terms of Service
-        </p>
-      </motion.footer>
+      <footer className="bg-gradient-to-r from-gray-100 to-gray-200 py-8">
+        <div className="container mx-auto px-4 text-center text-sm text-gray-600">
+          <p>
+            © 2024 Echo ·{' '}
+            <Link href="/privacy" className="text-black hover:underline">
+              Privacy Policy
+            </Link>{' '}
+            ·{' '}
+            <Link href="/terms" className="text-black hover:underline">
+              Terms of Service
+            </Link>
+          </p>
+        </div>
+      </footer>
     </div>
+  )
+}
+
+function FeatureCard({
+  icon,
+  title,
+  description,
+}: {
+  icon: React.ReactNode
+  title: string
+  description: string
+}) {
+  return (
+    <motion.div
+      variants={fadeIn}
+      whileHover={{ scale: 1.05 }}
+      className="flex flex-col items-center rounded-2xl bg-white p-6 text-center shadow-lg transition-all duration-300 hover:shadow-xl"
+    >
+      <div className="mb-4 rounded-full bg-gradient-to-r from-gray-100 to-gray-200 p-3">
+        {icon}
+      </div>
+      <h3 className="mb-2 bg-gradient-to-r from-black to-gray-600 bg-clip-text text-xl font-semibold text-transparent">
+        {title}
+      </h3>
+      <p className="text-gray-600">{description}</p>
+    </motion.div>
+  )
+}
+
+function GridItem({
+  icon,
+  title,
+  description,
+}: {
+  icon: React.ReactNode
+  title: string
+  description: string
+}) {
+  return (
+    <motion.div
+      variants={fadeIn}
+      whileHover={{ scale: 1.05 }}
+      className="flex flex-col items-center rounded-lg bg-white p-6 shadow-md transition-all duration-300 hover:shadow-lg"
+    >
+      <div className="mb-4">{icon}</div>
+      <h3 className="mb-2 text-xl font-semibold text-black">{title}</h3>
+      <p className="text-center text-gray-600">{description}</p>
+    </motion.div>
   )
 }

@@ -18,7 +18,8 @@
     "**/*.mjs",
     ".next/types/**/*.ts",
     "postcss.config.mjs",
-    "tailwind.config.js"
+    "tailwind.config.js",
+    "app/(auth)/forgot-password"
   ],
   "exclude": ["node_modules"]
 }

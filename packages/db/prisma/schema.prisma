@@ -1,0 +1,89 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id              String            @id @default(cuid())
+  name            String
+  email           String            @unique
+  password        String
+  image           String?
+  plan            Plan              @relation(fields: [planId], references: [id], onDelete: Cascade)
+  planId          String
+  rooms           Room[]            @relation("RoomCreator")
+  messages        Message[]         @relation("UserMessages")
+  createdAt       DateTime          @default(now())
+  updatedAt       DateTime          @updatedAt
+  RoomParticipant RoomParticipant[]
+}
+
+model Plan {
+  id              String   @id @default(cuid())
+  name            String
+  price           Float
+  maxRoomsPerDay  Int
+  maxRoomDuration Int
+  maxRoomUsers    Int
+  maxSavedRooms   Int
+  createdAt       DateTime @default(now())
+  updatedAt       DateTime @updatedAt
+  users           User[]
+}
+
+model Room {
+  id           String            @id @default(cuid())
+  name         String
+  isTemporary  Boolean           @default(true)
+  maxTimeLimit Int
+  maxUsers     Int
+  createdById  String
+  createdBy    User              @relation("RoomCreator", fields: [createdById], references: [id], onDelete: Cascade)
+  participants RoomParticipant[]
+  messages     Message[]         @relation("RoomMessages")
+  createdAt    DateTime          @default(now())
+  closedAt     DateTime?
+  updatedAt    DateTime          @updatedAt
+}
+
+model RoomParticipant {
+  id       String    @id @default(cuid())
+  roomId   String
+  userId   String?
+  user     User?     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  room     Room      @relation(fields: [roomId], references: [id], onDelete: Cascade)
+  joinedAt DateTime  @default(now())
+  leftAt   DateTime?
+}
+
+model Message {
+  id           String   @id @default(cuid())
+  content      String
+  sentAt       DateTime @default(now())
+  roomId       String
+  room         Room     @relation("RoomMessages", fields: [roomId], references: [id], onDelete: Cascade)
+  userId       String?
+  user         User?    @relation("UserMessages", fields: [userId], references: [id], onDelete: Cascade)
+  tempUsername String?
+  tempUserId   String?
+}
+
+model EmailVerificationToken {
+  identifier String
+  token      String   @unique
+  expires    DateTime
+
+  @@unique([identifier, token])
+}
+
+model PasswordResetToken {
+  identifier String
+  token      String   @unique
+  expires    DateTime
+
+  @@unique([identifier, token])
+}
