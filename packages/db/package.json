@@ -6,7 +6,7 @@
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "exports": {
-    "./client": "./src/index.ts"
+    "./src": "./src/index.ts"
   },
   "keywords": [],
   "author": "",

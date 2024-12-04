@@ -34,7 +34,6 @@ model Plan {
   updatedAt       DateTime @updatedAt
   users           User[]
 }
-
 model Room {
   id           String            @id @default(cuid())
   name         String

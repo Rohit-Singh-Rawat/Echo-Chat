@@ -3,6 +3,7 @@ import '@echo/ui/globals.css'
 import { GeistMono } from 'geist/font/mono'
 import { GeistSans } from 'geist/font/sans'
 import type { Metadata } from 'next'
+import { Toaster } from 'sonner'
 
 export const metadata: Metadata = {
   title: {
@@ -61,6 +62,7 @@ export default function RootLayout({
         className={`${GeistSans.variable} ${GeistMono.variable} ${GeistSans.className} antialiased`}
       >
         <main>{children}</main>
+        <Toaster />
       </body>
     </html>
   )

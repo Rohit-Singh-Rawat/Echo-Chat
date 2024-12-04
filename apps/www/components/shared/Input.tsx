@@ -1,47 +1,92 @@
-'use client'
+import { cn } from '@echo/utils/src'
+import { AlertCircle, Eye, EyeClosed } from 'lucide-react'
+import React, { useCallback, useState } from 'react'
 
-import { Input as BaseInput } from '@echo/ui/components/ui/input.tsx'
-import { cn } from '@echo/utils/src/index'
-import { EyeIcon, EyeOffIcon } from 'lucide-react'
-import { useState } from 'react'
-
-interface InputProps extends React.InputHTMLAttributes<HTMLInputElement> {
-  className?: string
+export interface InputProps
+  extends React.InputHTMLAttributes<HTMLInputElement> {
+  error?: string
 }
 
-const Input = ({ className, type = 'text', ...props }: InputProps) => {
-  const [showPassword, setShowPassword] = useState(false)
+const Input = React.forwardRef<HTMLInputElement, InputProps>(
+  ({ className, type, ...props }, ref) => {
+    const [isPasswordVisible, setIsPasswordVisible] = useState(false)
 
-  if (type === 'password') {
+    const toggleIsPasswordVisible = useCallback(
+      () => setIsPasswordVisible(!isPasswordVisible),
+      [isPasswordVisible, setIsPasswordVisible]
+    )
+
     return (
-      <div className="relative">
-        <BaseInput
-          type={showPassword ? 'text' : 'password'}
-          className={cn('w-full rounded-md px-4 py-2', className)}
-          {...props}
-        />
-        <button
-          type="button"
-          className="absolute right-2 top-1/2 mx-1 -translate-y-1/2"
-          onClick={() => setShowPassword(!showPassword)}
-        >
-          {showPassword ? (
-            <EyeOffIcon className="transition-ease size-4 text-gray-500 hover:text-black" />
-          ) : (
-            <EyeIcon className="transition-ease size-4 text-gray-500 hover:text-black" />
-          )}
-        </button>
+      <div className="w-full">
+        <div className="relative flex w-full">
+          <input
+            type={isPasswordVisible ? 'text' : type}
+            className={cn(
+              'w-full flex-1 rounded-md border border-gray-300 text-gray-900 placeholder-gray-400 focus:border-gray-500 focus:outline-none focus:ring-gray-500 sm:text-sm',
+              props.error &&
+                'border-red-500 focus:border-red-500 focus:ring-red-500',
+              className
+            )}
+            ref={ref}
+            {...props}
+          />
+
+          <div className="group">
+            {props.error && (
+              <div className="pointer-events-none absolute inset-y-0 right-0 flex flex-none items-center px-2.5">
+                <AlertCircle
+                  className={cn(
+                    'size-5 text-white',
+                    type === 'password' &&
+                      'transition-opacity group-hover:opacity-0'
+                  )}
+                  fill="#ef4444"
+                />
+              </div>
+            )}
+            {type === 'password' && (
+              <button
+                className={cn(
+                  'absolute inset-y-0 right-0 flex items-center px-3',
+                  props.error &&
+                    'opacity-0 transition-opacity group-hover:opacity-100'
+                )}
+                type="button"
+                onClick={() => toggleIsPasswordVisible()}
+                aria-label={
+                  isPasswordVisible ? 'Hide password' : 'Show Password'
+                }
+              >
+                {isPasswordVisible ? (
+                  <EyeClosed
+                    className="size-4 flex-none text-gray-500 transition hover:text-gray-700"
+                    aria-hidden
+                  />
+                ) : (
+                  <Eye
+                    className="size-4 flex-none text-gray-500 transition hover:text-gray-700"
+                    aria-hidden
+                  />
+                )}
+              </button>
+            )}
+          </div>
+        </div>
+
+        {props.error && (
+          <span
+            className="mt-2 block w-full text-sm text-red-500"
+            role="alert"
+            aria-live="assertive"
+          >
+            {props.error}
+          </span>
+        )}
       </div>
     )
   }
+)
 
-  return (
-    <BaseInput
-      type={type}
-      className={cn('w-full rounded-md px-4 py-2', className)}
-      {...props}
-    />
-  )
-}
+Input.displayName = 'Input'
 
-export default Input
+export { Input }
