@@ -15,7 +15,6 @@ import Input from '@/components/shared/Input'
 const ForgetPassword = () => {
   const [step, setStep] = useState('email')
   const [email, setEmail] = useState('')
-  const [otp, setOtp] = useState('')
   const [newPassword, setNewPassword] = useState('')
 
   const handleSubmit = () => {
