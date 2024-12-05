@@ -1,4 +1,5 @@
 'use client'
+import { createRoomSchema } from '@echo/lib'
 import {
   Dialog,
   DialogContent,
@@ -8,35 +9,77 @@ import {
 } from '@echo/ui/components/ui/dialog.tsx'
 import { Input as Input2 } from '@echo/ui/components/ui/input.tsx'
 import { Switch } from '@echo/ui/components/ui/switch.tsx'
+import { zodResolver } from '@hookform/resolvers/zod'
 import { ChevronDown, ChevronUp, Minus, Plus } from 'lucide-react'
-import { useState } from 'react'
+import { useRouter } from 'next/navigation'
+import { useAction } from 'next-safe-action/hooks'
 import { Button, Group, Input, Label, NumberField } from 'react-aria-components'
+import { useForm } from 'react-hook-form'
+import { toast } from 'sonner'
+import { z } from 'zod'
 
 import { Button as Button2 } from '@/components/shared/Button'
+import { createRooms } from '@/lib/actions/RoomActions'
 
-export default function CreateRoomButton() {
-  const [isLoading, setIsLoading] = useState(false)
+type CreateRoomInput = z.infer<typeof createRoomSchema>
 
-  const dummyTimeout = async () => {
-    setIsLoading(true)
-    try {
-      await new Promise((resolve) => {
-        setTimeout(() => {
-          resolve(true)
-        }, 3000)
-      })
-    } finally {
-      setIsLoading(false)
-    }
+interface CreateRoomButtonProps {
+  totalRooms?: number
+  limit?: number
+}
+
+export default function CreateRoomButton({
+  totalRooms,
+  limit,
+}: CreateRoomButtonProps) {
+  const router = useRouter()
+  const form = useForm<CreateRoomInput>({
+    resolver: zodResolver(createRoomSchema),
+    defaultValues: {
+      name: '',
+      maxUsers: 2,
+      maxTimeLimit: 10,
+      isTemporary: true,
+    },
+  })
+
+  const { execute, status } = useAction(createRooms, {
+    onSuccess: (result) => {
+      console.log(result, 'Gerfe')
+      if (result.data?.room) {
+        toast.success('Room created successfully')
+        router.push(`/room/${result.data.room.id}`)
+      }
+    },
+    onError: (error) => {
+      console.error('Failed to create room:', error)
+      toast.error('Failed to create room')
+    },
+  })
+
+  const onSubmit = (data: CreateRoomInput) => {
+    console.log(data)
+    execute({
+      name: data.name,
+      maxUsers: data.maxUsers,
+      maxTimeLimit: data.maxTimeLimit,
+      isTemporary: data.isTemporary,
+    })
   }
+
   return (
-    <Dialog onOpenChange={(open) => console.log('ji', open)}>
+    <Dialog>
       <DialogTrigger asChild>
-        <Button2 className="">
+        <Button2
+          className=""
+          disabled={totalRooms && limit ? totalRooms >= limit : false}
+        >
           Create room
-          <span className="border-primary-foreground/30 text-primary-foreground/60 -me-1 ms-1 inline-flex h-5 max-h-full items-center rounded border px-1 font-[inherit] text-[0.625rem] font-medium">
-            1/2
-          </span>
+          {totalRooms !== undefined && limit !== undefined && (
+            <span className="border-primary-foreground/30 text-primary-foreground/60 -me-1 ms-1 inline-flex h-5 max-h-full items-center rounded border px-1 font-[inherit] text-[0.625rem] font-medium">
+              {totalRooms}/{limit}
+            </span>
+          )}
         </Button2>
       </DialogTrigger>
       <DialogContent className="animate-scale-in max-h-[95vh] max-w-[500px] overflow-y-auto p-10">
@@ -44,7 +87,7 @@ export default function CreateRoomButton() {
           <DialogTitle className="mb-10 text-3xl font-semibold">
             Create Room
           </DialogTitle>
-          <div className="space-y-6">
+          <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
             <div className="space-y-2">
               <Label
                 className="text-foreground text-sm font-medium"
@@ -56,10 +99,17 @@ export default function CreateRoomButton() {
                 id="room-name"
                 placeholder="Enter room name"
                 type="text"
+                {...form.register('name')}
+                required
               />
             </div>
 
-            <NumberField defaultValue={2} minValue={1} maxValue={100}>
+            <NumberField
+              value={form.watch('maxUsers')}
+              onChange={(value) => form.setValue('maxUsers', value)}
+              minValue={1}
+              maxValue={100}
+            >
               <div className="space-y-2">
                 <Label className="text-foreground text-sm font-medium">
                   Total Participants
@@ -82,7 +132,12 @@ export default function CreateRoomButton() {
               </div>
             </NumberField>
 
-            <NumberField defaultValue={10} minValue={1} maxValue={20}>
+            <NumberField
+              value={form.watch('maxTimeLimit')}
+              onChange={(value) => form.setValue('maxTimeLimit', value)}
+              minValue={1}
+              maxValue={200}
+            >
               <div className="space-y-2">
                 <Label className="text-foreground text-sm font-medium">
                   Room Duration (minutes)
@@ -116,6 +171,10 @@ export default function CreateRoomButton() {
                 id="save-history"
                 className="order-1 h-4 w-6 after:absolute after:inset-0 [&_span]:size-3 [&_span]:data-[state=checked]:translate-x-2 rtl:[&_span]:data-[state=checked]:-translate-x-2"
                 aria-describedby="save-history-description"
+                checked={!form.watch('isTemporary')}
+                onCheckedChange={(checked) =>
+                  form.setValue('isTemporary', !checked)
+                }
               />
               <div className="grid grow gap-2">
                 <Label htmlFor="save-history">
@@ -138,6 +197,8 @@ export default function CreateRoomButton() {
                 id="private-room"
                 className="order-1 h-4 w-6 after:absolute after:inset-0 [&_span]:size-3 [&_span]:data-[state=checked]:translate-x-2 rtl:[&_span]:data-[state=checked]:-translate-x-2"
                 aria-describedby="private-room-description"
+                // checked={form.watch('isPrivate')}
+                // onCheckedChange={(checked) => form.setValue('isPrivate', checked)}
               />
               <div className="grid grow gap-2">
                 <Label htmlFor="private-room">Private Room</Label>
@@ -152,14 +213,13 @@ export default function CreateRoomButton() {
 
             <Button2
               type="submit"
-              onClick={dummyTimeout}
-              disabled={isLoading}
+              disabled={status === 'executing' || !form.watch('name')}
               className="w-full"
-              isLoading={isLoading}
+              isLoading={status === 'executing'}
             >
               Create Room
             </Button2>
-          </div>
+          </form>
         </DialogHeader>
       </DialogContent>
     </Dialog>

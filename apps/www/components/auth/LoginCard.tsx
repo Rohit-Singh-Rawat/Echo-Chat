@@ -1,21 +1,54 @@
 'use client'
-import { Button } from '@echo/ui/components/ui/button.tsx'
+import { loginSchema, type LoginInput } from '@echo/lib'
+import { zodResolver } from '@hookform/resolvers/zod'
 import Link from 'next/link'
+import { useRouter } from 'next/navigation'
+import { useAction } from 'next-safe-action/hooks'
+import { useForm } from 'react-hook-form'
+import { toast } from 'sonner'
+
+import { Button } from '../shared/Button'
 
 import { AuthHeader } from '@/components/auth/auth-header'
 import { SocialAuthButtons } from '@/components/auth/social-auth-buttons'
-import Input from '@/components/shared/Input'
+import { Input } from '@/components/shared/Input'
+import { LoginAction } from '@/lib/actions/authActions'
 
 const LoginCard = () => {
+  const router = useRouter()
+  const form = useForm<LoginInput>({
+    resolver: zodResolver(loginSchema),
+    defaultValues: {
+      email: '',
+      password: '',
+    },
+  })
+
+  const { executeAsync, isExecuting } = useAction(LoginAction, {
+    onSuccess: () => {
+      toast.success('Logged in successfully')
+      router.push('/dashboard')
+    },
+    onError: ({ error }) => {
+      toast.error(error.serverError || 'Invalid credentials')
+    },
+  })
+
+  const onSubmit = form.handleSubmit((data) => {
+    executeAsync(data)
+  })
+
   return (
     <div className="flex aspect-square w-full max-w-[400px] flex-col justify-between rounded-2xl border bg-white p-8 shadow-2xl shadow-cyan-500/20">
-      {' '}
       <AuthHeader
         title="Welcome back"
         description="Please enter your details to sign in."
       />
-      <div className="mt-5 flex grow flex-col justify-center space-y-4">
-        <SocialAuthButtons />
+      <form
+        onSubmit={onSubmit}
+        className="mt-5 flex grow flex-col justify-center space-y-4"
+      >
+        <SocialAuthButtons isAuthenticating={isExecuting} />
 
         <div className="relative flex items-center">
           <div className="grow border-t border-gray-200"></div>
@@ -30,11 +63,17 @@ const LoginCard = () => {
             type="email"
             placeholder="Enter your email..."
             className="w-full rounded-md px-4 py-2"
+            {...form.register('email')}
+            error={form.formState.errors.email?.message}
+            required
           />
           <Input
             type="password"
-            placeholder="password"
+            placeholder="Password"
             className="w-full rounded-md px-4 py-2"
+            {...form.register('password')}
+            error={form.formState.errors.password?.message}
+            required
           />
         </div>
 
@@ -47,10 +86,15 @@ const LoginCard = () => {
           </Link>
         </div>
 
-        <Button className="transition-ease w-full bg-black text-white hover:bg-black/90 hover:ring hover:ring-slate-200">
+        <Button
+          type="submit"
+          className="transition-ease w-full bg-black text-white hover:bg-black/90 hover:ring hover:ring-slate-200"
+          disabled={isExecuting}
+          isLoading={isExecuting}
+        >
           Sign in
         </Button>
-      </div>
+      </form>
       <p className="mt-6 text-center text-sm text-gray-500">
         Don&apos;t have an account yet?{' '}
         <Link
@@ -63,4 +107,5 @@ const LoginCard = () => {
     </div>
   )
 }
+
 export default LoginCard

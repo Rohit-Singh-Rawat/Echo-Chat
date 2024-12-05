@@ -1,10 +1,5 @@
 'use client'
 
-import {
-  Avatar,
-  AvatarImage,
-  AvatarFallback,
-} from '@echo/ui/components/ui/avatar.tsx'
 import { Button } from '@echo/ui/components/ui/button.tsx'
 import {
   DropdownMenu,
@@ -12,19 +7,12 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from '@echo/ui/components/ui/dropdown-menu.tsx'
-import {
-  HoverCard,
-  HoverCardTrigger,
-  HoverCardContent,
-} from '@echo/ui/components/ui/hover-card.tsx'
 import { TableRow, TableCell } from '@echo/ui/components/ui/table.tsx'
 import { Hash, MoreHorizontal } from 'lucide-react'
 
-import { ClockIcon } from '../icons/animated/clock'
-import { MessageCircleMoreIcon } from '../icons/animated/message-circle-more'
-import { UsersIcon } from '../icons/animated/users'
-
 import { ParticipantsList, RoomStats } from './RoomCard'
+
+import { useTimeLeft } from '@/hooks/useTimeLeft'
 
 interface RoomListRowProps {
   id: string
@@ -32,11 +20,7 @@ interface RoomListRowProps {
   knownParticipants: { name: string; avatar: string }[]
   totalParticipants: number
   messageCount: number
-  timeLeft: {
-    hours: number
-    minutes: number
-    seconds: number
-  }
+  closedAt: Date
   onJoin: () => void
 }
 
@@ -52,20 +36,14 @@ export default function RoomListRow({
   ],
   totalParticipants = 16,
   messageCount = 8,
-  timeLeft = { hours: 0, minutes: 45, seconds: 0 },
+  closedAt = new Date(Date.now() + 45 * 60 * 1000),
   onJoin = () => console.log('Joined the room'),
 }: RoomListRowProps) {
+  const timeLeft = useTimeLeft(closedAt)
+
   const displayParticipants = knownParticipants.slice(0, 3)
   const remainingParticipants =
     knownParticipants.length - displayParticipants.length
-
-  const formatTime = (time: typeof timeLeft) => {
-    const parts = []
-    if (time.hours > 0) parts.push(`${time.hours}h`)
-    if (time.minutes > 0) parts.push(`${time.minutes}m`)
-    if (time.seconds > 0) parts.push(`${time.seconds}s`)
-    return parts.join(' ')
-  }
 
   return (
     <TableRow className="hover:bg-muted/50">

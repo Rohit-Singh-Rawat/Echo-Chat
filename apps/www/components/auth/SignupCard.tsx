@@ -17,9 +17,8 @@ import { SendVerificationOtpAction } from '@/lib/actions/authActions'
 const SignupCard = () => {
   const { setStep, setEmail, setPassword, setFirstName, setLastName } =
     useRegisterContext()
-
-  const form = useForm<SignupInput>({
-    resolver: zodResolver(signupSchema),
+  const form = useForm<Omit<SignupInput, 'code'>>({
+    resolver: zodResolver(signupSchema.omit({ code: true })),
     defaultValues: {
       firstName: '',
       lastName: '',
@@ -41,9 +40,7 @@ const SignupCard = () => {
       toast.error(error.serverError || 'An error occurred')
     },
   })
-
   const onSubmit = form.handleSubmit((data) => {
-    console.log('fj')
     executeAsync({ email: data.email })
   })
 
@@ -106,9 +103,6 @@ const SignupCard = () => {
 
         <Button
           type="submit"
-          onClick={() => {
-            executeAsync({ email: form.getValues('email') })
-          }}
           className="w-full"
           disabled={isExecuting}
           isLoading={isExecuting}

@@ -25,17 +25,15 @@ import { UsersIcon } from '../icons/animated/users'
 
 import { UserLabel } from './UserLabel'
 
+import { useTimeLeft } from '@/hooks/useTimeLeft'
+
 interface ChatRoomCardProps {
   id: string
   title: string
   knownParticipants: { name: string; avatar: string }[]
   totalParticipants: number
   messageCount: number
-  timeLeft: {
-    hours: number
-    minutes: number
-    seconds: number
-  }
+  closedAt: Date
   onJoin: () => void
 }
 
@@ -94,7 +92,6 @@ export const ParticipantAvatar = ({
     </AvatarFallback>
   </Avatar>
 )
-
 export const ParticipantsList = ({
   displayParticipants,
   remainingParticipants,
@@ -103,29 +100,40 @@ export const ParticipantsList = ({
   displayParticipants: { name: string; avatar: string }[]
   remainingParticipants: number
   knownParticipants: { name: string; avatar: string }[]
-}) => (
-  <HoverCard>
-    <HoverCardTrigger>
-      <div className="flex -space-x-2">
-        {displayParticipants.map((participant, index) => (
-          <ParticipantAvatar key={index} participant={participant} />
-        ))}
-        {remainingParticipants > 0 && (
-          <button className="border-background bg-muted text-muted-foreground z-20 flex size-6 items-center justify-center rounded-full border-2 text-[10px] font-medium">
-            +{remainingParticipants}
-          </button>
-        )}
+}) => {
+  if (knownParticipants.length === 0) {
+    return (
+      <div className="text-muted-foreground/80 flex items-center gap-2 text-sm italic">
+        <UsersIcon className="size-4" />
+        <span>No participants yet</span>
       </div>
-    </HoverCardTrigger>
-    <HoverCardContent>
-      <div className="flex flex-wrap gap-2 overflow-y-auto">
-        {knownParticipants.map((participant, index) => (
-          <UserLabel key={index} participant={participant} index={index} />
-        ))}
-      </div>
-    </HoverCardContent>
-  </HoverCard>
-)
+    )
+  }
+
+  return (
+    <HoverCard>
+      <HoverCardTrigger>
+        <div className="flex -space-x-2">
+          {displayParticipants.map((participant, index) => (
+            <ParticipantAvatar key={index} participant={participant} />
+          ))}
+          {remainingParticipants > 0 && (
+            <button className="border-background bg-muted text-muted-foreground z-20 flex size-6 items-center justify-center rounded-full border-2 text-[10px] font-medium">
+              +{remainingParticipants}
+            </button>
+          )}
+        </div>
+      </HoverCardTrigger>
+      <HoverCardContent>
+        <div className="flex flex-wrap gap-2 overflow-y-auto">
+          {knownParticipants.map((participant, index) => (
+            <UserLabel key={index} participant={participant} index={index} />
+          ))}
+        </div>
+      </HoverCardContent>
+    </HoverCard>
+  )
+}
 
 export const RoomStats = ({
   messageCount,
@@ -154,7 +162,7 @@ export const RoomStats = ({
         <UsersIcon className="size-4" />
         <span>{userCount}</span>
       </div>
-      <div className="flex items-center gap-1">
+      <div className="mx-w-20 flex w-20 items-center gap-1">
         <ClockIcon className="size-4" />
         <span>{formatTime(timeLeft)}</span>
       </div>
@@ -174,9 +182,10 @@ export default function ChatRoomCard({
   ],
   totalParticipants = 16,
   messageCount = 8,
-  timeLeft = { hours: 0, minutes: 45, seconds: 0 },
+  closedAt = new Date(Date.now() + 45 * 60 * 1000),
   onJoin = () => console.log('Joined the room'),
 }: ChatRoomCardProps) {
+  const timeLeft = useTimeLeft(closedAt)
   const displayParticipants = knownParticipants.slice(0, 3)
   const remainingParticipants =
     knownParticipants.length - displayParticipants.length

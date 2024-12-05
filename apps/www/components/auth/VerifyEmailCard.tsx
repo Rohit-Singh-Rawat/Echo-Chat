@@ -39,7 +39,8 @@ const VerifyEmailCard = () => {
     return null
   }
 
-  const handleVerify = () => {
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault()
     if (code.length === 6) {
       executeAsync({ email, password, firstName, lastName, code })
     } else {
@@ -55,7 +56,10 @@ const VerifyEmailCard = () => {
         description="Please enter the verification code sent to your email."
       />
 
-      <div className="mt-5 flex grow flex-col items-center justify-center space-y-8">
+      <form
+        onSubmit={handleSubmit}
+        className="mt-5 flex grow flex-col items-center justify-center space-y-8"
+      >
         <InputOTP
           maxLength={6}
           pattern={'^\\d+$'}
@@ -85,19 +89,20 @@ const VerifyEmailCard = () => {
         )}
 
         <Button
+          type="submit"
           className="transition-ease w-full bg-black text-white hover:bg-black/90 hover:ring hover:ring-slate-200"
-          onClick={handleVerify}
           isLoading={isExecuting}
           disabled={isExecuting}
         >
           Verify Email
         </Button>
-      </div>
+      </form>
 
       <div className="mt-6 text-center">
         <p className="text-sm text-gray-500">
           Didn&apos;t receive the code?{' '}
           <button
+            type="button"
             className="transition-ease font-medium underline underline-offset-2 hover:text-black"
             onClick={() => {
               // Add logic to resend verification code

@@ -22,7 +22,7 @@ const Page = () => {
         if (!open) router.back()
       }}
     >
-      <DialogContent className="animate-scale-in max-h-[95vh] max-w-[500px] overflow-y-auto p-10">
+      <DialogContent className="animate-scale-in max-h-[95vh] max-w-[450px] overflow-y-auto p-10">
         <DialogTitle></DialogTitle>
         <JoinRoomForm anonymous={anonymous} roomId={roomId} />
       </DialogContent>

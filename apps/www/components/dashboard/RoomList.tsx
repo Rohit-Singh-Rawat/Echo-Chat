@@ -10,24 +10,9 @@ import {
 
 import RoomListRow from './RoomListRow'
 
-interface Props {
-  rooms?: {
-    id: string
-    title: string
-    knownParticipants: { name: string; avatar: string }[]
-    totalParticipants: number
-    messageCount: number
-    userCount: number
-    timeLeft: {
-      hours: number
-      minutes: number
-      seconds: number
-    }
-  }[]
-}
+import { RoomWithParticipants } from '@/types'
 
-const RoomList = ({ rooms = [] }: Props) => {
-  const roomz = [1, 2, 3, 4, 5]
+const RoomList = ({ rooms }: { rooms: RoomWithParticipants[] }) => {
   return (
     <Table>
       <TableHeader className="">
@@ -39,32 +24,20 @@ const RoomList = ({ rooms = [] }: Props) => {
         </TableRow>
       </TableHeader>
       <TableBody>
-        {roomz.map((room) => (
+        {rooms.map((room) => (
           <RoomListRow
-            key={room}
-            id="room-1"
-            title="General Discussion"
-            knownParticipants={[
-              {
-                name: 'John Doe',
+            key={room.id}
+            id={room.id}
+            title={room.name}
+            knownParticipants={room.participants
+              .filter((p) => p.user)
+              .map((p) => ({
+                name: p.user!.name,
                 avatar: 'https://avatar.iran.liara.run/public',
-              },
-              {
-                name: 'Alice Smith',
-                avatar: 'https://avatar.iran.liara.run/public',
-              },
-              {
-                name: 'Bob Wilson',
-                avatar: 'https://avatar.iran.liara.run/public',
-              },
-            ]}
-            totalParticipants={12}
-            messageCount={156}
-            timeLeft={{
-              hours: 2,
-              minutes: 30,
-              seconds: 0,
-            }}
+              }))}
+            totalParticipants={room.participants.length}
+            messageCount={room._count.messages}
+            closedAt={new Date(room.closedAt)}
             onJoin={() => (window.location.href = '/room/room-1')}
           />
         ))}

@@ -88,7 +88,7 @@ export const createAccount = async (
     if (!result.success) {
       throw new Error('Invalid input')
     }
-    console.log('object')
+
     const { email, password, firstName, lastName, code } = result.data
     const verificationToken = await client.emailVerificationToken.findUnique({
       where: {
@@ -99,40 +99,34 @@ export const createAccount = async (
         },
       },
     })
-    console.log('object')
+
     if (!verificationToken) {
       throw new Error('Invalid verification code entered.')
     }
 
-    console.log('object')
     await client.emailVerificationToken.delete({
       where: {
         identifier: email,
         token: code,
       },
     })
-    console.log('object')
 
     const user = await client.user.findUnique({
       where: {
         email,
       },
     })
-    console.log('object')
 
     if (!user) {
-      const user = await client.user.create({
+      await client.user.create({
         data: {
           email,
           password: await hashPassword(password),
           name: `${firstName} ${lastName}`,
-          planId: 'free_plan',
         },
       })
-      console.log('object', user)
     }
     const response = await loginWithCredentials(email, password)
-    console.log(response)
     if (!response.success) {
       throw new Error('Failed to login after account creation')
     }
@@ -231,5 +225,40 @@ export const resetPassword = async (
     res.json({ message: 'Password reset successful' })
   } catch (error) {
     res.status(500).json({ message: 'Failed to reset password' })
+  }
+}
+
+export const getSession = async (
+  req: Request,
+  res: Response
+): Promise<void> => {
+  try {
+    if (!req.user) {
+      res.status(401).json({ message: 'Not authenticated' })
+      return
+    }
+
+    const user = await client.user.findUnique({
+      where: {
+        id: req.user.userId,
+      },
+      select: {
+        id: true,
+        email: true,
+        name: true,
+        subscription: true,
+        subscriptionId: true,
+      },
+    })
+
+    if (!user) {
+      res.status(404).json({ message: 'User not found' })
+      return
+    }
+    res.json({
+      user,
+    })
+  } catch (error) {
+    res.status(500).json({ message: 'Failed to get session' })
   }
 }
