@@ -11,7 +11,7 @@ import { Button } from '../shared/Button'
 
 import { AuthHeader } from '@/components/auth/auth-header'
 import { SocialAuthButtons } from '@/components/auth/social-auth-buttons'
-import { Input } from '@/components/shared/Input'
+import Input from '@/components/shared/Input'
 import { LoginAction } from '@/lib/actions/authActions'
 
 const LoginCard = () => {

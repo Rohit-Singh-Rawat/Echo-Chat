@@ -11,7 +11,7 @@ import { Button } from '../shared/Button'
 import { useRegisterContext } from '@/app/context/RegistryContext'
 import { AuthHeader } from '@/components/auth/auth-header'
 import { SocialAuthButtons } from '@/components/auth/social-auth-buttons'
-import { Input } from '@/components/shared/Input'
+import Input from '@/components/shared/Input'
 import { SendVerificationOtpAction } from '@/lib/actions/authActions'
 
 const SignupCard = () => {
