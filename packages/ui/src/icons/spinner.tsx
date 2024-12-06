@@ -15,17 +15,17 @@ export function LoadingSpinner({ className }: { className?: string }) {
           <div
             key={i}
             style={{
-              animationDelay: `${-1.2 + 0.1 * i}s`,
+              animationDelay: `${-0.7 + 0.057 * i}s`,
               background: 'gray',
               position: 'absolute',
               borderRadius: '1rem',
-              width: '30%',
-              height: '8%',
-              left: '-10%',
-              top: '-4%',
-              transform: `rotate(${30 * i}deg) translate(120%)`,
+              width: '27%',
+              height: '7%',
+              left: '-8%',
+              top: '-3%',
+              transform: `rotate(${30 * i}deg) translate(130%)`,
             }}
-            className="animate-spinner"
+            className="animate-[spinner_0.6s_linear_infinite]"
           />
         ))}
       </div>

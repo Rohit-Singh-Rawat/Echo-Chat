@@ -27,16 +27,17 @@ const MessageBox = ({ userName, avatar, timestamp, message, image }: Props) => {
           <span className="text-xs text-gray-500">{timestamp}</span>
         </div>
         <div
-          className={`flex max-w-[70%] flex-col items-center justify-center rounded-2xl p-2 px-4 ${userName === 'You' ? 'rounded-tr-none border bg-neutral-300' : 'rounded-tl-none border-2 border-neutral-200 bg-white'}`}
+          className={`flex ${image ? 'w-80' : 'max-w-[70%]'} flex-col items-center justify-center rounded-2xl p-2 px-4 ${userName === 'You' ? 'rounded-tr-none border bg-neutral-100' : 'rounded-tl-none border border-neutral-200 bg-white'}`}
         >
-          {message && <p className="mt-1 text-sm">{message}</p>}
+          {' '}
           {image && (
             <img
               src={image}
               alt="Message attachment"
-              className="mt-2 max-h-20 rounded-lg object-contain"
+              className="mt-2 w-80 rounded-lg object-contain"
             />
           )}
+          {message && <p className="mt-1 text-sm">{message}</p>}
         </div>
       </div>
     </div>

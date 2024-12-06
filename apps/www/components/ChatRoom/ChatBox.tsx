@@ -1,30 +1,26 @@
-import { ArrowLeftToLine } from 'lucide-react'
-
-import { Button } from '../shared/Button'
+import GridPattern from '@echo/ui/components/ui/GridPattern.tsx'
+import { cn } from '@echo/utils/src'
 
 import ChatBoxInput from './ChatBoxInput'
 import Chats from './Chats'
 
 const ChatBox = () => {
   return (
-    <div className="relative w-full flex-1">
-      <div className="flex w-full items-center justify-between border-b-2 border-neutral-200 p-4">
-        <h1 className="text-xl font-semibold text-neutral-900">
-          This is Room Title
-        </h1>
-        <Button className="">
-          <ArrowLeftToLine
-            className="-ms-1 me-2 opacity-60"
-            size={16}
-            strokeWidth={2}
-            aria-hidden="true"
-          />
-          Exit
-        </Button>
-      </div>
-      <div className="relative h-[calc(100%-69.6px)] flex-1 overflow-hidden bg-[#f8f8f8] pb-12">
-        {' '}
-        <div className="grainy inset-0s -z-10s absolute"></div>
+    <div className="relative size-full flex-1 rounded-xl border border-neutral-200 bg-white p-2">
+      {' '}
+      <GridPattern
+        width={30}
+        height={30}
+        x={-1}
+        y={-1}
+        strokeDasharray={'4 2'}
+        className={cn(
+          '[mask-image:linear-gradient(to_bottom_left,white,transparent_70%)]',
+          '[mask-image:radial-gradient(600px_circle_at_center,white,transparent)]',
+          'fill-neutral-400/30 stroke-neutral-400/20'
+        )}
+      />
+      <div className="relative h-[calc(100%-10px)] flex-1 overflow-hidden pb-12">
         <Chats
           messages={[
             {

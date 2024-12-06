@@ -149,6 +149,8 @@ export const RoomStats = ({
     if (time.hours > 0) parts.push(`${time.hours}h`)
     if (time.minutes > 0) parts.push(`${time.minutes}m`)
     if (time.seconds > 0) parts.push(`${time.seconds}s`)
+    if (time.hours <= 0 && time.minutes <= 0 && time.seconds <= 0)
+      return 'Ended'
     return parts.join(' ')
   }
 

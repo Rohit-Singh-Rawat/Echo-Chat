@@ -43,12 +43,12 @@ export default function CreateRoomButton({
     },
   })
 
-  const { execute, status } = useAction(createRooms, {
+  const { executeAsync, status } = useAction(createRooms, {
     onSuccess: (result) => {
-      console.log(result, 'Gerfe')
       if (result.data?.room) {
         toast.success('Room created successfully')
         router.push(`/room/${result.data.room.id}`)
+        document.querySelector('[role="dialog"]')?.closest('dialog')?.close()
       }
     },
     onError: (error) => {
@@ -59,7 +59,7 @@ export default function CreateRoomButton({
 
   const onSubmit = (data: CreateRoomInput) => {
     console.log(data)
-    execute({
+    executeAsync({
       name: data.name,
       maxUsers: data.maxUsers,
       maxTimeLimit: data.maxTimeLimit,

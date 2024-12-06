@@ -32,14 +32,14 @@ export default function NoRooms() {
             position: 'absolute',
             inset: 0,
             left: 0,
-            zIndex: 50,
+            zIndex: 10,
             background:
               'linear-gradient(to bottom, transparent, transparent 60%, white 76%, white)',
           }}
         ></div>
         <CardStack items={dummyRooms} />
       </div>
-      <div className="z-[100] text-center">
+      <div className="z-50 text-center">
         <h2 className="text-xl font-semibold text-gray-900">
           No active rooms found
         </h2>

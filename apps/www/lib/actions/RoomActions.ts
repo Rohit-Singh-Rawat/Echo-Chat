@@ -69,15 +69,14 @@ export const createRooms = actionClient
           }
         )
 
-        revalidateTag('rooms')
-        revalidateTag('user-stats')
         if (!response.ok) {
           throw new Error('Failed to create room')
         }
 
-        const data = await response.json()
-        console.log(data)
-        return { room: data.room }
+        revalidateTag('rooms')
+        revalidateTag('user-stats')
+        const room = await response.json()
+        return { room: room }
       } catch (error) {
         console.error('Error creating room:', error)
         throw error
