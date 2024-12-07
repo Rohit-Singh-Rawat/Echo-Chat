@@ -123,6 +123,7 @@ export const createAccount = async (
           email,
           password: await hashPassword(password),
           name: `${firstName} ${lastName}`,
+          image: `https://avatar.iran.liara.run/public/${Math.floor(Math.random() * 100) + 1}`,
         },
       })
     }

@@ -13,10 +13,9 @@ model User {
   email           String            @unique
   password        String
   image           String?
-  subscription    Subscription?     
+  subscription    Subscription?
   subscriptionId  String?           @unique
   rooms           Room[]            @relation("RoomCreator")
-  messages        Message[]         @relation("UserMessages")
   roomsCount      Int               @default(0)
   savedRoomsCount Int               @default(0)
   createdAt       DateTime          @default(now())
@@ -70,28 +69,28 @@ model Room {
 }
 
 model RoomParticipant {
-  id           String    @id @default(cuid())
-  roomId       String
-  userId       String?
-  user         User?     @relation(fields: [userId], references: [id], onDelete: Cascade)
-  room         Room      @relation(fields: [roomId], references: [id], onDelete: Cascade)
-  tempUsername String?
-  tempUserId   String?
+  id            String    @id @default(cuid())
+  roomId        String
+  userId        String?
+  user          User?     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  room          Room      @relation(fields: [roomId], references: [id], onDelete: Cascade)
+  tempUsername  String?
+  tempUserId    String?
   tempUserImage String?
-  joinedAt     DateTime  @default(now())
-  leftAt       DateTime?
+  joinedAt      DateTime  @default(now())
+  leftAt        DateTime?
+  Message       Message[]
 }
 
 model Message {
-  id           String   @id @default(cuid())
-  content      String
-  sentAt       DateTime @default(now())
-  roomId       String
-  room         Room     @relation("RoomMessages", fields: [roomId], references: [id], onDelete: Cascade)
-  userId       String?
-  user         User?    @relation("UserMessages", fields: [userId], references: [id], onDelete: Cascade)
-  tempUsername String?
-  tempUserId   String?
+  id                String          @id @default(cuid())
+  content           String
+  sentAt            DateTime        @default(now())
+  roomId            String
+  room              Room            @relation("RoomMessages", fields: [roomId], references: [id], onDelete: Cascade)
+  sender            RoomParticipant @relation(fields: [senderId], references: [id])
+  senderId String
+  
 }
 
 model EmailVerificationToken {

@@ -1,7 +1,6 @@
 'use client'
 
 import { Button } from '@echo/ui/components/ui/button.tsx'
-import NumberFlow from '@number-flow/react'
 import { AnimatePresence, motion } from 'framer-motion'
 import { Check, Link } from 'lucide-react'
 import { usePathname } from 'next/navigation'
@@ -14,9 +13,10 @@ import { ClockIcon } from '@/components/icons/animated/clock'
 
 type RoomSettingsProps = {
   roomId: string
+  timeLeft: Date
 }
 
-export const RoomSettings = ({ roomId }: RoomSettingsProps) => {
+export const RoomSettings = ({ roomId, timeLeft }: RoomSettingsProps) => {
   const [copied, setCopied] = useState(false)
   const [fullUrl, setFullUrl] = useState('')
   const [timeoutId, setTimeoutId] = useState<NodeJS.Timeout | null>(null)
@@ -63,7 +63,7 @@ export const RoomSettings = ({ roomId }: RoomSettingsProps) => {
         <div className="flex items-center gap-2 rounded-lg border p-4">
           <ClockIcon className="size-4" />
           <div>
-            <Countdown endDate={new Date(Date.now() + 7200 * 1000)} />
+            <Countdown endDate={timeLeft} />
           </div>
         </div>
         <div className="flex-1 rounded-xl border border-gray-200 p-4">

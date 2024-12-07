@@ -164,7 +164,7 @@ export const RoomStats = ({
         <UsersIcon className="size-4" />
         <span>{userCount}</span>
       </div>
-      <div className="mx-w-20 flex w-20 items-center gap-1">
+      <div className="mx-w-28 flex w-28 items-center gap-1">
         <ClockIcon className="size-4" />
         <span>{formatTime(timeLeft)}</span>
       </div>

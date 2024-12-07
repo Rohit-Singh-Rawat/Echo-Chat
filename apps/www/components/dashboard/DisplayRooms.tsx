@@ -42,7 +42,7 @@ export default function DisplayRooms({ rooms }: { rooms: Rooms }) {
               totalParticipants={room.participants.length}
               messageCount={room._count.messages}
               closedAt={new Date(room.closedAt)}
-              onJoin={() => (window.location.href = '/room/room-1')}
+              onJoin={() => (window.location.href = `/room/${room.id}`)}
             />
           ))}
         </div>

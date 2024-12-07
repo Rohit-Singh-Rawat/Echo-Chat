@@ -154,7 +154,6 @@ export const getRoomHistory = async (
       orderBy: { sentAt: 'desc' },
       take: Number(limit),
       skip: (Number(page) - 1) * Number(limit),
-      include: { user: true },
     })
     res.json(messages)
   } catch (error) {
