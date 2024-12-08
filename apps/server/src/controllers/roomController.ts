@@ -206,7 +206,14 @@ export const getUserRooms = async (
         RoomParticipant: {
           where: {
             room: {
-              closedAt: { gte: new Date() },
+              OR: [
+                {
+                  closedAt: { gte: new Date() },
+                },
+                {
+                  id: 'public'
+                }
+              ]
             },
           },
           include: {

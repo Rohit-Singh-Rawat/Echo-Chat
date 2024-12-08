@@ -4,13 +4,7 @@ import { cn } from '@echo/utils/src'
 import ChatBoxInput from './ChatBoxInput'
 import Chats from './Chats'
 
-interface Message {
-  userId: string
-  username: string
-  avatar: string
-  content: string
-  sentAt: Date
-}
+import { Message } from '@/types'
 
 interface ChatBoxProps {
   messages: Message[]

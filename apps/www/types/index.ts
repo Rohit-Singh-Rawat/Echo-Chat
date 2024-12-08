@@ -66,3 +66,21 @@ export type UserStats = {
     maxSavedRooms: number
   }
 }
+export interface Message {
+  userId: string
+  username: string
+  avatar: string
+  content: string
+  sentAt: Date
+}
+
+export interface UserIdentity {
+  userId: string
+  username: string
+  avatar: string
+}
+
+export interface PageClientProps {
+  roomId: string
+  token?: string
+}

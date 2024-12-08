@@ -115,7 +115,6 @@ export const getSession = actionClient.action(async () => {
     if (response.ok) {
       const data = await response.json()
 
-      console.log(response, data)
       return { user: data.user }
     } else {
       return { user: null }

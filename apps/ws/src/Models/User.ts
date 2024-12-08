@@ -31,6 +31,28 @@ export class User {
             where: {
               id: roomId,
             },
+            include: {
+              messages: {
+                select: {
+                  content: true,
+                  sender: {
+                    select: {
+                      user: {
+                        select: {
+                          id: true,
+                          name: true,
+                          image: true,
+                        },
+                      },
+                      tempUserId: true,
+                      tempUsername: true,
+                      tempUserImage: true,
+                    },
+                  },
+                  sentAt: true,
+                },
+              },
+            },
           })
           if (!room) {
             this.ws.close()
@@ -83,6 +105,22 @@ export class User {
           } else {
             return
           }
+
+          // Check if user with same ID already exists in the room
+          const existingUser = RoomManager.getInstance()
+            .rooms.get(roomId)
+            ?.users.find((u) => u.id === this.id)
+          if (existingUser) {
+            this.send({
+              type: 'error',
+              payload: {
+                message: 'User already exists in room',
+              },
+            })
+            this.ws.close()
+            return
+          }
+
           if (
             !(await RoomManager.getInstance().addUser(this, {
               id: room.id,
@@ -118,6 +156,8 @@ export class User {
           this.send({
             type: 'room_joined',
             payload: {
+              userId: this.id,
+              participantId: `${room.id}-${this.id}`,
               users: RoomManager.getInstance()
                 .rooms.get(roomId)
                 ?.users.map((u) => ({
@@ -130,9 +170,18 @@ export class User {
               maxTimeLimit: room.maxTimeLimit,
               closeTime: room.closedAt,
               isTemporary: room.isTemporary,
-              last20Messages:
-                RoomManager.getInstance().rooms.get(roomId)?.last20Messages ||
-                [],
+              last20Messages: room.isTemporary
+                ? RoomManager.getInstance().rooms.get(roomId)?.last20Messages ||
+                  []
+                : room.messages.map((msg) => ({
+                    content: msg.content,
+                    userId: msg.sender.user?.id || msg.sender.tempUserId || '',
+                    username:
+                      msg.sender.user?.name || msg.sender.tempUsername || '',
+                    avatar:
+                      msg.sender.user?.image || msg.sender.tempUserImage || '',
+                    sentAt: msg.sentAt,
+                  })),
             },
           })
           console.log('Rooms:', [...RoomManager.getInstance().rooms.entries()])
@@ -177,13 +226,14 @@ export class User {
             payload: messageContent.payload,
           })
 
-          await client.message.create({
-            data: {
-              content,
-              roomId: this.roomId,
-              senderId: `${this.roomId}-${this.id}`,
-            },
-          })
+          if (!RoomManager.getInstance().rooms.get(this.roomId)?.isTemporary)
+            await client.message.create({
+              data: {
+                content,
+                roomId: this.roomId,
+                senderId: `${this.roomId}-${this.id}`,
+              },
+            })
         }
       }
     })

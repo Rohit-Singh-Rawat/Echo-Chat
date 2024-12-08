@@ -1,3 +1,5 @@
+import { AnimatePresence, motion } from 'framer-motion'
+
 import MessageBox from './MessageBox'
 
 import useChatScroll from '@/hooks/useChatScroll'
@@ -20,20 +22,29 @@ const Chats = ({ messages }: Props) => {
       className="chat-scroll z-40 flex h-full flex-col overflow-y-auto scroll-smooth p-4"
       ref={ref}
     >
-      {messages.map((message, index) => (
-        <MessageBox
-          key={index}
-          prevMessageSender={
-            index > 0 ? messages[index - 1]?.userName : undefined
-          }
-          userName={message.userName}
-          userId={message.userId}
-          avatar={message.avatar}
-          timestamp={message.timestamp}
-          message={message.message}
-          image={message.image}
-        />
-      ))}
+      <AnimatePresence>
+        {messages.map((message, index) => (
+          <motion.div
+            key={index}
+            initial={{ opacity: 0, y: 50 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0 }}
+            layout
+          >
+            <MessageBox
+              prevMessageSender={
+                index > 0 ? messages[index - 1]?.userId : undefined
+              }
+              userName={message.userName}
+              userId={message.userId}
+              avatar={message.avatar}
+              timestamp={message.timestamp}
+              message={message.message}
+              image={message.image}
+            />
+          </motion.div>
+        ))}
+      </AnimatePresence>
     </div>
   )
 }

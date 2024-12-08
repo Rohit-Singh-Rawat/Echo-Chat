@@ -27,38 +27,39 @@ export class RoomManager {
       return false
     }
     console.log('d')
-    await client.roomParticipant.upsert({
-      where: {
-        id: `${roomInfo.id}-${user.id}`,
-      },
-      update: {
-        leftAt: null,
-        roomId: roomInfo.id,
-        joinedAt: new Date(),
-        ...(user.temporary
-          ? {
-              tempUserId: user.id,
-              tempUsername: user.name,
-              tempUserImage: user.avatar,
-            }
-          : {
-              userId: user.id,
-            }),
-      },
-      create: {
-        id: `${roomInfo.id}-${user.id}`,
-        roomId: roomInfo.id,
-        ...(user.temporary
-          ? {
-              tempUserId: user.id,
-              tempUsername: user.name,
-              tempUserImage: user.avatar,
-            }
-          : {
-              userId: user.id,
-            }),
-      },
-    })
+    if (!(roomInfo.id === 'public'))
+      await client.roomParticipant.upsert({
+        where: {
+          id: `${roomInfo.id}-${user.id}`,
+        },
+        update: {
+          leftAt: null,
+          roomId: roomInfo.id,
+          joinedAt: new Date(),
+          ...(user.temporary
+            ? {
+                tempUserId: user.id,
+                tempUsername: user.name,
+                tempUserImage: user.avatar,
+              }
+            : {
+                userId: user.id,
+              }),
+        },
+        create: {
+          id: `${roomInfo.id}-${user.id}`,
+          roomId: roomInfo.id,
+          ...(user.temporary
+            ? {
+                tempUserId: user.id,
+                tempUsername: user.name,
+                tempUserImage: user.avatar,
+              }
+            : {
+                userId: user.id,
+              }),
+        },
+      })
     console.log(room)
     room.users.push(user)
     console.log(room)
