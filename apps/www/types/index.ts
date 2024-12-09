@@ -2,6 +2,7 @@ export type User = {
   email: string
   id: string
   name: string
+  avatar: string
   subscriptionId: string | null
   subscription: {
     id: string

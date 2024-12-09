@@ -248,6 +248,7 @@ export const getSession = async (
         email: true,
         name: true,
         subscription: true,
+        image:true,
         subscriptionId: true,
       },
     })

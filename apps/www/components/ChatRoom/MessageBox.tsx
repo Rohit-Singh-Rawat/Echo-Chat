@@ -1,6 +1,8 @@
 import { Dot } from 'lucide-react'
 import Image from 'next/image'
 
+import { ReactionButton } from './ReactionButton'
+
 import { useIdentityStore } from '@/app/store/useIdentityStore'
 
 type Props = {
@@ -25,6 +27,10 @@ const MessageBox = ({
   const { userId: participantId } = useIdentityStore()
   console.log(prevMessageSender, participantId)
 
+  const handleReaction = (emoji: string) => {
+    console.log(`Reacted with ${emoji} to message`)
+  }
+
   return (
     <div
       className={`flex items-start gap-3 px-6 ${userId == prevMessageSender ? 'pt-1' : 'pt-6'} ${userId === participantId ? 'flex-row-reverse justify-end' : 'justify-start'} z-40`}
@@ -45,11 +51,11 @@ const MessageBox = ({
         className={`flex w-full flex-col ${userId === participantId ? 'items-end' : 'items-start'} justify-center`}
       >
         {prevMessageSender !== userId ? (
-          <div className="flex items-center justify-center gap-1">
-            <span className="font-medium">
-              {userId === participantId ? 'you' : userName}
+          <div className="flex items-center justify-center">
+            <span className="text-xs font-medium">
+              {userId === participantId ? 'You' : userName}
             </span>
-            <Dot />
+            <Dot className="w-4 scale-110" />
             <span className="text-xs text-gray-500">
               {new Date(timestamp).toLocaleTimeString([], {
                 hour: '2-digit',
@@ -59,17 +65,24 @@ const MessageBox = ({
           </div>
         ) : null}
         <div
-          className={`flex ${image ? 'w-80' : 'max-w-[70%]'} flex-col items-center justify-center ${userId == prevMessageSender ? 'rounded-2xl' : `${userId === participantId ? 'rounded-2xl rounded-tr-none' : 'rounded-2xl rounded-tl-none'}`} p-2 px-4 ${userId == prevMessageSender ? '' : 'pb-3.5'} ${userId === participantId ? 'border-[1.5px] bg-neutral-100' : 'border-[1.5px] border-neutral-200 bg-white'}`}
+          className={`group flex items-center gap-3 ${userId === participantId ? 'flex-row-reverse' : 'flex-row'}`}
         >
-          {' '}
-          {image && (
-            <Image
-              src={image}
-              alt="Message attachment"
-              className="mt-2 w-80 rounded-lg bg-white object-contain"
-            />
-          )}
-          {message && <p className="mt-1 text-sm">{message}</p>}
+          <div
+            className={`flex ${image ? 'w-80' : 'max-w-[70%]'} flex-col items-center justify-center ${userId == prevMessageSender ? 'rounded-[14px]' : `${userId === participantId ? 'rounded-[14px] rounded-tr-none' : 'rounded-[14px] rounded-tl-none'}`} p-2 px-4 ${userId === participantId ? 'border-[1.5px] border-transparent bg-neutral-100' : 'border-[1.5px] border-neutral-200 bg-white'}`}
+          >
+            {' '}
+            {image && (
+              <Image
+                src={image}
+                alt="Message attachment"
+                className="mt-2 w-80 rounded-lg bg-white object-contain"
+              />
+            )}
+            {message && <p className="text-sm">{message}</p>}
+          </div>
+          <div className="">
+            <ReactionButton onReact={handleReaction} />
+          </div>
         </div>
       </div>
     </div>

@@ -10,15 +10,16 @@ export const metadata = {
 }
 
 interface PageProps {
-  params: {
+  params: Promise<{
     roomId: string
-  }
+  }>
 }
 
 const Page = async ({ params }: PageProps) => {
-  const [session, cookieStore] = await Promise.all([getSession(), cookies()])
+  const cookieStore = await cookies()
+  const resolvedParams = await params
 
-  const { roomId } = params
+  const { roomId } = resolvedParams
   const token = cookieStore.get('token')?.value
 
   return <PageClient roomId={roomId} token={token} />

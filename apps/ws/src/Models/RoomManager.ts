@@ -82,21 +82,22 @@ export class RoomManager {
     if (room) {
       room.users = room.users.filter((u) => u.id !== user.id)
 
-      await client.roomParticipant.update({
-        where: {
-          id: `${roomId}-${user.id}`,
-          ...(user.temporary
-            ? {
-                tempUserId: user.id,
-              }
-            : {
-                userId: user.id,
-              }),
-        },
-        data: {
-          leftAt: new Date(),
-        },
-      })
+      if (!(roomId === 'public'))
+        await client.roomParticipant.update({
+          where: {
+            id: `${roomId}-${user.id}`,
+            ...(user.temporary
+              ? {
+                  tempUserId: user.id,
+                }
+              : {
+                  userId: user.id,
+                }),
+          },
+          data: {
+            leftAt: new Date(),
+          },
+        })
 
       if (room.users.length === 0) {
         this.rooms.delete(roomId)

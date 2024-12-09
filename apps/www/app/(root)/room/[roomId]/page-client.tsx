@@ -17,6 +17,7 @@ import { Message, PageClientProps, UserIdentity } from '@/types'
 const PageClient = ({ roomId, token }: PageClientProps) => {
   const { setAnonymous, anonymous, setUserId } = useIdentityStore()
   const tempUser = useTempUser()
+  const [roomName, SetRoomName] = useState('')
   const [messages, setMessages] = useState<Message[]>([])
   const [users, setUsers] = useState<UserIdentity[]>([])
   const [timeLeft, setTimeLeft] = useState<Date>(new Date())
@@ -35,7 +36,7 @@ const PageClient = ({ roomId, token }: PageClientProps) => {
 
   useEffect(() => {
     if (readyState === ReadyState.CLOSED) {
-      setError('Server connection closed. Please try again later.')
+      if (!error) setError('Server connection closed. Please try again later.')
     }
   }, [readyState])
 
@@ -77,6 +78,7 @@ const PageClient = ({ roomId, token }: PageClientProps) => {
       room_joined: () => {
         setUserId(data.payload.userId)
         setIsLoading(false)
+        SetRoomName(data.payload.roomName)
         setUsers(data.payload.users)
         setMessages(data.payload.last20Messages)
         setTimeLeft(new Date(data.payload.closeTime))
@@ -109,6 +111,15 @@ const PageClient = ({ roomId, token }: PageClientProps) => {
       message_sent: () => {
         setMessages((prevMessages) => [...prevMessages, data.payload])
       },
+      'reaction-added': () => {
+        setMessages((prevMessages) =>
+          prevMessages.map((msg) =>
+            msg.id === data.payload.messageId
+              ? { ...msg, reactions: [...msg.reactions, data.payload.reaction] }
+              : msg
+          )
+        )
+      },
     }
 
     const handler = handlers[data.type]
@@ -119,6 +130,19 @@ const PageClient = ({ roomId, token }: PageClientProps) => {
     (content: string) => {
       if (anonymous === null || readyState !== ReadyState.OPEN) return
       sendMessage(JSON.stringify({ type: 'message', payload: { content } }))
+    },
+    [readyState, sendMessage, anonymous]
+  )
+
+  const sendReaction = useCallback(
+    (messageId: string, emoji: string) => {
+      if (anonymous === null || readyState !== ReadyState.OPEN) return
+      sendMessage(
+        JSON.stringify({
+          type: 'add-reaction',
+          payload: { messageId, emoji },
+        })
+      )
     },
     [readyState, sendMessage, anonymous]
   )
@@ -154,10 +178,14 @@ const PageClient = ({ roomId, token }: PageClientProps) => {
 
   return (
     <div className="grid h-screen max-h-screen w-screen grid-cols-1 grid-rows-10 justify-center overflow-hidden bg-neutral-100 p-5 pt-0">
-      <RoomHeader />
+      <RoomHeader roomName={roomName} />
       <div className="row-span-9 flex w-full gap-5">
         <ParticipantsSidebar participants={users} />
-        <ChatBox messages={messages} sendMessage={sendChatMessage} />
+        <ChatBox
+          messages={messages}
+          sendMessage={sendChatMessage}
+          sendReaction={sendReaction}
+        />
         <RoomSettings roomId={roomId} timeLeft={timeLeft} />
       </div>
     </div>

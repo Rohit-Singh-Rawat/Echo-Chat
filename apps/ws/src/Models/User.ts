@@ -167,6 +167,7 @@ export class User {
                   temporary: u.temporary,
                 })),
               maxUsers: room.maxUsers,
+              roomName: room.name,
               maxTimeLimit: room.maxTimeLimit,
               closeTime: room.closedAt,
               isTemporary: room.isTemporary,
@@ -252,7 +253,7 @@ export class User {
       RoomManager.getInstance().removeUser(this.roomId, this)
       RoomManager.getInstance().broadcast(
         {
-          type: 'user-leave',
+          type: 'user_left',
           payload: {
             userId: this.id,
           },

@@ -11,7 +11,7 @@ import { Button } from '@/components/shared/Button'
 
 export default function GetAnonomousity() {
   const { setAnonymous } = useIdentityStore()
-  const [isAnonymous, setIsAnonymous] = useState(true)
+  const [isAnonymous, setIsAnonymous] = useState(false)
 
   const handleAnonymousChoice = () => {
     setAnonymous(isAnonymous)
@@ -23,7 +23,7 @@ export default function GetAnonomousity() {
       <div className="">
         <EchoLogo />
       </div>
-      <div className="m-auto w-1/3 space-y-6 rounded-2xl border-2 border-neutral-300 bg-white p-10 shadow-2xl">
+      <div className="transition-ease m-auto w-1/3 space-y-6 rounded-2xl border-2 border-neutral-300 bg-white p-10 shadow-xl hover:shadow-2xl">
         <div>
           <h1 className="mb-4 text-3xl font-semibold">Choose Your Identity</h1>
           <p className="mb-6 text-gray-600">
