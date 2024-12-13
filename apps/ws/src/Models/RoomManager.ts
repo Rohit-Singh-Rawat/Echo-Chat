@@ -99,7 +99,7 @@ export class RoomManager {
           },
         })
 
-      if (room.users.length === 0) {
+      if (room.users.length === 0 && roomId !== 'public') {
         this.rooms.delete(roomId)
       }
     }

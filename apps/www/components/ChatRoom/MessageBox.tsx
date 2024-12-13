@@ -1,7 +1,13 @@
+import {
+  Avatar,
+  AvatarFallback,
+  AvatarImage,
+} from '@echo/ui/components/ui/avatar.tsx'
+import { LoadingSpinner } from '@echo/ui/icons/spinner.tsx'
 import { Dot } from 'lucide-react'
 import Image from 'next/image'
 
-import { ReactionButton } from './ReactionButton'
+import { EmojiPickerPopover } from './EmojiPickerPopover'
 
 import { useIdentityStore } from '@/app/store/useIdentityStore'
 
@@ -13,6 +19,7 @@ type Props = {
   userId: string
   prevMessageSender?: string
   image?: string
+  onReaction: (emoji: string) => void
 }
 
 const MessageBox = ({
@@ -23,12 +30,12 @@ const MessageBox = ({
   image,
   userId,
   prevMessageSender,
+  onReaction,
 }: Props) => {
   const { userId: participantId } = useIdentityStore()
-  console.log(prevMessageSender, participantId)
 
   const handleReaction = (emoji: string) => {
-    console.log(`Reacted with ${emoji} to message`)
+    onReaction(emoji)
   }
 
   return (
@@ -36,13 +43,12 @@ const MessageBox = ({
       className={`flex items-start gap-3 px-6 ${userId == prevMessageSender ? 'pt-1' : 'pt-6'} ${userId === participantId ? 'flex-row-reverse justify-end' : 'justify-start'} z-40`}
     >
       {prevMessageSender !== userId ? (
-        <Image
-          src={avatar}
-          alt={`${userName}'s avatar`}
-          width={32}
-          height={32}
-          className="rounded-full"
-        />
+        <Avatar className="size-8">
+          <AvatarImage src={avatar} alt={`${userName}'s avatar`} />
+          <AvatarFallback>
+            <LoadingSpinner className="size-4" />
+          </AvatarFallback>
+        </Avatar>
       ) : (
         <div className="size-8" />
       )}
@@ -68,7 +74,7 @@ const MessageBox = ({
           className={`group flex items-center gap-3 ${userId === participantId ? 'flex-row-reverse' : 'flex-row'}`}
         >
           <div
-            className={`flex ${image ? 'w-80' : 'max-w-[70%]'} flex-col items-center justify-center ${userId == prevMessageSender ? 'rounded-[14px]' : `${userId === participantId ? 'rounded-[14px] rounded-tr-none' : 'rounded-[14px] rounded-tl-none'}`} p-2 px-4 ${userId === participantId ? 'border-[1.5px] border-transparent bg-neutral-100' : 'border-[1.5px] border-neutral-200 bg-white'}`}
+            className={`flex ${image ? 'w-80' : 'max-w-[70%]'} min-w-20 flex-col items-center justify-start text-start ${userId == prevMessageSender ? 'rounded-[14px]' : `${userId === participantId ? 'rounded-[14px] rounded-tr-none' : 'rounded-[14px] rounded-tl-none'}`} p-2 px-4 ${userId === participantId ? 'border-[1.5px] border-transparent bg-neutral-100' : 'border-[1.5px] border-neutral-200 bg-white'}`}
           >
             {' '}
             {image && (
@@ -80,8 +86,11 @@ const MessageBox = ({
             )}
             {message && <p className="text-sm">{message}</p>}
           </div>
-          <div className="">
-            <ReactionButton onReact={handleReaction} />
+          <div className="relative">
+            <EmojiPickerPopover
+              onEmojiSelect={handleReaction}
+              side={userId === participantId ? 'left' : 'right'}
+            />
           </div>
         </div>
       </div>
