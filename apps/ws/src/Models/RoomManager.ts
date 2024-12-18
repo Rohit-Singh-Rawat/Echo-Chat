@@ -17,7 +17,7 @@ export class RoomManager {
       this.rooms.set(roomInfo.id, {
         users: [],
         isTemporary: roomInfo.isTemporary,
-        last20Messages: [],
+        lastMessages: [],
         maxTimeLimit: roomInfo.maxTimeLimit,
         maxUsers: roomInfo.maxUsers,
       })
@@ -26,7 +26,6 @@ export class RoomManager {
     if (room.users.length >= room.maxUsers) {
       return false
     }
-    console.log('d')
     if (!(roomInfo.id === 'public'))
       await client.roomParticipant.upsert({
         where: {
@@ -60,7 +59,6 @@ export class RoomManager {
               }),
         },
       })
-    console.log(room)
     room.users.push(user)
     console.log(room)
     return true

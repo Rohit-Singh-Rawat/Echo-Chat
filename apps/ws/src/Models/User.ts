@@ -2,6 +2,7 @@ import jwt from 'jsonwebtoken'
 import { WebSocket } from 'ws'
 import client from '@echo/db/src'
 import { RoomManager } from './RoomManager'
+import { v4 as uuid } from 'uuid'
 import { WebSocketMessage } from '../types/index.d'
 
 export class User {
@@ -47,6 +48,25 @@ export class User {
                       tempUserId: true,
                       tempUsername: true,
                       tempUserImage: true,
+                    },
+                  },
+                  reaction: {
+                    select: {
+                      emoji: true,
+                      sender: {
+                        select: {
+                          user: {
+                            select: {
+                              id: true,
+                              name: true,
+                              image: true,
+                            },
+                          },
+                          tempUserId: true,
+                          tempUsername: true,
+                          tempUserImage: true,
+                        },
+                      },
                     },
                   },
                   sentAt: true,
@@ -171,8 +191,8 @@ export class User {
               maxTimeLimit: room.maxTimeLimit,
               closeTime: room.closedAt,
               isTemporary: room.isTemporary,
-              last20Messages: room.isTemporary
-                ? RoomManager.getInstance().rooms.get(roomId)?.last20Messages ||
+              lastMessages: room.isTemporary
+                ? RoomManager.getInstance().rooms.get(roomId)?.lastMessages ||
                   []
                 : room.messages.map((msg) => ({
                     content: msg.content,
@@ -182,6 +202,36 @@ export class User {
                     avatar:
                       msg.sender.user?.image || msg.sender.tempUserImage || '',
                     sentAt: msg.sentAt,
+                    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+                    reactions: msg.reaction.reduce(
+                      (
+                        reactions: Record<
+                          string,
+                          { id: string; name: string; avatar: string }[]
+                        >,
+                        reaction
+                      ) => {
+                        if (!reactions[reaction.emoji]) {
+                          reactions[reaction.emoji] = []
+                        }
+                        reactions[reaction.emoji]!.push({
+                          id:
+                            reaction.sender.user?.id ||
+                            reaction.sender.tempUserId ||
+                            '',
+                          name:
+                            reaction.sender.user?.name ||
+                            reaction.sender.tempUsername ||
+                            '',
+                          avatar:
+                            reaction.sender.user?.image ||
+                            reaction.sender.tempUserImage ||
+                            '',
+                        })
+                        return reactions
+                      },
+                      {}
+                    ),
                   })),
             },
           })
@@ -206,21 +256,24 @@ export class User {
           if (!room) {
             return
           }
+          const messageId = uuid()
 
           const messageContent = {
             type: 'receive-message',
             payload: {
+              id: messageId,
               content: content,
               userId: this.id,
               avatar: this.avatar,
               username: this.name,
+              reactions: {},
               sentAt: new Date(),
             },
           }
-          if (room.last20Messages.length >= 20) {
-            room.last20Messages.shift()
+          if (room.lastMessages.length >= 50) {
+            room.lastMessages.shift()
           }
-          room.last20Messages.push(messageContent.payload)
+          room.lastMessages.push(messageContent.payload)
           RoomManager.getInstance().broadcast(messageContent, this, this.roomId)
           this.send({
             type: 'message_sent',
@@ -230,11 +283,78 @@ export class User {
           if (!RoomManager.getInstance().rooms.get(this.roomId)?.isTemporary)
             await client.message.create({
               data: {
+                id: messageId,
                 content,
                 roomId: this.roomId,
                 senderId: `${this.roomId}-${this.id}`,
               },
             })
+          break
+        }
+        case 'reaction': {
+          if (!this.id || !this.roomId) {
+            this.send({
+              type: 'error',
+              payload: {
+                message: 'Please join a room first',
+              },
+            })
+            return
+          }
+          const { emoji, messageId } = parsedData.payload
+          if (
+            !emoji ||
+            !messageId ||
+            typeof emoji !== 'string' ||
+            typeof messageId !== 'string'
+          ) {
+            return
+          }
+          const room = RoomManager.getInstance().rooms.get(this.roomId)
+          if (!room) {
+            return
+          }
+          const reactionData = {
+            type: 'reaction-added',
+            payload: {
+              messageId,
+              emoji,
+              userId: this.id,
+              sentAt: new Date(),
+            },
+          }
+          console.log('e')
+          RoomManager.getInstance().broadcast(reactionData, this, this.roomId)
+          this.send({
+            type: 'reaction-received',
+            payload: reactionData.payload,
+          })
+
+          const message = room.lastMessages.find((msg) => msg.id === messageId)
+          if (message) {
+            if (!message.reactions) {
+              message.reactions = {}
+            }
+            if (!message.reactions[emoji]) {
+              message.reactions[emoji] = []
+            }
+            message.reactions[emoji].push({
+              id: this.id,
+              name: this.name,
+              avatar: this.avatar,
+            })
+
+            if (!room.isTemporary) {
+              await client.reaction.create({
+                data: {
+                  emoji,
+                  messageId,
+                  senderId: `${this.roomId}-${this.id}`,
+                  roomId: this.roomId,
+                },
+              })
+            }
+          }
         }
       }
     })

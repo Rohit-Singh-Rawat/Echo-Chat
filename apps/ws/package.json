@@ -17,6 +17,7 @@
     "@echo/db": "workspace:*",
     "flatted": "^3.3.2",
     "jsonwebtoken": "^8.5.1",
+    "uuid": "^11.0.3",
     "ws": "^8.18.0"
   },
   "devDependencies": {

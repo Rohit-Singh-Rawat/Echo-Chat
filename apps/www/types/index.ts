@@ -69,10 +69,13 @@ export type UserStats = {
 }
 export interface Message {
   userId: string
+  id: string
   username: string
   avatar: string
   content: string
   sentAt: Date
+  reactions: Record<string, { id: string; name: string; avatar: string }[]>
+  image?: string
 }
 
 export interface UserIdentity {

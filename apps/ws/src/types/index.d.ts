@@ -13,7 +13,7 @@ export interface Room {
   maxUsers: number
   isTemporary: boolean
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  last20Messages: any[]
+  lastMessages: any[]
 }
 
 export interface RoomInfo {

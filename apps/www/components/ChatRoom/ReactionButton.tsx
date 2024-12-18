@@ -9,13 +9,13 @@ import {
 
 import Emoji from '../icons/animated/Emoji'
 
-export const ReactionButton = () => {
+export const ReactionButton = ({ open }: { open: boolean }) => {
   return (
     <TooltipProvider delayDuration={0}>
       <Tooltip>
         <TooltipTrigger asChild>
           <div
-            className="transition-ease rounded-full p-0.5 opacity-0 hover:bg-gray-100 group-hover:opacity-100"
+            className={`transition-ease ${open ? 'opacity-100' : 'marker:'} rounded-full p-0.5 opacity-0 hover:bg-gray-100 group-hover:opacity-100`}
             aria-label="Add reaction"
           >
             <Emoji className="size-5 fill-gray-500" />

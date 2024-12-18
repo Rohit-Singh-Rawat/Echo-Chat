@@ -80,7 +80,8 @@ const PageClient = ({ roomId, token }: PageClientProps) => {
         setIsLoading(false)
         SetRoomName(data.payload.roomName)
         setUsers(data.payload.users)
-        setMessages(data.payload.last20Messages)
+        setMessages(data.payload.lastMessages)
+        console.log(data)
         setTimeLeft(new Date(data.payload.closeTime))
       },
       user_joined: () => {
@@ -112,13 +113,46 @@ const PageClient = ({ roomId, token }: PageClientProps) => {
         setMessages((prevMessages) => [...prevMessages, data.payload])
       },
       'reaction-added': () => {
-        setMessages((prevMessages) =>
-          prevMessages.map((msg) =>
-            msg.id === data.payload.messageId
-              ? { ...msg, reactions: [...msg.reactions, data.payload.reaction] }
-              : msg
+        setMessages((prevMessages) => {
+          const messageIndex = prevMessages.findIndex(
+            (msg) => msg.id === data.payload.messageId
           )
-        )
+          if (messageIndex === -1) return prevMessages
+          const newMessages = [...prevMessages]
+          if (newMessages[messageIndex])
+            if (!(data.payload.emoji in newMessages[messageIndex].reactions)) {
+              newMessages[messageIndex].reactions[data.payload.emoji] = []
+            }
+          newMessages[messageIndex]!.reactions[data.payload.emoji]!.push({
+            id: data.payload.userId,
+            name: data.payload.username,
+            avatar: data.payload.avatar,
+          })
+
+          return newMessages
+        })
+        console.log('object')
+      },
+      'reaction-received': () => {
+        console.log('d')
+        setMessages((prevMessages) => {
+          const messageIndex = prevMessages.findIndex(
+            (msg) => msg.id === data.payload.messageId
+          )
+          if (messageIndex === -1) return prevMessages
+          const newMessages = [...prevMessages]
+          if (newMessages[messageIndex])
+            if (!(data.payload.emoji in newMessages[messageIndex].reactions)) {
+              newMessages[messageIndex].reactions[data.payload.emoji] = []
+            }
+          newMessages[messageIndex]!.reactions[data.payload.emoji]!.push({
+            id: data.payload.userId,
+            name: data.payload.username,
+            avatar: data.payload.avatar,
+          })
+
+          return newMessages
+        })
       },
     }
 
@@ -139,7 +173,7 @@ const PageClient = ({ roomId, token }: PageClientProps) => {
       if (anonymous === null || readyState !== ReadyState.OPEN) return
       sendMessage(
         JSON.stringify({
-          type: 'add-reaction',
+          type: 'reaction',
           payload: { messageId, emoji },
         })
       )

@@ -9,9 +9,10 @@ import { Message } from '@/types'
 interface ChatBoxProps {
   messages: Message[]
   sendMessage: (content: string) => void
+  sendReaction: (messageId: string, emoji: string) => void
 }
 
-const ChatBox = ({ messages, sendMessage }: ChatBoxProps) => {
+const ChatBox = ({ messages, sendMessage, sendReaction }: ChatBoxProps) => {
   return (
     <div className="relative size-full flex-1 rounded-xl border border-neutral-200 bg-white p-2">
       {' '}
@@ -29,11 +30,15 @@ const ChatBox = ({ messages, sendMessage }: ChatBoxProps) => {
       />
       <div className="relative h-[calc(100%-10px)] flex-1 overflow-hidden pb-12">
         <Chats
+          sendReaction={sendReaction}
           messages={messages.map((message) => ({
-            userName: message.username,
+            id: message.id,
+            image: message?.image,
+            reactions: message.reactions,
+            username: message.username,
             avatar: message.avatar,
-            timestamp: message.sentAt,
-            message: message.content,
+            sentAt: message.sentAt,
+            content: message.content,
             userId: message.userId,
           }))}
         />

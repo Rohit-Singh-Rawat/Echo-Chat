@@ -64,33 +64,49 @@ model Room {
   createdAt    DateTime          @default(now())
   closedAt     DateTime?
   updatedAt    DateTime          @updatedAt
+  Reaction     Reaction[]
 
   @@index([createdById, createdAt])
 }
 
 model RoomParticipant {
-  id            String    @id @default(cuid())
+  id            String     @id @default(cuid())
   roomId        String
   userId        String?
-  user          User?     @relation(fields: [userId], references: [id], onDelete: Cascade)
-  room          Room      @relation(fields: [roomId], references: [id], onDelete: Cascade)
+  user          User?      @relation(fields: [userId], references: [id], onDelete: Cascade)
+  room          Room       @relation(fields: [roomId], references: [id], onDelete: Cascade)
   tempUsername  String?
   tempUserId    String?
   tempUserImage String?
-  joinedAt      DateTime  @default(now())
+  joinedAt      DateTime   @default(now())
   leftAt        DateTime?
   Message       Message[]
+  Reaction      Reaction[]
 }
 
 model Message {
-  id                String          @id @default(cuid())
-  content           String
-  sentAt            DateTime        @default(now())
-  roomId            String
-  room              Room            @relation("RoomMessages", fields: [roomId], references: [id], onDelete: Cascade)
-  sender            RoomParticipant @relation(fields: [senderId], references: [id])
+  id       String          @id @default(cuid())
+  content  String
+  sentAt   DateTime        @default(now())
+  roomId   String
+  room     Room            @relation("RoomMessages", fields: [roomId], references: [id], onDelete: Cascade)
+  sender   RoomParticipant @relation(fields: [senderId], references: [id])
   senderId String
-  
+  reaction Reaction[]      @relation("MessageReactions")
+}
+
+model Reaction {
+  emoji String
+
+  id        String          @id @default(cuid())
+  sentAt    DateTime        @default(now())
+  messageId String
+  message   Message         @relation("MessageReactions", fields: [messageId], references: [id], onDelete: Cascade)
+  sender    RoomParticipant @relation(fields: [senderId], references: [id])
+  senderId  String
+  updatedAt DateTime        @updatedAt
+  Room      Room?           @relation(fields: [roomId], references: [id])
+  roomId    String?
 }
 
 model EmailVerificationToken {

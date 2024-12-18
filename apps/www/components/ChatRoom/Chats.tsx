@@ -3,19 +3,14 @@ import { AnimatePresence, motion } from 'framer-motion'
 import MessageBox from './MessageBox'
 
 import useChatScroll from '@/hooks/useChatScroll'
+import { Message } from '@/types'
 
 type Props = {
-  messages: {
-    userName: string
-    avatar: string
-    timestamp: Date
-    message: string
-    image?: string
-    userId: string
-  }[]
+  messages: Message[]
+  sendReaction: (messageId: string, emoji: string) => void
 }
 
-const Chats = ({ messages }: Props) => {
+const Chats = ({ messages, sendReaction }: Props) => {
   const ref = useChatScroll(messages)
   return (
     <div
@@ -32,14 +27,17 @@ const Chats = ({ messages }: Props) => {
             layout
           >
             <MessageBox
+              reactions={message.reactions}
+              sendReaction={sendReaction}
               prevMessageSender={
                 index > 0 ? messages[index - 1]?.userId : undefined
               }
-              userName={message.userName}
+              userName={message.username}
+              messageId={message.id}
               userId={message.userId}
               avatar={message.avatar}
-              timestamp={message.timestamp}
-              message={message.message}
+              timestamp={message.sentAt}
+              message={message.content}
               image={message.image}
             />
           </motion.div>

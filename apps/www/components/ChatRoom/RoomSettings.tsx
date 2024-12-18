@@ -58,7 +58,7 @@ export const RoomSettings = ({ roomId, timeLeft }: RoomSettingsProps) => {
   }
 
   return (
-    <div className="chat-scroll flex h-full w-64 flex-col overflow-y-auto rounded-xl border border-neutral-200 bg-white">
+    <div className="chat-scroll hidden h-full w-64 flex-col overflow-y-auto rounded-xl border border-neutral-200 bg-white xl:flex">
       <div className="flex h-full flex-col gap-4 p-4">
         <div className="flex items-center gap-2 rounded-lg border p-4">
           <ClockIcon className="size-4" />
