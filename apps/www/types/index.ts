@@ -76,6 +76,7 @@ export interface Message {
   sentAt: Date
   reactions: Record<string, { id: string; name: string; avatar: string }[]>
   image?: string
+  userEmoji?: string
 }
 
 export interface UserIdentity {

@@ -5,13 +5,13 @@ import {
   PopoverContent,
   PopoverTrigger,
 } from '@echo/ui/components/ui/popover.tsx'
-import { LoadingSpinner } from '@echo/ui/icons/spinner.tsx'
-import EmojiPicker, { EmojiClickData, EmojiStyle } from 'emoji-picker-react'
-import { Suspense, useState } from 'react'
+import { useState } from 'react'
 
+import { EmojiPickerContent } from './EmojiPickerContent'
 import { ReactionButton } from './ReactionButton'
 
 interface EmojiPickerPopoverProps {
+  userEmoji?: string
   onEmojiSelect: (emoji: string) => void
   side?: 'top' | 'right' | 'bottom' | 'left'
 }
@@ -19,37 +19,46 @@ interface EmojiPickerPopoverProps {
 export const EmojiPickerPopover = ({
   onEmojiSelect,
   side = 'right',
+  userEmoji,
 }: EmojiPickerPopoverProps) => {
   const [open, setOpen] = useState(false)
 
-  const handleEmojiClick = (emojiData: EmojiClickData) => {
-    console.log(emojiData)
-    onEmojiSelect(emojiData.emoji)
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const handleEmojiSelect = (emoji: any) => {
+    onEmojiSelect(emoji.native)
     setOpen(false)
   }
 
   return (
-    <Popover open={open} onOpenChange={setOpen}>
-      <PopoverTrigger>
-        <ReactionButton open={open} />
-      </PopoverTrigger>
-      <PopoverContent
-        side={side}
-        className={`w-fit scale-75 border-none bg-transparent p-0 shadow-none ${side === 'left' ? 'translate-x-6' : side === 'right' ? '-translate-x-6' : ''}`}
-      >
-        <Suspense fallback={<LoadingSpinner className="m-4" />}>
-          <EmojiPicker
-            emojiStyle={EmojiStyle.GOOGLE}
-            onEmojiClick={handleEmojiClick}
-            reactions={['1f44d', '2764-fe0f', '1f602', '1f622', '1f64f']}
-            reactionsDefaultOpen
-            onReactionClick={handleEmojiClick}
-            allowExpandReactions
-            width={320}
-            height={400}
+    <>
+      {open && (
+        <div
+          className="fixed inset-0 z-[100] cursor-default"
+          onClick={() => setOpen(false)}
+          onKeyDown={(e) => {
+            if (e.key === 'Escape' || e.key === ' ') {
+              setOpen(false)
+            }
+          }}
+          role="button"
+          tabIndex={0}
+        />
+      )}
+      <Popover open={open} onOpenChange={setOpen}>
+        <PopoverTrigger>
+          <ReactionButton open={open} />
+        </PopoverTrigger>
+        <PopoverContent
+          side={side}
+          className="z-[101] border-none bg-transparent p-0 shadow-none"
+        >
+          <EmojiPickerContent
+            userEmoji={userEmoji}
+            onEmojiSelect={handleEmojiSelect}
+            side={side}
           />
-        </Suspense>
-      </PopoverContent>
-    </Popover>
+        </PopoverContent>
+      </Popover>
+    </>
   )
 }

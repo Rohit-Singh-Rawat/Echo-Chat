@@ -192,8 +192,19 @@ export class User {
               closeTime: room.closedAt,
               isTemporary: room.isTemporary,
               lastMessages: room.isTemporary
-                ? RoomManager.getInstance().rooms.get(roomId)?.lastMessages ||
-                  []
+                ? RoomManager.getInstance()
+                    .rooms.get(roomId)
+                    ?.lastMessages.map((msg) => ({
+                      ...msg,
+                      userEmoji:
+                        (msg.reactions &&
+                          Object.entries<
+                            { id: string; name: string; avatar: string }[]
+                          >(msg.reactions).find(([, users]) =>
+                            users.some((user) => user.id === this.id)
+                          )?.[0]) ||
+                        '',
+                    })) || []
                 : room.messages.map((msg) => ({
                     content: msg.content,
                     userId: msg.sender.user?.id || msg.sender.tempUserId || '',
@@ -201,6 +212,14 @@ export class User {
                       msg.sender.user?.name || msg.sender.tempUsername || '',
                     avatar:
                       msg.sender.user?.image || msg.sender.tempUserImage || '',
+                    userEmoji:
+                      msg.reaction.some(
+                        (r) =>
+                          r.sender.user?.id === this.id ||
+                          r.sender.tempUserId === this.id
+                      ) && msg.reaction[0]?.emoji
+                        ? msg.reaction[0].emoji
+                        : '',
                     sentAt: msg.sentAt,
                     // eslint-disable-next-line @typescript-eslint/no-explicit-any
                     reactions: msg.reaction.reduce(

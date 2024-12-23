@@ -1,16 +1,11 @@
-import {
-  Avatar,
-  AvatarFallback,
-  AvatarImage,
-} from '@echo/ui/components/ui/avatar.tsx'
-import { LoadingSpinner } from '@echo/ui/icons/spinner.tsx'
-import { Dot } from 'lucide-react'
-import Image from 'next/image'
+import { AnimatePresence, motion } from 'framer-motion'
 
-import { EmojiPickerPopover } from './EmojiPickerPopover'
+import { MessageAvatar } from './Message/MessageAvatar'
+import { MessageContent } from './Message/MessageContent'
+import { MessageHeader } from './Message/MessageHeader'
+import { MessageReactions } from './Message/MessageReactions'
 
 import { useIdentityStore } from '@/app/store/useIdentityStore'
-
 type Props = {
   userName: string
   avatar: string
@@ -20,14 +15,15 @@ type Props = {
   message?: string
   userId: string
   prevMessageSender?: string
+  userEmoji?: string
   image?: string
-
   sendReaction: (messageId: string, emoji: string) => void
 }
 
 const MessageBox = ({
   userName,
   avatar,
+  userEmoji,
   timestamp,
   message,
   image,
@@ -38,85 +34,70 @@ const MessageBox = ({
   sendReaction,
 }: Props) => {
   const { userId: participantId } = useIdentityStore()
-  const reactionArray = Object.entries(reactions).map(([emoji, users]) => ({
+  const isOwnMessage = userId === participantId
+  const showAvatar = prevMessageSender !== userId
+
+  const reactionsList = Object.entries(reactions).map(([emoji, users]) => ({
     emoji,
-    users,
+    total: users.length,
+    users: users,
   }))
+  const totalReactions = reactionsList.reduce(
+    (acc, curr) => acc + curr.total,
+    0
+  )
+
   const handleReaction = (emoji: string) => {
     sendReaction(messageId, emoji)
   }
-  console.log(reactions)
+
   return (
     <div
-      className={`flex items-start gap-3 px-6 ${userId == prevMessageSender ? 'pt-1' : 'pt-6'} ${userId === participantId ? 'flex-row-reverse justify-end' : 'justify-start'} z-40`}
+      className={`flex items-start gap-3 px-6 ${
+        userId == prevMessageSender ? 'pt-1' : 'pt-6'
+      } ${isOwnMessage ? 'flex-row-reverse justify-end' : 'justify-start'} z-40`}
     >
-      {prevMessageSender !== userId ? (
-        <Avatar className="size-8">
-          <AvatarImage src={avatar} alt={`${userName}'s avatar`} />
-          <AvatarFallback>
-            <LoadingSpinner className="size-4" />
-          </AvatarFallback>
-        </Avatar>
-      ) : (
-        <div className="size-8" />
-      )}
+      <MessageAvatar
+        avatar={avatar}
+        userName={userName}
+        showAvatar={showAvatar}
+      />
 
       <div
-        className={`flex w-full flex-col ${userId === participantId ? 'items-end' : 'items-start'} justify-center`}
+        className={`flex w-full flex-col ${
+          isOwnMessage ? 'items-end' : 'items-start'
+        } justify-center`}
       >
-        {prevMessageSender !== userId ? (
-          <div className="flex items-center justify-center">
-            <span className="text-xs font-medium">
-              {userId === participantId ? 'You' : userName}
-            </span>
-            <Dot className="w-4 scale-110" />
-            <span className="text-xs text-gray-500">
-              {new Date(timestamp).toLocaleTimeString([], {
-                hour: '2-digit',
-                minute: '2-digit',
-              })}
-            </span>
-          </div>
-        ) : null}
-        <div
-          className={`flex w-full flex-col ${userId === participantId ? 'items-end' : 'items-start'}`}
+        {showAvatar && (
+          <MessageHeader
+            isOwnMessage={isOwnMessage}
+            userName={userName}
+            timestamp={timestamp}
+          />
+        )}
+
+        <motion.div
+          layout
+          className={`flex min-h-[30px] w-full flex-col ${
+            isOwnMessage ? 'items-end' : 'items-start'
+          }`}
         >
-          {' '}
-          <div
-            className={`group flex w-full items-center gap-3 ${userId === participantId ? 'flex-row-reverse' : 'flex-row'}`}
-          >
-            <div
-              className={`flex ${image ? 'w-80' : 'max-w-[70%]'} min-w-20 flex-col items-center justify-start text-start ${userId == prevMessageSender ? 'rounded-[14px]' : `${userId === participantId ? 'rounded-[14px] rounded-tr-none' : 'rounded-[14px] rounded-tl-none'}`} p-2 px-4 ${userId === participantId ? 'border-[1.5px] border-transparent bg-neutral-100' : 'border-[1.5px] border-neutral-200 bg-white'}`}
-            >
-              {' '}
-              {image && (
-                <Image
-                  src={image}
-                  alt="Message attachment"
-                  className="mt-2 w-80 rounded-lg bg-white object-contain"
-                />
-              )}
-              {message && <p className="text-sm">{message}</p>}
-            </div>
-            <div className="relative">
-              <EmojiPickerPopover
-                onEmojiSelect={handleReaction}
-                side={userId === participantId ? 'left' : 'right'}
-              />
-            </div>
-          </div>
-          {reactionArray.length > 0 ? (
-            <div className="z-50 mx-2 w-fit -translate-y-2 rounded-full border border-neutral-200 bg-white p-1.5">
-              <div className="flex items-center justify-center gap-0.5">
-                {reactionArray.slice(0, 3).map((reaction, i) => (
-                  <span key={i} className="text-xs">
-                    {reaction.emoji}
-                  </span>
-                ))}
-              </div>
-            </div>
-          ) : null}
-        </div>
+          <AnimatePresence mode="popLayout">
+            <MessageContent
+              userEmoji={userEmoji}
+              message={message}
+              image={image}
+              isOwnMessage={isOwnMessage}
+              isPrevMessageSameSender={userId === prevMessageSender}
+              onReaction={handleReaction}
+            />
+
+            <MessageReactions
+              reactions={reactionsList}
+              totalReactions={totalReactions}
+            />
+          </AnimatePresence>
+        </motion.div>
       </div>
     </div>
   )

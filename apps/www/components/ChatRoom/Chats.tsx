@@ -12,6 +12,7 @@ type Props = {
 
 const Chats = ({ messages, sendReaction }: Props) => {
   const ref = useChatScroll(messages)
+
   return (
     <div
       className="chat-scroll z-40 flex h-full flex-col overflow-y-auto scroll-smooth p-4"
@@ -39,6 +40,7 @@ const Chats = ({ messages, sendReaction }: Props) => {
               timestamp={message.sentAt}
               message={message.content}
               image={message.image}
+              userEmoji={message.userEmoji}
             />
           </motion.div>
         ))}

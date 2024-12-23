@@ -39,6 +39,7 @@ const ChatBox = ({ messages, sendMessage, sendReaction }: ChatBoxProps) => {
             avatar: message.avatar,
             sentAt: message.sentAt,
             content: message.content,
+            userEmoji: message.userEmoji,
             userId: message.userId,
           }))}
         />

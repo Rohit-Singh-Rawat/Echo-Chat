@@ -131,10 +131,8 @@ const PageClient = ({ roomId, token }: PageClientProps) => {
 
           return newMessages
         })
-        console.log('object')
       },
       'reaction-received': () => {
-        console.log('d')
         setMessages((prevMessages) => {
           const messageIndex = prevMessages.findIndex(
             (msg) => msg.id === data.payload.messageId
@@ -150,7 +148,7 @@ const PageClient = ({ roomId, token }: PageClientProps) => {
             name: data.payload.username,
             avatar: data.payload.avatar,
           })
-
+          newMessages[messageIndex]!.userEmoji = data.payload.emoji
           return newMessages
         })
       },
@@ -198,9 +196,9 @@ const PageClient = ({ roomId, token }: PageClientProps) => {
   if (error) {
     return (
       <ErrorState
-        title="Connection Error"
+        details="Connection Error"
         message="Unable to connect to the chat room. Please try again later."
-        details={error}
+        title={error}
         fullScreen
       />
     )
