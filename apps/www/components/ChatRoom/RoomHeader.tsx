@@ -7,7 +7,7 @@ import { Button } from '@/components/shared/Button'
 
 export const RoomHeader = ({ roomName }: { roomName: string }) => {
   const { user, isLoading } = useUserStore()
- 
+
   return (
     <div className="row-span-1 flex w-full items-center justify-between px-7">
       <div className="flex justify-between gap-10">

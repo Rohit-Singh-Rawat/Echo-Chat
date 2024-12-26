@@ -2,12 +2,12 @@
 import { useAction } from 'next-safe-action/hooks'
 import { toast } from 'sonner'
 
-import { Button } from '../shared/Button'
-
 import {
   activateProPlanAction,
   activateFreePlanAction,
 } from '@/lib/actions/plansActions'
+
+import { Button } from '../shared/Button'
 
 interface PricingCardButtonProps {
   name: string

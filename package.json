@@ -28,7 +28,11 @@
     "node": ">=18"
   },
   "lint-staged": {
-      },
+   
+    "packages/utils/**/*.{js,ts}": [
+      "eslint --fix"
+    ]
+  },
   "workspaces": [
     "apps/*",
     "packages/*"

@@ -1,23 +1,7 @@
-import {
-  Users,
-  Clock,
-  Layout,
-  Save,
-  Diamond,
-  Infinity,
-  Lock,
-  Zap,
-  Gem,
-  Snowflake,
-} from 'lucide-react'
+import { Users, Clock, Layout, Save, Zap, Gem, Snowflake } from 'lucide-react'
 import React from 'react'
 
 import { PricingCard } from './PricingCard'
-
-import {
-  activateFreePlanAction,
-  activateProPlanAction,
-} from '@/lib/actions/plansActions'
 
 const plans = [
   {

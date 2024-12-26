@@ -2,7 +2,6 @@ import { cookies } from 'next/headers'
 
 import PageClient from './page-client'
 
-
 export const metadata = {
   title: 'Chat Room',
   description: 'Real-time chat room powered by Echo',

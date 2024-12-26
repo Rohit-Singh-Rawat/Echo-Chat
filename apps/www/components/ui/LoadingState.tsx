@@ -1,6 +1,6 @@
 'use client'
 
-import { GridPattern } from '@echo/ui/components/ui/GridPattern.tsx'
+import GridPattern from '@echo/ui/components/ui/GridPattern.tsx'
 import { cn } from '@echo/utils/src'
 import { motion, AnimatePresence } from 'framer-motion'
 import { useEffect, useState, useMemo } from 'react'

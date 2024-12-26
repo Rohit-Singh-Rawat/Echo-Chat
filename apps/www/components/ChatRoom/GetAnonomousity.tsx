@@ -3,11 +3,11 @@
 import { Info } from 'lucide-react'
 import { useState } from 'react'
 
-import EchoLogo from '../icons/animated/EchoLogo'
-
 import { useIdentityStore } from '@/app/store/useIdentityStore'
 import IdentityToggler from '@/components/Join-Room/IdentityToggler'
 import { Button } from '@/components/shared/Button'
+
+import EchoLogo from '../icons/animated/EchoLogo'
 
 export default function GetAnonomousity() {
   const { setAnonymous } = useIdentityStore()
