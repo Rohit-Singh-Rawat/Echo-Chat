@@ -6,7 +6,6 @@ import CustomControls from './Features/CustomControls'
 import InstantRooms from './Features/InstantRooms'
 import PrivacyFeature from './Features/PrivacyFeature'
 
-
 const BentoSection = () => {
   return (
     <section className="py-24" id="features">
