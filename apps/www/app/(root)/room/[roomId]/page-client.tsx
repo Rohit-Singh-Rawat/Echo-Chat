@@ -38,7 +38,7 @@ const PageClient = ({ roomId, token }: PageClientProps) => {
     if (readyState === ReadyState.CLOSED) {
       if (!error) setError('Server connection closed. Please try again later.')
     }
-  }, [readyState])
+  }, [readyState, error])
 
   const effectiveTempUser = token && !anonymous ? null : tempUser
 
@@ -81,7 +81,7 @@ const PageClient = ({ roomId, token }: PageClientProps) => {
         SetRoomName(data.payload.roomName)
         setUsers(data.payload.users)
         setMessages(data.payload.lastMessages)
-        console.log(data)
+
         setTimeLeft(new Date(data.payload.closeTime))
       },
       user_joined: () => {

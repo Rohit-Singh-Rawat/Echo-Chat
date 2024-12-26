@@ -12,8 +12,7 @@ interface GridPatternProps {
   className?: string
   [key: string]: unknown
 }
-
-export function GridPattern({
+function GridPattern({
   width = 40,
   height = 40,
   x = -1,

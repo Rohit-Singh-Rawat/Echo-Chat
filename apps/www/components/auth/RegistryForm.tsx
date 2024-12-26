@@ -1,7 +1,7 @@
 'use client'
-import RegistryFlow from './RegistryFlow'
-
 import { RegisterProvider } from '@/app/context/RegistryContext'
+
+import RegistryFlow from './RegistryFlow'
 
 const RegistryForm = () => {
   return (

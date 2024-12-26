@@ -13,9 +13,9 @@ import {
 } from '@echo/ui/components/ui/tabs.tsx'
 import { motion } from 'framer-motion'
 
-import { MessageAvatar } from './MessageAvatar'
-
 import { useIdentityStore } from '@/app/store/useIdentityStore'
+
+import { MessageAvatar } from './MessageAvatar'
 
 type Reaction = {
   emoji: string

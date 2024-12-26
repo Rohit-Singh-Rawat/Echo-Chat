@@ -1,11 +1,11 @@
 import { AnimatePresence, motion } from 'framer-motion'
 
+import { useIdentityStore } from '@/app/store/useIdentityStore'
+
 import { MessageAvatar } from './Message/MessageAvatar'
 import { MessageContent } from './Message/MessageContent'
 import { MessageHeader } from './Message/MessageHeader'
 import { MessageReactions } from './Message/MessageReactions'
-
-import { useIdentityStore } from '@/app/store/useIdentityStore'
 
 type Props = {
   userName: string

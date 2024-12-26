@@ -5,11 +5,11 @@ import { User } from 'lucide-react'
 import Image from 'next/image'
 import React, { forwardRef, useRef } from 'react'
 
+import { EchoLoading } from '@/components/ui/EchoLoading'
+
 import eren from '../../../public/images/eren.jpg'
 import RohitSinghRawat from '../../../public/images/RohitSinghRawat.jpg'
 import { AnimatedBeam } from '../../ui/AnimatedBeams'
-
-import { EchoLoading } from '@/components/ui/EchoLoading'
 
 const Circle = forwardRef<
   HTMLDivElement,

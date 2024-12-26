@@ -7,9 +7,9 @@ import { usePathname } from 'next/navigation'
 import { QRCodeSVG } from 'qrcode.react'
 import { useEffect, useState } from 'react'
 
-import Countdown from './Countdown'
-
 import { ClockIcon } from '@/components/icons/animated/clock'
+
+import Countdown from './Countdown'
 
 type RoomSettingsProps = {
   roomId: string

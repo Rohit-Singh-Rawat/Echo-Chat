@@ -1,9 +1,9 @@
 'use client'
 
+import { useRegisterContext } from '@/app/context/RegistryContext'
+
 import SignupCard from './SignupCard'
 import VerifyEmailCard from './VerifyEmailCard'
-
-import { useRegisterContext } from '@/app/context/RegistryContext'
 
 const RegistryFlow = () => {
   const { step } = useRegisterContext()

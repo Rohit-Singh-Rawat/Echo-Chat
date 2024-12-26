@@ -10,11 +10,11 @@ import { useAction } from 'next-safe-action/hooks'
 import { useState } from 'react'
 import { toast } from 'sonner'
 
-import { Button } from '../shared/Button'
-
 import { useRegisterContext } from '@/app/context/RegistryContext'
 import { AuthHeader } from '@/components/auth/auth-header'
 import { CreateUserAccountAction } from '@/lib/actions/authActions'
+
+import { Button } from '../shared/Button'
 
 const VerifyEmailCard = () => {
   const { email, password, firstName, lastName } = useRegisterContext()

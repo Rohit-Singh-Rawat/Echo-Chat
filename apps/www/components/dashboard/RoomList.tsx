@@ -8,9 +8,9 @@ import {
   TableCell,
 } from '@echo/ui/components/ui/table.tsx'
 
-import RoomListRow from './RoomListRow'
-
 import { RoomWithParticipants } from '@/types'
+
+import RoomListRow from './RoomListRow'
 
 const RoomList = ({ rooms }: { rooms: RoomWithParticipants[] }) => {
   return (

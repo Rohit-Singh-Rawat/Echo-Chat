@@ -20,7 +20,7 @@ export const EmojiPickerContent = ({
   side = 'right',
 }: EmojiPickerContentProps) => {
   const [isExpanded, setIsExpanded] = useState(false)
-  console.log(userEmoji, 'd')
+
   return (
     <div
       className={`z-[99999] w-fit scale-75 ${

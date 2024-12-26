@@ -1,9 +1,9 @@
 import { AnimatePresence, motion } from 'framer-motion'
 
-import MessageBox from './MessageBox'
-
 import useChatScroll from '@/hooks/useChatScroll'
 import { Message } from '@/types'
+
+import MessageBox from './MessageBox'
 
 type Props = {
   messages: Message[]

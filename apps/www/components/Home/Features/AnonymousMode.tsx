@@ -1,9 +1,7 @@
-import { UserX } from 'lucide-react'
-
-import AnonymousDemo from './AnonymousDemo'
-
 import { GridItem } from '@/components/ui/GridItem'
 import { GridItemHeading } from '@/components/ui/GridItemHeading'
+
+import AnonymousDemo from './AnonymousDemo'
 
 const AnonymousMode = () => {
   return (

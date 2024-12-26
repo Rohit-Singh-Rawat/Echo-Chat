@@ -2,7 +2,6 @@ import { cookies } from 'next/headers'
 
 import PageClient from './page-client'
 
-import { getSession } from '@/lib/actions/authActions'
 
 export const metadata = {
   title: 'Chat Room',

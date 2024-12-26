@@ -1,10 +1,10 @@
 import NumberFlow from '@number-flow/react'
 import Image from 'next/image'
 
-import { UsersIcon } from '../icons/animated/users'
-
 import { useIdentityStore } from '@/app/store/useIdentityStore'
 import { UserIdentity } from '@/types'
+
+import { UsersIcon } from '../icons/animated/users'
 
 interface ParticipantsSidebarProps {
   participants: UserIdentity[]

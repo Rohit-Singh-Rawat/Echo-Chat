@@ -1,3 +1,4 @@
+/* eslint-disable import/no-unresolved */
 import './globals.css'
 import '@echo/ui/globals.css'
 import { GeistMono } from 'geist/font/mono'

@@ -1,10 +1,10 @@
 import GridPattern from '@echo/ui/components/ui/GridPattern.tsx'
 import { cn } from '@echo/utils/src'
 
+import { Message } from '@/types'
+
 import ChatBoxInput from './ChatBoxInput'
 import Chats from './Chats'
-
-import { Message } from '@/types'
 
 interface ChatBoxProps {
   messages: Message[]

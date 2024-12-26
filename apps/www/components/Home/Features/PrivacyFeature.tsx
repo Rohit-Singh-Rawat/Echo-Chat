@@ -1,5 +1,5 @@
 import { Lock, Shield } from 'lucide-react'
-import { useRef, useState } from 'react'
+import { useState } from 'react'
 
 import { GradientShield } from '@/components/icons/GradientShield'
 import { GridItem } from '@/components/ui/GridItem'

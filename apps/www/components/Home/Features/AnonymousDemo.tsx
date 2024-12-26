@@ -1,10 +1,10 @@
 import Image from 'next/image'
 
-import eren from '../../../public/images/eren.jpg'
-import RohitSinghRawat from '../../../public/images/RohitSinghRawat.jpg'
-
 import PrivacyIcon from '@/components/icons/PrivacyIcon'
 import { UserIcon } from '@/components/icons/UserIcon'
+
+import eren from '../../../public/images/eren.jpg'
+import RohitSinghRawat from '../../../public/images/RohitSinghRawat.jpg'
 
 const AnonymousDemo = () => {
   const items = [

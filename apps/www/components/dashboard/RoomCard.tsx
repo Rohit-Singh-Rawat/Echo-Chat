@@ -19,13 +19,13 @@ import {
 } from '@echo/ui/components/ui/hover-card.tsx'
 import { Hash, MoreHorizontal } from 'lucide-react'
 
+import { useTimeLeft } from '@/hooks/useTimeLeft'
+
 import { ClockIcon } from '../icons/animated/clock'
 import { MessageCircleMoreIcon } from '../icons/animated/message-circle-more'
 import { UsersIcon } from '../icons/animated/users'
 
 import { UserLabel } from './UserLabel'
-
-import { useTimeLeft } from '@/hooks/useTimeLeft'
 
 interface ChatRoomCardProps {
   id: string

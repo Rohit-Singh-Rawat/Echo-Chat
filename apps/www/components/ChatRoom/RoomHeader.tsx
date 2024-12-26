@@ -1,5 +1,4 @@
 import { ArrowLeftToLine, CircleUser } from 'lucide-react'
-import { useEffect } from 'react'
 
 import { useUserStore } from '@/app/store/UserStore'
 import { UserButton } from '@/components/ChatRoom/UserButton'
@@ -8,7 +7,7 @@ import { Button } from '@/components/shared/Button'
 
 export const RoomHeader = ({ roomName }: { roomName: string }) => {
   const { user, isLoading } = useUserStore()
-  console.log(user)
+ 
   return (
     <div className="row-span-1 flex w-full items-center justify-between px-7">
       <div className="flex justify-between gap-10">
@@ -18,9 +17,9 @@ export const RoomHeader = ({ roomName }: { roomName: string }) => {
         ) : (
           <UserButton
             user={{
-              avatar: user?.avatar,
-              email: user?.email,
-              name: user?.email,
+              avatar: user?.avatar ?? '',
+              email: user?.email ?? '',
+              name: user?.email ?? '',
             }}
           />
         )}

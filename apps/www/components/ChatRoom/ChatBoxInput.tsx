@@ -23,7 +23,7 @@ const ChatBoxInput = ({
   return (
     <form
       onSubmit={handleSubmit}
-      className="absolute bottom-5 right-[50%] z-50 flex w-[90%] translate-x-[50%] items-center rounded-full border border-neutral-200 bg-white p-1 px-2"
+      className="absolute bottom-5 right-1/2 z-50 flex w-[90%] translate-x-1/2 items-center rounded-full border border-neutral-200 bg-white p-1 px-2"
     >
       <FileInput />
       <Textarea

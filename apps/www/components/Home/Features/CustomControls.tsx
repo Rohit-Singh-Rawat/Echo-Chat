@@ -1,11 +1,11 @@
 import { Clock, SlidersHorizontal, UserCog, Wrench } from 'lucide-react'
 
-import { Circle } from './RealTimeDemo'
-
 import { EchoLoading } from '@/components/ui/EchoLoading'
 import { GridItem } from '@/components/ui/GridItem'
 import { GridItemHeading } from '@/components/ui/GridItemHeading'
 import { OrbitingCircles } from '@/components/ui/OrbitingCircles'
+
+import { Circle } from './RealTimeDemo'
 
 const CustomControls = () => {
   const icons = [

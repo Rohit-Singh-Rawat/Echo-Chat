@@ -2,8 +2,6 @@
 
 import { motion } from 'framer-motion'
 
-import { FeatureCard } from './FeatureCard'
-
 import AIIcon from '@/components/icons/AIIcon'
 import BoltIcon from '@/components/icons/BoltIcon'
 import ClickIcon from '@/components/icons/ClickIcon'
@@ -12,6 +10,8 @@ import OpenSourceIcon from '@/components/icons/OpenSourceIcon'
 import PrivacyIcon from '@/components/icons/PrivacyIcon'
 import ShieldLockIcon from '@/components/icons/ShieldLockIcon'
 import VideoIcon from '@/components/icons/VideoIcon'
+
+import { FeatureCard } from './FeatureCard'
 
 export function FeatureCards() {
   const features = [

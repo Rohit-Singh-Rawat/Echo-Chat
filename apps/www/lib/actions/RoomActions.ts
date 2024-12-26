@@ -4,9 +4,9 @@ import { createRoomSchema } from '@echo/lib'
 import { revalidateTag } from 'next/cache'
 import { cookies } from 'next/headers'
 
-import { actionClient } from './safe-actions'
-
 import { Rooms } from '@/types'
+
+import { actionClient } from './safe-actions'
 
 export async function getRooms() {
   const cookieStore = await cookies()

@@ -1,7 +1,7 @@
-import { RealTimeDemo } from './RealTimeDemo'
-
 import { GridItem } from '@/components/ui/GridItem'
 import { GridItemHeading } from '@/components/ui/GridItemHeading'
+
+import { RealTimeDemo } from './RealTimeDemo'
 
 const InstantRooms = () => {
   return (

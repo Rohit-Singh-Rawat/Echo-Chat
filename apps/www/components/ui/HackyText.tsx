@@ -13,7 +13,7 @@ interface HackyTextProps {
   isHovered?: boolean
 }
 
-export const HackyText = ({
+const HackyText = ({
   text: TARGET_TEXT,
   className,
   isHovered,

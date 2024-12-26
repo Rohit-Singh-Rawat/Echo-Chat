@@ -57,9 +57,8 @@ export default function CreateRoomButton({
     },
   })
 
-  const onSubmit = (data: CreateRoomInput) => {
-    console.log(data)
-    executeAsync({
+  const onSubmit = async (data: CreateRoomInput) => {
+    await executeAsync({
       name: data.name,
       maxUsers: data.maxUsers,
       maxTimeLimit: data.maxTimeLimit,
@@ -70,10 +69,7 @@ export default function CreateRoomButton({
   return (
     <Dialog>
       <DialogTrigger asChild>
-        <Button2
-          className=""
-          disabled={totalRooms && limit ? totalRooms >= limit : false}
-        >
+        <Button2 disabled={totalRooms && limit ? totalRooms >= limit : false}>
           Create room
           {totalRooms !== undefined && limit !== undefined && (
             <span className="border-primary-foreground/30 text-primary-foreground/60 -me-1 ms-1 inline-flex h-5 max-h-full items-center rounded border px-1 font-[inherit] text-[0.625rem] font-medium">
@@ -197,8 +193,7 @@ export default function CreateRoomButton({
                 id="private-room"
                 className="order-1 h-4 w-6 after:absolute after:inset-0 [&_span]:size-3 [&_span]:data-[state=checked]:translate-x-2 rtl:[&_span]:data-[state=checked]:-translate-x-2"
                 aria-describedby="private-room-description"
-                // checked={form.watch('isPrivate')}
-                // onCheckedChange={(checked) => form.setValue('isPrivate', checked)}
+                disabled
               />
               <div className="grid grow gap-2">
                 <Label htmlFor="private-room">Private Room</Label>

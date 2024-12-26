@@ -1,7 +1,6 @@
 import GridPattern from '@echo/ui/components/ui/GridPattern.tsx'
 import { cn } from '@echo/utils/src'
 
-import EchoLogo from '@/components/icons/animated/EchoLogo'
 import { PricingPlans } from '@/components/plansComponents/PricingPlans'
 
 const page = () => {
@@ -15,7 +14,7 @@ const page = () => {
         y={-1}
         squares={Array.from(
           { length: Math.floor(Math.random() * 41) + 20 },
-          (_, i) => [
+          (_) => [
             Math.floor(Math.random() * 41) + 0,
             Math.floor(Math.random() * 41) + 0,
           ]

@@ -7,12 +7,12 @@ import { useAction } from 'next-safe-action/hooks'
 import { useForm } from 'react-hook-form'
 import { toast } from 'sonner'
 
-import { Button } from '../shared/Button'
-
 import { AuthHeader } from '@/components/auth/auth-header'
 import { SocialAuthButtons } from '@/components/auth/social-auth-buttons'
 import Input from '@/components/shared/Input'
 import { LoginAction } from '@/lib/actions/authActions'
+
+import { Button } from '../shared/Button'
 
 const LoginCard = () => {
   const router = useRouter()

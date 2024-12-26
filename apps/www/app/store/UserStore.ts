@@ -15,7 +15,6 @@ export const useUserStore = create<UserState>((set) => {
     set({ isLoading: true })
     try {
       const session = await getSession()
-      console.log(session)
       if (session?.data?.user) {
         set({ user: session.data.user })
       } else {
