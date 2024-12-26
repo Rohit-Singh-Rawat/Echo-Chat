@@ -49,7 +49,7 @@ const Footer = () => {
             <div className="flex flex-col space-y-5">
               <h3 className="font-medium text-black">Socials</h3>
               <Link
-                href="https://github.com/Rohit-Singh-Rawaat"
+                href="https://github.com/Rohit-Singh-Rawat"
                 className="text-sm text-neutral-500 hover:text-neutral-600"
               >
                 GitHub
