@@ -3,17 +3,14 @@ import Image from 'next/image'
 import PrivacyIcon from '@/components/icons/PrivacyIcon'
 import { UserIcon } from '@/components/icons/UserIcon'
 
-import eren from '../../../public/images/eren.jpg'
-import RohitSinghRawat from '../../../public/images/RohitSinghRawat.jpg'
-
 const AnonymousDemo = () => {
   const items = [
-    { type: 'user', image: eren },
+    { type: 'user', image: '/images/eren.jpg' },
     { type: 'empty' },
     { type: 'user' },
     { type: 'empty' },
     { type: 'empty' },
-    { type: 'user', image: RohitSinghRawat },
+    { type: 'user', image: '/images/RohitSinghRawat.jpg' },
     { type: 'user' },
     { type: 'empty' },
     { type: 'user' },

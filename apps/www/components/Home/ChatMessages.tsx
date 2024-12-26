@@ -5,9 +5,6 @@ import { motion, useInView } from 'framer-motion'
 import Image from 'next/image'
 import React, { useRef } from 'react'
 
-import eren from '../../public/images/eren.jpg'
-import RohitSinghRawat from '../../public/images/RohitSinghRawat.jpg'
-
 type MessageProps = {
   content: string
   isSent: boolean
@@ -39,7 +36,7 @@ const Message = ({
               className="size-8 shrink-0 overflow-hidden rounded-full"
             >
               <Image
-                src={RohitSinghRawat}
+                src="/images/RohitSinghRawat.jpg"
                 alt="Avatar"
                 width={50}
                 height={50}
@@ -88,7 +85,12 @@ const Message = ({
               transition={{ duration: 0.3, delay }}
               className="size-8 shrink-0 overflow-hidden rounded-full"
             >
-              <Image src={eren} alt="Avatar" width={50} height={50} />
+              <Image
+                src="/images/eren.jpg"
+                alt="Avatar"
+                width={50}
+                height={50}
+              />
             </motion.div>
           )}
         </>

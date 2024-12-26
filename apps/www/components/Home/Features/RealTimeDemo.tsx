@@ -7,8 +7,6 @@ import React, { forwardRef, useRef } from 'react'
 
 import { EchoLoading } from '@/components/ui/EchoLoading'
 
-import eren from '../../../public/images/eren.jpg'
-import RohitSinghRawat from '../../../public/images/RohitSinghRawat.jpg'
 import { AnimatedBeam } from '../../ui/AnimatedBeams'
 
 const Circle = forwardRef<
@@ -51,7 +49,7 @@ export function RealTimeDemo() {
         <div className="flex flex-row items-center justify-between">
           <Circle ref={div1Ref} className="p-0.5">
             <Image
-              src={eren}
+              src="/images/eren.jpg"
               alt="Eren"
               width={32}
               height={32}
@@ -71,7 +69,7 @@ export function RealTimeDemo() {
           </Circle>
           <Circle ref={div6Ref} className="p-0.5">
             <Image
-              src={RohitSinghRawat}
+              src="/images/RohitSinghRawat.jpg"
               alt="Rohit Singh Rawat"
               width={32}
               height={32}
