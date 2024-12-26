@@ -7,7 +7,7 @@ import { GridItemHeading } from '@/components/ui/GridItemHeading'
 
 const AnonymousMode = () => {
   return (
-    <GridItem colSpan={2} rowSpan={2} delay={0.3} className="">
+    <GridItem delay={0.3} className="col-span-2 row-span-2">
       {' '}
       <GridItemHeading
         title="Stay Anonymous"

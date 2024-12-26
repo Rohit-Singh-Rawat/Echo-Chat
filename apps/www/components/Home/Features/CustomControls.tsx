@@ -16,7 +16,7 @@ const CustomControls = () => {
   ]
 
   return (
-    <GridItem delay={0.4} colSpan={2} rowSpan={1}>
+    <GridItem delay={0.4} className="col-span-2 row-span-1">
       <GridItemHeading
         title="Custom Controls"
         description="Set user limits and room duration to match your needs."

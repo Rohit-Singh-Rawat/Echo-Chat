@@ -15,8 +15,8 @@ module.exports = {
         },
       },
       animation: {
-        'ripple': 'ripple 4s ease-out infinite',
+        ripple: 'ripple 4s ease-out infinite',
       },
     },
   },
-} 
+}
