@@ -6,9 +6,8 @@ import CustomControls from './Features/CustomControls'
 import InstantRooms from './Features/InstantRooms'
 import PrivacyFeature from './Features/PrivacyFeature'
 
-type Props = Record<string, never>
 
-const BentoSection = (props: Props) => {
+const BentoSection = () => {
   return (
     <section className="py-24" id="features">
       <div className="container">
