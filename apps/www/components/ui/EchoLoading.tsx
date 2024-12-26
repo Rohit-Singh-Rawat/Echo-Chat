@@ -5,9 +5,10 @@ import { motion, useAnimation } from 'framer-motion'
 
 interface EchoLoadingProps {
   className?: string
+  duration?: number
 }
 
-const EchoLoading = ({ className }: EchoLoadingProps) => {
+const EchoLoading = ({ className, duration = 2 }: EchoLoadingProps) => {
   const controls = useAnimation()
 
   return (
@@ -26,7 +27,7 @@ const EchoLoading = ({ className }: EchoLoadingProps) => {
           scale: [1, 1.1, 1],
         }}
         transition={{
-          duration: 2,
+          duration,
           repeat: Infinity,
           ease: 'easeInOut',
         }}
@@ -38,7 +39,7 @@ const EchoLoading = ({ className }: EchoLoadingProps) => {
             animate: {
               d: ['M6 6v11', 'M6 10v3', 'M6 6v11'],
               transition: {
-                duration: 1.5,
+                duration: duration * 0.75,
                 repeat: Infinity,
               },
             },
@@ -52,7 +53,7 @@ const EchoLoading = ({ className }: EchoLoadingProps) => {
             animate: {
               d: ['M10 3v18', 'M10 9v5', 'M10 3v18'],
               transition: {
-                duration: 1,
+                duration: duration * 0.5,
                 repeat: Infinity,
               },
             },
@@ -66,7 +67,7 @@ const EchoLoading = ({ className }: EchoLoadingProps) => {
             animate: {
               d: ['M14 8v7', 'M14 6v11', 'M14 8v7'],
               transition: {
-                duration: 0.8,
+                duration: duration * 0.4,
                 repeat: Infinity,
               },
             },
@@ -80,7 +81,7 @@ const EchoLoading = ({ className }: EchoLoadingProps) => {
             animate: {
               d: ['M18 5v13', 'M18 7v9', 'M18 5v13'],
               transition: {
-                duration: 1.5,
+                duration: duration * 0.75,
                 repeat: Infinity,
               },
             },

@@ -6,6 +6,7 @@ import { MessageHeader } from './Message/MessageHeader'
 import { MessageReactions } from './Message/MessageReactions'
 
 import { useIdentityStore } from '@/app/store/useIdentityStore'
+
 type Props = {
   userName: string
   avatar: string
