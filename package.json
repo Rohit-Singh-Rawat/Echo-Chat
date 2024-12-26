@@ -28,10 +28,16 @@
     "node": ">=18"
   },
   "lint-staged": {
-   
+    "apps/**/*.{js,ts,jsx,tsx}": [
+      "eslint --fix"
+    ],
+    "packages/ui/**/*.{js,ts,jsx,tsx}": [
+      "eslint --fix"
+    ],
     "packages/utils/**/*.{js,ts}": [
       "eslint --fix"
-    ]
+    ],
+    "*.{css,md,mdx,json,html}": "pnpm format"
   },
   "workspaces": [
     "apps/*",
