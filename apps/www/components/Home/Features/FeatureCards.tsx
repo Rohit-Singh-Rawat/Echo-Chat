@@ -1,5 +1,7 @@
 'use client'
 
+import { motion } from 'framer-motion'
+
 import { FeatureCard } from './FeatureCard'
 
 import AIIcon from '@/components/icons/AIIcon'
@@ -66,10 +68,16 @@ export function FeatureCards() {
   ]
 
   return (
-    <div className="mx-auto my-24 grid max-w-7xl grid-cols-1 px-6 lg:grid-cols-4">
+    <motion.div
+      initial={{ opacity: 0, y: 20, filter: 'blur(10px)' }}
+      whileInView={{ opacity: 1, y: 0, filter: 'blur(0px)' }}
+      viewport={{ once: true }}
+      transition={{ duration: 0.5, delay: 0.2 }}
+      className="mx-auto my-32 grid max-w-7xl grid-cols-1 px-6 lg:grid-cols-4"
+    >
       {features.map((feature, index) => (
         <FeatureCard key={feature.title} {...feature} index={index} />
       ))}
-    </div>
+    </motion.div>
   )
 }

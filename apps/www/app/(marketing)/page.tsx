@@ -1,18 +1,17 @@
 import BentoSection from '@/components/Home/BentoSection'
+import ContactUs from '@/components/Home/ContactUs'
 import { FeatureCards } from '@/components/Home/Features/FeatureCards'
 import { Hero } from '@/components/Home/Hero'
-import { NavBar } from '@/components/Home/NavBar'
 
 const Page = () => {
   return (
     <div className="bg-white">
-      <NavBar />
       <div className="container">
         <Hero />
         <BentoSection />
         <FeatureCards />
+        <ContactUs />
       </div>
-      <div className="h-[200vh]">d</div>
     </div>
   )
 }

@@ -112,7 +112,7 @@ export function RealTimeDemo() {
         containerRef={containerRef}
         fromRef={div5Ref}
         toRef={div4Ref}
-        curvature={-5}
+        curvature={5}
         endYOffset={-10}
         reverse
       />

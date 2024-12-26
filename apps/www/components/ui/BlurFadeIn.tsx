@@ -26,11 +26,12 @@ const BlurFadeIn = ({
         y,
         filter: blur ? 'blur(10px)' : 'none',
       }}
-      animate={{
+      whileInView={{
         opacity: 1,
         y: 0,
         filter: 'blur(0px)',
       }}
+      viewport={{ once: true }}
       transition={{
         duration,
         delay,

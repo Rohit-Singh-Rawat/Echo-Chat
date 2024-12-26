@@ -10,7 +10,7 @@ export const NavLinks = () => {
   const navLinks = [
     { href: '#features', label: 'Features' },
     { href: '/plans', label: 'Pricing' },
-    { href: '/contact', label: 'Contact' },
+    { href: '/#contact', label: 'Contact' },
   ]
 
   return (

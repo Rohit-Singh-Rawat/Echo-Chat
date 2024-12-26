@@ -6,7 +6,7 @@ import { PricingPlans } from '@/components/plansComponents/PricingPlans'
 
 const page = () => {
   return (
-    <div className="h-screen w-screen overflow-x-hidden">
+    <div className="my-20 overflow-x-hidden">
       {' '}
       <GridPattern
         width={30}
@@ -26,9 +26,6 @@ const page = () => {
         )}
       />
       <div className="z-50 flex w-full flex-col items-center gap-10 py-8">
-        <div className="scale-125">
-          <EchoLogo />
-        </div>
         <div className="my-5">
           <h1 className="mb-2 text-4xl font-semibold text-black/80">
             Choose your plan
