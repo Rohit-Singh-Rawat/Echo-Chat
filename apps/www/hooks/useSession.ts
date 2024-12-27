@@ -1,53 +1,30 @@
 'use client'
-import { create } from 'zustand'
 
-type User = {
-  id: string
-  email: string
-  firstName: string
-  lastName: string
-} | null
+import { useQuery } from '@tanstack/react-query'
 
-interface SessionState {
-  user: User
-  isAuthenticated: boolean
-  fetchSession: () => Promise<void>
-}
+import { getSession } from '@/lib/actions/authActions'
+import { User } from '@/types'
 
-export const useSession = create<SessionState>((set) => ({
-  user: null,
-  isAuthenticated: false,
-  fetchSession: async () => {
-    const token = document.cookie
-      .split('; ')
-      .find((row) => row.startsWith('token='))
-      ?.split('=')[1]
-
-    if (!token) {
-      set({ user: null, isAuthenticated: false })
-      return
-    }
-
-    try {
-      const response = await fetch(
-        `${process.env.NEXT_PUBLIC_SERVER_API_BASE_URL}/api/v1/auth/me`,
-        {
-          headers: {
-            Authorization: `Bearer ${token}`,
-            'Content-Type': 'application/json',
-          },
-        }
-      )
-
-      if (response.ok) {
-        const data = await response.json()
-        set({ user: data.user, isAuthenticated: true })
-      } else {
-        set({ user: null, isAuthenticated: false })
+export function useUser() {
+  return useQuery<{ user: User }, Error>({
+    queryKey: ['user'],
+    queryFn: async () => {
+      const session = await getSession()
+      if (!session) {
+        throw new Error('Session fetch failed')
       }
-    } catch (error) {
-      console.error('Failed to fetch session:', error)
-      set({ user: null, isAuthenticated: false })
-    }
-  },
-}))
+      if (session?.data?.user) {
+        return { user: session.data.user }
+      } else {
+        throw new Error('Unauthorized')
+      }
+    },
+
+    retry: (failureCount, error) => {
+      return failureCount < 3 && error.message !== 'Unauthorized'
+    },
+    staleTime: 5 * 60 * 1000,
+    refetchOnWindowFocus: false,
+    refetchInterval: (data) => (data ? 15 * 60 * 1000 : false),
+  })
+}

@@ -12,6 +12,8 @@ export const getStats = async (req: Request, res: Response): Promise<void> => {
               select: {
                 maxRooms: true,
                 maxSavedRooms: true,
+                maxTimeLimit: true,
+                maxUsers: true,
               },
             },
           },
@@ -33,6 +35,8 @@ export const getStats = async (req: Request, res: Response): Promise<void> => {
       limits: {
         maxRooms: stats.subscription?.plan?.maxRooms ?? 0,
         maxSavedRooms: stats.subscription?.plan?.maxSavedRooms ?? 0,
+        maxTimeLimit: stats.subscription?.plan?.maxTimeLimit ?? 0,
+        maxUsers: stats.subscription?.plan?.maxUsers ?? 0,
       },
     })
   } catch (error) {

@@ -120,7 +120,6 @@ export const getSession = actionClient.action(async () => {
       return { user: null }
     }
   } catch (error) {
-    console.error('Failed to fetch session:', error)
     return { user: null }
   }
 })

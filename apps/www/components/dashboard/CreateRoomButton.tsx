@@ -20,18 +20,15 @@ import { z } from 'zod'
 
 import { Button as Button2 } from '@/components/shared/Button'
 import { createRooms } from '@/lib/actions/RoomActions'
+import { UserStats } from '@/types'
 
 type CreateRoomInput = z.infer<typeof createRoomSchema>
 
-interface CreateRoomButtonProps {
-  totalRooms?: number
-  limit?: number
-}
-
 export default function CreateRoomButton({
   totalRooms,
-  limit,
-}: CreateRoomButtonProps) {
+  limits,
+  savedRooms,
+}: UserStats) {
   const router = useRouter()
   const form = useForm<CreateRoomInput>({
     resolver: zodResolver(createRoomSchema),
@@ -69,11 +66,17 @@ export default function CreateRoomButton({
   return (
     <Dialog>
       <DialogTrigger asChild>
-        <Button2 disabled={totalRooms && limit ? totalRooms >= limit : false}>
+        <Button2
+          disabled={
+            totalRooms && limits.maxRooms
+              ? totalRooms >= limits.maxRooms
+              : false
+          }
+        >
           Create room
-          {totalRooms !== undefined && limit !== undefined && (
+          {totalRooms !== undefined && limits.maxRooms !== undefined && (
             <span className="border-primary-foreground/30 text-primary-foreground/60 -me-1 ms-1 inline-flex h-5 max-h-full items-center rounded border px-1 font-[inherit] text-[0.625rem] font-medium">
-              {totalRooms}/{limit}
+              {totalRooms}/{limits.maxRooms}
             </span>
           )}
         </Button2>
@@ -104,7 +107,7 @@ export default function CreateRoomButton({
               value={form.watch('maxUsers')}
               onChange={(value) => form.setValue('maxUsers', value)}
               minValue={1}
-              maxValue={100}
+              maxValue={limits?.maxUsers ?? 100}
             >
               <div className="space-y-2">
                 <Label className="text-foreground text-sm font-medium">
@@ -132,7 +135,7 @@ export default function CreateRoomButton({
               value={form.watch('maxTimeLimit')}
               onChange={(value) => form.setValue('maxTimeLimit', value)}
               minValue={1}
-              maxValue={200}
+              maxValue={limits?.maxTimeLimit ?? 200}
             >
               <div className="space-y-2">
                 <Label className="text-foreground text-sm font-medium">
@@ -165,6 +168,11 @@ export default function CreateRoomButton({
             <div className="border-input has-[[data-state=checked]]:border-ring relative flex w-full items-start gap-2 rounded-lg border p-4 shadow-sm shadow-black/5">
               <Switch
                 id="save-history"
+                disabled={
+                  savedRooms !== undefined &&
+                  limits.maxSavedRooms !== undefined &&
+                  savedRooms >= limits.maxSavedRooms
+                }
                 className="order-1 h-4 w-6 after:absolute after:inset-0 [&_span]:size-3 [&_span]:data-[state=checked]:translate-x-2 rtl:[&_span]:data-[state=checked]:-translate-x-2"
                 aria-describedby="save-history-description"
                 checked={!form.watch('isTemporary')}

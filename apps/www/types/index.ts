@@ -2,7 +2,7 @@ export type User = {
   email: string
   id: string
   name: string
-  avatar: string
+  image: string
   subscriptionId: string | null
   subscription: {
     id: string
@@ -65,6 +65,8 @@ export type UserStats = {
   limits: {
     maxRooms: number
     maxSavedRooms: number
+    maxTimeLimit: number
+    maxUsers: number
   }
 }
 export interface Message {

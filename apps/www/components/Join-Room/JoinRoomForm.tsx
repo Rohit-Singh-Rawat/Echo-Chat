@@ -5,6 +5,7 @@ import { Hash } from 'lucide-react'
 import { useRouter } from 'next/navigation'
 import { useState } from 'react'
 
+import { useIdentityStore } from '@/app/store/useIdentityStore'
 import EchoRoom from '@/components/icons/EchoRoom'
 import IdentityToggler from '@/components/Join-Room/IdentityToggler'
 
@@ -15,19 +16,20 @@ export const JoinRoomForm = ({
   anonymous,
 }: {
   roomId?: string
-  anonymous?: string
+  anonymous?: boolean
 }) => {
   const router = useRouter()
   const [formData, setFormData] = useState({
     roomId: roomId,
-    anonymous: anonymous == 'true' ?? false,
   })
 
-  const submitForm = () => {
+  const { setAnonymous } = useIdentityStore()
+  const submitForm = (event: React.FormEvent<HTMLFormElement>) => {
+    event.preventDefault()
     router.push(`/room/${formData.roomId}`)
   }
   return (
-    <div className="flex flex-col items-center">
+    <form onSubmit={submitForm} className="flex flex-col items-center">
       <div className="rounded-full border border-gray-200 bg-white p-2 shadow-sm">
         <EchoRoom className="size-5" />
       </div>
@@ -56,16 +58,14 @@ export const JoinRoomForm = ({
 
       <div className="mb-6">
         <IdentityToggler
-          onChange={(anonymous) =>
-            setFormData((data) => ({ ...data, anonymous: anonymous }))
-          }
-          defaultChecked={formData.anonymous ?? false}
+          defaultChecked={anonymous ?? false}
+          onChange={(anonymous) => setAnonymous(anonymous)}
         />
       </div>
 
-      <Button className="w-full" onClick={submitForm}>
+      <Button className="w-full" type="submit">
         Join Room
       </Button>
-    </div>
+    </form>
   )
 }

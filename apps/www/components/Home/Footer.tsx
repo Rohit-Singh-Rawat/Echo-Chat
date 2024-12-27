@@ -4,7 +4,7 @@ import EchoLogo from '../icons/animated/EchoLogo'
 
 const Footer = () => {
   return (
-    <footer className="border-t border-neutral-200 bg-white">
+    <footer className="mt-10 border-t border-neutral-200 bg-white">
       <div className="container mx-auto px-20 py-24">
         <div className="flex items-start justify-between">
           <div className="space-y-3">
@@ -33,13 +33,13 @@ const Footer = () => {
                 Pricing
               </Link>
               <Link
-                href="#features"
+                href="/#features"
                 className="text-sm text-neutral-500 hover:text-neutral-600"
               >
                 features
               </Link>
               <Link
-                href="#contact"
+                href="/#contact"
                 className="text-sm text-neutral-500 hover:text-neutral-600"
               >
                 Contact

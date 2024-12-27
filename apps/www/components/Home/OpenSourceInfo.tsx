@@ -1,5 +1,4 @@
-import { CircleAlert, Github, GitPullRequest, Star } from 'lucide-react'
-import Link from 'next/link'
+import { CircleDot, Github, GitPullRequest, Star } from 'lucide-react'
 
 import BlurFadeIn from '../ui/BlurFadeIn'
 import LinkButton from '../ui/LinkButton'
@@ -17,7 +16,7 @@ const GitHubFlowDiagram = () => {
           <Star />
         </div>
         <div className="translate-x-2 rounded-xl border-2 border-neutral-200 bg-white p-2 shadow-lg transition-transform hover:-translate-y-1">
-          <CircleAlert />
+          <CircleDot />
         </div>
       </div>
       <svg viewBox="0 0 128 55" className="">

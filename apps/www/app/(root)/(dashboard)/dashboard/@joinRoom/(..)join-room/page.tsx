@@ -24,7 +24,7 @@ const Page = () => {
     >
       <DialogContent className="animate-scale-in max-h-[95vh] max-w-[450px] overflow-y-auto p-10">
         <DialogTitle></DialogTitle>
-        <JoinRoomForm anonymous={anonymous} roomId={roomId} />
+        <JoinRoomForm anonymous={anonymous === 'true'} roomId={roomId} />
       </DialogContent>
     </Dialog>
   )

@@ -7,6 +7,8 @@ import { GeistSans } from 'geist/font/sans'
 import type { Metadata } from 'next'
 import { Toaster } from 'sonner'
 
+import { ReactQueryProvider } from '@/providers/ReactQueryProvider'
+
 export const metadata: Metadata = {
   title: {
     default: 'Echo - Real-time Chat',
@@ -63,7 +65,10 @@ export default function RootLayout({
       <body
         className={`${GeistSans.variable} ${GeistMono.variable} ${GeistSans.className} antialiased`}
       >
-        <main>{children}</main>
+        <main>
+          {' '}
+          <ReactQueryProvider>{children}</ReactQueryProvider>
+        </main>
         <Analytics />
         <Toaster />
       </body>

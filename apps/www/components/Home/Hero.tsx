@@ -98,7 +98,7 @@ export const Hero = () => {
               transition={{ duration: 0.8, delay: 0.6 }}
               className="mt-10 flex items-center justify-center gap-6"
             >
-              <Link href="/signup">
+              <Link href="/register">
                 <Button className="transition-ease group relative overflow-hidden rounded-full bg-black px-8 py-4 font-normal text-white hover:scale-105 hover:shadow-xl">
                   Get started
                   <motion.div
@@ -109,7 +109,7 @@ export const Hero = () => {
                   />
                 </Button>
               </Link>
-              <Link href="/public">
+              <Link href="/room/public">
                 <Button className="text- group relative overflow-hidden rounded-full border-2 border-neutral-200 bg-white px-8 py-4 font-normal text-neutral-900 transition-all hover:scale-105 hover:border-neutral-300 hover:bg-neutral-50">
                   Join public
                   <motion.div

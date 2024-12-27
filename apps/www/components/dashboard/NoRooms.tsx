@@ -53,7 +53,7 @@ export default function NoRooms() {
             Join a Room
           </Button>
         </Link>
-        <CreateRoomButton />
+        {/* <CreateRoomButton /> */}
       </div>
       {/* <p className="text-sm text-gray-500">
         Need help? Check out our <Link href="/help" className="text-blue-600 hover:underline">getting started guide</Link>

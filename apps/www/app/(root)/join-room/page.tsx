@@ -18,7 +18,7 @@ const Page = async ({
         <EchoLogo />
       </div>
       <div className="flex flex-col items-center rounded-2xl border-2 border-gray-200 bg-white p-10">
-        <JoinRoomForm anonymous={anonymous} roomId={roomId} />
+        <JoinRoomForm anonymous={anonymous == 'true'} roomId={roomId} />
       </div>
     </div>
   )

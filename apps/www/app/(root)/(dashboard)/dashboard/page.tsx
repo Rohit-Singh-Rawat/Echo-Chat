@@ -1,7 +1,6 @@
 import { Button } from '@echo/ui/components/ui/button.tsx'
 import Link from 'next/link'
 
-import ContactUs from '@/components/dashboard/ContactUs'
 import CreateRoomButton from '@/components/dashboard/CreateRoomButton'
 import DisplaySwitch from '@/components/dashboard/DisplayRadio'
 import DisplayRooms from '@/components/dashboard/DisplayRooms'
@@ -29,14 +28,10 @@ const page = async () => {
           <Link href="/join-room">
             <Button variant="outline">Join a Room</Button>
           </Link>
-          <CreateRoomButton
-            limit={stats.limits.maxRooms}
-            totalRooms={stats.totalRooms}
-          />
+          <CreateRoomButton {...stats} />
         </div>
       </div>
       <DisplayRooms rooms={rooms} />
-      <ContactUs />
     </div>
   )
 }

@@ -1,7 +1,6 @@
 import { Card } from '@echo/ui/components/ui/card.tsx'
 import { Separator } from '@echo/ui/components/ui/separator.tsx'
 import { LucideIcon } from 'lucide-react'
-import { SafeActionFn } from 'next-safe-action'
 import React from 'react'
 
 import { Badge } from './Badge'

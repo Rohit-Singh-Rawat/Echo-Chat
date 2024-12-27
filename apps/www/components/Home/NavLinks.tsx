@@ -2,13 +2,13 @@
 
 import { motion } from 'framer-motion'
 import Link from 'next/link'
-import { useMemo, useState } from 'react'
+import { useState } from 'react'
 
 export const NavLinks = () => {
   const [activeLink, setActiveLink] = useState<string | null>(null)
 
   const navLinks = [
-    { href: '#features', label: 'Features' },
+    { href: '/#features', label: 'Features' },
     { href: '/plans', label: 'Pricing' },
     { href: '/#contact', label: 'Contact' },
   ]

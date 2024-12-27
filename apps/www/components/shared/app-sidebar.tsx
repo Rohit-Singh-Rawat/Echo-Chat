@@ -44,13 +44,7 @@ export function AppSidebar() {
       <SidebarContent className="ju flex flex-col">
         <SidebarHeader className="flex flex-row items-center justify-between">
           <EchoLogo />
-          <NavUser
-            user={{
-              name: 'rohit',
-              avatar: 'https://avatar.iran.liara.run/public',
-              email: 'rohitsrawat2003@gmail.com',
-            }}
-          />
+          <NavUser />
         </SidebarHeader>
         <SidebarGroup className="mt-10 flex-1">
           <SidebarGroupContent>
