@@ -91,3 +91,12 @@ export interface PageClientProps {
   roomId: string
   token?: string
 }
+export type Reaction = {
+  emoji: string
+  total: number
+  users: {
+    id: string
+    name: string
+    avatar: string
+  }[]
+}

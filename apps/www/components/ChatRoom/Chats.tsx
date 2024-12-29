@@ -7,7 +7,11 @@ import MessageBox from './MessageBox'
 
 type Props = {
   messages: Message[]
-  sendReaction: (messageId: string, emoji: string) => void
+  sendReaction: (
+    messageId: string,
+    emoji: string,
+    currentEmoji?: string
+  ) => void
 }
 
 const Chats = ({ messages, sendReaction }: Props) => {
@@ -25,7 +29,6 @@ const Chats = ({ messages, sendReaction }: Props) => {
             initial={{ opacity: 0, y: 50 }}
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0 }}
-            layout
           >
             <MessageBox
               reactions={message.reactions}

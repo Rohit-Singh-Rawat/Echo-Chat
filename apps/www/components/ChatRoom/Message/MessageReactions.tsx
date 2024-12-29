@@ -14,27 +14,20 @@ import {
 import { motion } from 'framer-motion'
 
 import { useIdentityStore } from '@/app/store/useIdentityStore'
+import { Reaction } from '@/types'
 
 import { MessageAvatar } from './MessageAvatar'
-
-type Reaction = {
-  emoji: string
-  total: number
-  users: {
-    id: string
-    name: string
-    avatar: string
-  }[]
-}
 
 type MessageReactionsProps = {
   reactions: Reaction[]
   totalReactions: number
+  side?: 'right' | 'left'
 }
 
 export const MessageReactions = ({
   reactions,
   totalReactions,
+  side,
 }: MessageReactionsProps) => {
   const { userId: participantId } = useIdentityStore()
   if (totalReactions === 0) return null
@@ -65,7 +58,9 @@ export const MessageReactions = ({
   return (
     <Popover>
       <PopoverTrigger asChild>
-        <button className="z-50 mx-2 w-fit -translate-y-2 rounded-full border border-neutral-200 bg-white p-1.5">
+        <button
+          className={`absolute bottom-0 ${side === 'left' ? 'right-0' : 'left-0'} z-50 mx-2 w-fit translate-y-2/3 rounded-full border border-neutral-200 bg-white p-1.5`}
+        >
           <div className="flex items-center justify-center gap-0.5">
             {reactions.slice(0, 3).map((reaction) => (
               <span key={reaction.emoji} className="text-xs">

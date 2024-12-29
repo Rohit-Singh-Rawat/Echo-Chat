@@ -1,2 +1,1 @@
-export * from './validations/auth'
-export * from './validations/room'
+export * from './validations' // Re-export everything from validations

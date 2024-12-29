@@ -320,7 +320,7 @@ export class User {
             })
             return
           }
-          const { emoji, messageId } = parsedData.payload
+          const { emoji, messageId, currentEmoji } = parsedData.payload
           if (
             !emoji ||
             !messageId ||
@@ -333,27 +333,93 @@ export class User {
           if (!room) {
             return
           }
-          const reactionData = {
-            type: 'reaction-added',
-            payload: {
-              messageId,
-              emoji,
-              userId: this.id,
-              sentAt: new Date(),
-            },
-          }
-          console.log('e')
-          RoomManager.getInstance().broadcast(reactionData, this, this.roomId)
-          this.send({
-            type: 'reaction-received',
-            payload: reactionData.payload,
-          })
-
           const message = room.lastMessages.find((msg) => msg.id === messageId)
-          if (message) {
-            if (!message.reactions) {
-              message.reactions = {}
+          if (!message) {
+            return
+          }
+
+          if (!message.reactions) {
+            message.reactions = {}
+          }
+
+          if (currentEmoji) {
+            if (currentEmoji === emoji) {
+              message.reactions[currentEmoji] = message.reactions[currentEmoji].filter(
+                (user: { id: string }) => user.id !== this.id
+              )
+              if (message.reactions[currentEmoji].length === 0) {
+                delete message.reactions[currentEmoji]
+              }
+
+              const reactionData = {
+                type: 'reaction-removed',
+                payload: {
+                  messageId,
+                  emoji: currentEmoji,
+                  userId: this.id,
+                },
+              }
+              RoomManager.getInstance().broadcast(reactionData, this, this.roomId)
+              this.send({
+                type: 'reaction-removed',
+                payload: reactionData.payload,
+              })
+
+              if (!room.isTemporary) {
+                await client.reaction.deleteMany({
+                  where: {
+                    messageId: messageId,
+                    senderId: `${this.roomId}-${this.id}`,
+                  },
+                })
+              }
+            } else {
+              message.reactions[currentEmoji] = message.reactions[currentEmoji].filter(
+                (user: { id: string }) => user.id !== this.id
+              )
+              if (message.reactions[currentEmoji].length === 0) {
+                delete message.reactions[currentEmoji]
+              }
+              if (!message.reactions[emoji]) {
+                message.reactions[emoji] = []
+              }
+              message.reactions[emoji].push({
+                id: this.id,
+                name: this.name,
+                avatar: this.avatar,
+              })
+
+              const reactionData = {
+                type: 'reaction-updated',
+                payload: {
+                  messageId,
+                  oldEmoji: currentEmoji,
+                  newEmoji: emoji,
+                  userId: this.id,
+                  avatar: this.avatar,
+                  name: this.name,
+                  sentAt: new Date(),
+                },
+              }
+              RoomManager.getInstance().broadcast(reactionData, this, this.roomId)
+              this.send({
+                type: 'reaction-updated',
+                payload: reactionData.payload,
+              })
+
+              if (!room.isTemporary) {
+                await client.reaction.updateMany({
+                  where: {
+                    messageId: messageId,
+                    senderId: `${this.roomId}-${this.id}`,
+                  },
+                  data: {
+                    emoji,
+                  },
+                })
+              }
             }
+          } else {
             if (!message.reactions[emoji]) {
               message.reactions[emoji] = []
             }
@@ -361,6 +427,23 @@ export class User {
               id: this.id,
               name: this.name,
               avatar: this.avatar,
+            })
+
+            const reactionData = {
+              type: 'reaction-added',
+              payload: {
+                messageId,
+                emoji,
+                userId: this.id,
+                avatar: this.avatar,
+                name: this.name,
+                sentAt: new Date(),
+              },
+            }
+            RoomManager.getInstance().broadcast(reactionData, this, this.roomId)
+            this.send({
+              type: 'reaction-received',
+              payload: reactionData.payload,
             })
 
             if (!room.isTemporary) {
@@ -374,6 +457,7 @@ export class User {
               })
             }
           }
+          break
         }
       }
     })

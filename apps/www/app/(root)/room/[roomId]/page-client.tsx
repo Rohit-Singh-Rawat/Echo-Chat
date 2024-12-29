@@ -15,7 +15,7 @@ import { useTempUser } from '@/hooks/useTempUser'
 import { Message, PageClientProps, UserIdentity } from '@/types'
 
 const PageClient = ({ roomId, token }: PageClientProps) => {
-  const { setAnonymous, anonymous, setUserId } = useIdentityStore()
+  const { setAnonymous, anonymous, setUserId, userId } = useIdentityStore()
   const tempUser = useTempUser()
   const [roomName, SetRoomName] = useState('')
   const [messages, setMessages] = useState<Message[]>([])
@@ -118,14 +118,14 @@ const PageClient = ({ roomId, token }: PageClientProps) => {
             (msg) => msg.id === data.payload.messageId
           )
           if (messageIndex === -1) return prevMessages
-          const newMessages = [...prevMessages]
+          const newMessages = structuredClone(prevMessages)
           if (newMessages[messageIndex])
             if (!(data.payload.emoji in newMessages[messageIndex].reactions)) {
               newMessages[messageIndex].reactions[data.payload.emoji] = []
             }
           newMessages[messageIndex]!.reactions[data.payload.emoji]!.push({
             id: data.payload.userId,
-            name: data.payload.username,
+            name: data.payload.name,
             avatar: data.payload.avatar,
           })
 
@@ -138,17 +138,95 @@ const PageClient = ({ roomId, token }: PageClientProps) => {
             (msg) => msg.id === data.payload.messageId
           )
           if (messageIndex === -1) return prevMessages
-          const newMessages = [...prevMessages]
-          if (newMessages[messageIndex])
+          const newMessages = structuredClone(prevMessages)
+
+          if (newMessages[messageIndex]) {
             if (!(data.payload.emoji in newMessages[messageIndex].reactions)) {
               newMessages[messageIndex].reactions[data.payload.emoji] = []
             }
-          newMessages[messageIndex]!.reactions[data.payload.emoji]!.push({
-            id: data.payload.userId,
-            name: data.payload.username,
-            avatar: data.payload.avatar,
-          })
-          newMessages[messageIndex]!.userEmoji = data.payload.emoji
+            newMessages[messageIndex].reactions[data.payload.emoji]!.push({
+              id: data.payload.userId,
+              name: data.payload.name,
+              avatar: data.payload.avatar,
+            })
+            newMessages[messageIndex]!.userEmoji = data.payload.emoji
+          }
+
+          return newMessages
+        })
+      },
+      'reaction-removed': () => {
+        setMessages((prevMessages) => {
+          const messageIndex = prevMessages.findIndex(
+            (msg) => msg.id === data.payload.messageId
+          )
+          if (messageIndex === -1) return prevMessages
+          const newMessages = structuredClone(prevMessages)
+
+          if (newMessages[messageIndex]) {
+            const reactions =
+              newMessages[messageIndex].reactions[data.payload.emoji]
+            if (reactions) {
+              newMessages[messageIndex].reactions[data.payload.emoji] =
+                reactions.filter((user) => user.id !== data.payload.userId)
+              if (
+                newMessages[messageIndex].reactions[data.payload.emoji]
+                  ?.length === 0
+              ) {
+                delete newMessages[messageIndex].reactions[data.payload.emoji]
+              }
+              if (
+                data.payload.userId === userId &&
+                newMessages[messageIndex].userEmoji === data.payload.emoji
+              ) {
+                newMessages[messageIndex].userEmoji = ''
+              }
+            }
+          }
+
+          return newMessages
+        })
+      },
+      'reaction-updated': () => {
+        setMessages((prevMessages) => {
+          const messageIndex = prevMessages.findIndex(
+            (msg) => msg.id === data.payload.messageId
+          )
+          if (messageIndex === -1) return prevMessages
+          const newMessages = structuredClone(prevMessages)
+
+          if (newMessages[messageIndex]) {
+            // Remove old reaction
+            const oldReactions =
+              newMessages[messageIndex].reactions[data.payload.oldEmoji]
+            if (oldReactions) {
+              newMessages[messageIndex].reactions[data.payload.oldEmoji] =
+                oldReactions.filter((user) => user.id !== data.payload.userId)
+              if (
+                newMessages[messageIndex].reactions[data.payload.oldEmoji]
+                  ?.length === 0
+              ) {
+                delete newMessages[messageIndex].reactions[
+                  data.payload.oldEmoji
+                ]
+              }
+            }
+
+            if (
+              !(data.payload.newEmoji in newMessages[messageIndex].reactions)
+            ) {
+              newMessages[messageIndex].reactions[data.payload.newEmoji] = []
+            }
+            newMessages[messageIndex].reactions[data.payload.newEmoji]!.push({
+              id: data.payload.userId,
+              name: data.payload.name,
+              avatar: data.payload.avatar,
+            })
+            if (data.payload.userId === userId) {
+              newMessages[messageIndex].userEmoji = data.payload.newEmoji
+            }
+          }
+
           return newMessages
         })
       },
@@ -156,7 +234,7 @@ const PageClient = ({ roomId, token }: PageClientProps) => {
 
     const handler = handlers[data.type]
     if (handler) handler()
-  }, [lastMessage, anonymous, setUserId])
+  }, [lastMessage, anonymous, setUserId, userId])
 
   const sendChatMessage = useCallback(
     (content: string) => {
@@ -167,12 +245,12 @@ const PageClient = ({ roomId, token }: PageClientProps) => {
   )
 
   const sendReaction = useCallback(
-    (messageId: string, emoji: string) => {
+    (messageId: string, emoji: string, currentEmoji?: string) => {
       if (anonymous === null || readyState !== ReadyState.OPEN) return
       sendMessage(
         JSON.stringify({
           type: 'reaction',
-          payload: { messageId, emoji },
+          payload: { messageId, emoji, currentEmoji },
         })
       )
     },

@@ -9,7 +9,11 @@ import Chats from './Chats'
 interface ChatBoxProps {
   messages: Message[]
   sendMessage: (content: string) => void
-  sendReaction: (messageId: string, emoji: string) => void
+  sendReaction: (
+    messageId: string,
+    emoji: string,
+    currentEmoji?: string
+  ) => void
 }
 
 const ChatBox = ({ messages, sendMessage, sendReaction }: ChatBoxProps) => {

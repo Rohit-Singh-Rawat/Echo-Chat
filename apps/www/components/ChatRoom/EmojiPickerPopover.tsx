@@ -12,7 +12,7 @@ import { ReactionButton } from './ReactionButton'
 
 interface EmojiPickerPopoverProps {
   userEmoji?: string
-  onEmojiSelect: (emoji: string) => void
+  onEmojiSelect: (emoji: string, currentEmoji?: string) => void
   side?: 'top' | 'right' | 'bottom' | 'left'
 }
 
@@ -25,7 +25,7 @@ export const EmojiPickerPopover = ({
 
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const handleEmojiSelect = (emoji: any) => {
-    onEmojiSelect(emoji.native)
+    onEmojiSelect(emoji.native, userEmoji)
     setOpen(false)
   }
 

@@ -5,7 +5,6 @@ import { useIdentityStore } from '@/app/store/useIdentityStore'
 import { MessageAvatar } from './Message/MessageAvatar'
 import { MessageContent } from './Message/MessageContent'
 import { MessageHeader } from './Message/MessageHeader'
-import { MessageReactions } from './Message/MessageReactions'
 
 type Props = {
   userName: string
@@ -18,7 +17,11 @@ type Props = {
   prevMessageSender?: string
   userEmoji?: string
   image?: string
-  sendReaction: (messageId: string, emoji: string) => void
+  sendReaction: (
+    messageId: string,
+    emoji: string,
+    currentEmoji?: string
+  ) => void
 }
 
 const MessageBox = ({
@@ -48,8 +51,8 @@ const MessageBox = ({
     0
   )
 
-  const handleReaction = (emoji: string) => {
-    sendReaction(messageId, emoji)
+  const handleReaction = (emoji: string, currentEmoji?: string) => {
+    sendReaction(messageId, emoji, currentEmoji)
   }
 
   return (
@@ -78,26 +81,20 @@ const MessageBox = ({
         )}
 
         <motion.div
-          layout
-          className={`flex min-h-[30px] w-full flex-col ${
+          className={`relative min-h-[30px] ${totalReactions > 0 ? 'mb-5' : ''} w-full ${
             isOwnMessage ? 'items-end' : 'items-start'
           }`}
         >
-          <AnimatePresence mode="popLayout">
-            <MessageContent
-              userEmoji={userEmoji}
-              message={message}
-              image={image}
-              isOwnMessage={isOwnMessage}
-              isPrevMessageSameSender={userId === prevMessageSender}
-              onReaction={handleReaction}
-            />
-
-            <MessageReactions
-              reactions={reactionsList}
-              totalReactions={totalReactions}
-            />
-          </AnimatePresence>
+          <MessageContent
+            userEmoji={userEmoji}
+            message={message}
+            image={image}
+            isOwnMessage={isOwnMessage}
+            isPrevMessageSameSender={userId === prevMessageSender}
+            onReaction={handleReaction}
+            reactions={reactionsList}
+            totalReactions={totalReactions}
+          />
         </motion.div>
       </div>
     </div>
