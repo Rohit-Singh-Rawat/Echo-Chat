@@ -142,6 +142,54 @@ export const createRoom = async (
 //   }
 // }
 
+export const getRoomsHistory = async (
+  req: Request,
+  res: Response
+): Promise<void> => {
+  try {
+    const rooms = await client.room.findMany({
+      where: {
+        createdBy: {
+          id: req.user!.userId,
+        },
+        closedAt: { lt: new Date() },
+      },
+      include: {
+        _count: {
+          select: {
+            messages: true,
+          },
+        },
+        participants: {
+          select: {
+            id: true,
+            tempUsername: true,
+            tempUserId: true,
+            joinedAt: true,
+            leftAt: true,
+            user: {
+              select: {
+                id: true,
+                name: true,
+                email: true,
+                image: true,
+              },
+            },
+          },
+        },
+      },
+      orderBy: {
+        closedAt: 'desc',
+      },
+    })
+
+    res.json(rooms)
+  } catch (error) {
+    console.error('Error fetching rooms history:', error)
+    res.status(400).json({ message: 'Failed to fetch rooms history' })
+  }
+}
+
 export const getRoomHistory = async (
   req: Request,
   res: Response
@@ -211,9 +259,9 @@ export const getUserRooms = async (
                   closedAt: { gte: new Date() },
                 },
                 {
-                  id: 'public'
-                }
-              ]
+                  id: 'public',
+                },
+              ],
             },
           },
           include: {

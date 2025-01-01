@@ -15,11 +15,12 @@ export const authenticateToken = (
 ): void => {
   const authHeader = req.headers['authorization']
   const token = authHeader && authHeader.split(' ')[1]
-
   if (!token) {
     res.status(401).json({ message: 'Authentication required' })
     return
   }
+
+  console.log('desd')
 
   try {
     const user = jwt.verify(

@@ -3,6 +3,7 @@
 import { useEffect, useState, useCallback } from 'react'
 import useWebSocket, { ReadyState } from 'react-use-websocket'
 
+import useRoomStore from '@/app/store/RoomStore'
 import { useIdentityStore } from '@/app/store/useIdentityStore'
 import ChatBox from '@/components/ChatRoom/ChatBox'
 import GetAnonomousity from '@/components/ChatRoom/GetAnonomousity'
@@ -83,6 +84,13 @@ const PageClient = ({ roomId, token }: PageClientProps) => {
         setMessages(data.payload.lastMessages)
 
         setTimeLeft(new Date(data.payload.closeTime))
+
+        useRoomStore.getState().setRoom({
+          id: roomId,
+          name: data.payload.roomName,
+          closeTime: new Date(data.payload.closeTime),
+          isTemporary: data.payload.isTemporary,
+        })
       },
       user_joined: () => {
         setUsers((prevUsers) => {
@@ -235,11 +243,12 @@ const PageClient = ({ roomId, token }: PageClientProps) => {
     const handler = handlers[data.type]
     if (handler) handler()
   }, [lastMessage, anonymous, setUserId, userId])
-
   const sendChatMessage = useCallback(
-    (content: string) => {
+    (content: string, image?: string) => {
       if (anonymous === null || readyState !== ReadyState.OPEN) return
-      sendMessage(JSON.stringify({ type: 'message', payload: { content } }))
+      sendMessage(
+        JSON.stringify({ type: 'message', payload: { content, image } })
+      )
     },
     [readyState, sendMessage, anonymous]
   )

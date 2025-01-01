@@ -14,6 +14,8 @@
   "license": "ISC",
   "description": "",
   "dependencies": {
+    "@aws-sdk/client-s3": "^3.717.0",
+    "@aws-sdk/s3-request-presigner": "^3.717.0",
     "@echo/db": "workspace:*",
     "@echo/lib": "workspace:*",
     "@types/bcrypt": "^5.0.2",

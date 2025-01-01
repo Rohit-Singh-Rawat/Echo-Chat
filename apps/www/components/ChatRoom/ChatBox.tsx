@@ -8,7 +8,7 @@ import Chats from './Chats'
 
 interface ChatBoxProps {
   messages: Message[]
-  sendMessage: (content: string) => void
+  sendMessage: (content: string, image?: string) => void
   sendReaction: (
     messageId: string,
     emoji: string,

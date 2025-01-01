@@ -35,6 +35,7 @@ export class User {
             include: {
               messages: {
                 select: {
+                  id: true,
                   content: true,
                   sender: {
                     select: {
@@ -207,6 +208,7 @@ export class User {
                     })) || []
                 : room.messages.map((msg) => ({
                     content: msg.content,
+                    id: msg.id,
                     userId: msg.sender.user?.id || msg.sender.tempUserId || '',
                     username:
                       msg.sender.user?.name || msg.sender.tempUsername || '',
@@ -333,24 +335,22 @@ export class User {
           if (!room) {
             return
           }
-          const message = room.lastMessages.find((msg) => msg.id === messageId)
-          if (!message) {
-            return
-          }
 
-          if (!message.reactions) {
-            message.reactions = {}
-          }
+          const message = room.lastMessages.find((msg) => msg.id === messageId)
 
           if (currentEmoji) {
             if (currentEmoji === emoji) {
-              message.reactions[currentEmoji] = message.reactions[currentEmoji].filter(
-                (user: { id: string }) => user.id !== this.id
-              )
-              if (message.reactions[currentEmoji].length === 0) {
-                delete message.reactions[currentEmoji]
+              if (message) {
+                if (message.reactions[currentEmoji]) {
+                  message.reactions[currentEmoji] = message.reactions[
+                    currentEmoji
+                  ].filter((user: { id: string }) => user.id !== this.id)
+                  if (message.reactions[currentEmoji].length === 0) {
+                    delete message.reactions[currentEmoji]
+                  }
+                }
               }
-
+              // Remove reaction
               const reactionData = {
                 type: 'reaction-removed',
                 payload: {
@@ -359,7 +359,11 @@ export class User {
                   userId: this.id,
                 },
               }
-              RoomManager.getInstance().broadcast(reactionData, this, this.roomId)
+              RoomManager.getInstance().broadcast(
+                reactionData,
+                this,
+                this.roomId
+              )
               this.send({
                 type: 'reaction-removed',
                 payload: reactionData.payload,
@@ -374,21 +378,25 @@ export class User {
                 })
               }
             } else {
-              message.reactions[currentEmoji] = message.reactions[currentEmoji].filter(
-                (user: { id: string }) => user.id !== this.id
-              )
-              if (message.reactions[currentEmoji].length === 0) {
-                delete message.reactions[currentEmoji]
+              if (message) {
+                if (message.reactions[currentEmoji]) {
+                  message.reactions[currentEmoji] = message.reactions[
+                    currentEmoji
+                  ].filter((user: { id: string }) => user.id !== this.id)
+                  if (message.reactions[currentEmoji].length === 0) {
+                    delete message.reactions[currentEmoji]
+                  }
+                }
+                if (!message.reactions[emoji]) {
+                  message.reactions[emoji] = []
+                }
+                message.reactions[emoji].push({
+                  id: this.id,
+                  name: this.name,
+                  avatar: this.avatar,
+                })
               }
-              if (!message.reactions[emoji]) {
-                message.reactions[emoji] = []
-              }
-              message.reactions[emoji].push({
-                id: this.id,
-                name: this.name,
-                avatar: this.avatar,
-              })
-
+              // Update reaction
               const reactionData = {
                 type: 'reaction-updated',
                 payload: {
@@ -401,7 +409,11 @@ export class User {
                   sentAt: new Date(),
                 },
               }
-              RoomManager.getInstance().broadcast(reactionData, this, this.roomId)
+              RoomManager.getInstance().broadcast(
+                reactionData,
+                this,
+                this.roomId
+              )
               this.send({
                 type: 'reaction-updated',
                 payload: reactionData.payload,
@@ -420,15 +432,17 @@ export class User {
               }
             }
           } else {
-            if (!message.reactions[emoji]) {
-              message.reactions[emoji] = []
+            if (message) {
+              if (!message.reactions[emoji]) {
+                message.reactions[emoji] = []
+              }
+              message.reactions[emoji].push({
+                id: this.id,
+                name: this.name,
+                avatar: this.avatar,
+              })
             }
-            message.reactions[emoji].push({
-              id: this.id,
-              name: this.name,
-              avatar: this.avatar,
-            })
-
+            // Add new reaction
             const reactionData = {
               type: 'reaction-added',
               payload: {

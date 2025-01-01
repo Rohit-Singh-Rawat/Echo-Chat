@@ -9,15 +9,17 @@ import FileInput from './FileInput'
 const ChatBoxInput = ({
   sendMessage,
 }: {
-  sendMessage: (content: string) => void
+  sendMessage: (content: string, image?: string) => void
 }) => {
   const [message, setMessage] = useState('')
+  const [image, setImage] = useState<string | null>(null)
 
   const handleSubmit = (e: FormEvent) => {
     e.preventDefault()
-    if (!message.trim()) return
-    sendMessage(message)
+    if (!message.trim() && !image) return
+    sendMessage(message, image || undefined)
     setMessage('')
+    setImage(null)
   }
 
   return (
@@ -25,7 +27,7 @@ const ChatBoxInput = ({
       onSubmit={handleSubmit}
       className="absolute bottom-5 right-1/2 z-50 flex w-[90%] translate-x-1/2 items-center rounded-full border border-neutral-200 bg-white p-1 px-2"
     >
-      <FileInput />
+      <FileInput onImageUpload={setImage} SendImage={image} />
       <Textarea
         id="Message"
         value={message}

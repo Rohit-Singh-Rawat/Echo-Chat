@@ -2,6 +2,8 @@ import { Router } from 'express'
 import {
   getUserRooms,
   createRoom,
+  getRoomsHistory,
+  getRoomHistory,
   // joinRoom,
 } from '../controllers/roomController'
 import { authenticateToken } from '../middleware/authMiddleware'
@@ -13,5 +15,7 @@ router.post('/create', authenticateToken, createRoom)
 // router.post('/leave', leaveRoom)
 // router.post('/message', sendMessage)
 router.get('/getRooms', authenticateToken, getUserRooms)
+router.get('/history', authenticateToken, getRoomsHistory)
+router.get('/history/:roomId', authenticateToken, getRoomHistory)
 
 export default router
