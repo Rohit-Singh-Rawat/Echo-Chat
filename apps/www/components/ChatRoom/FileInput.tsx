@@ -11,12 +11,13 @@ import { LoadingSpinner } from '@echo/ui/icons/spinner.tsx'
 import { X } from 'lucide-react'
 import Image from 'next/image'
 import { useAction } from 'next-safe-action/hooks'
-import React, { useCallback, useEffect, useRef } from 'react'
+import React, { useCallback, useEffect, useRef, useState } from 'react'
 import { toast } from 'sonner'
 
-import useFileStore from '@/app/store/SelectedImageStore'
+import useRoomStore from '@/app/store/RoomStore'
 import { useUser } from '@/hooks/useSession'
-import { uploadImage } from '@/lib/actions/ImageUpload'
+import { uploadImage, deleteImage } from '@/lib/actions/ImageUpload'
+import getPublicUrl from '@/utils'
 
 import { AttachFileIcon } from '../icons/animated/attach-file'
 
@@ -31,7 +32,7 @@ interface FileValidation {
 }
 
 const fileValidation: FileValidation = {
-  maxSize: 3 * 1024 * 1024,
+  maxSize: 3 * 1024 * 1024, // 3MB
   allowedTypes: ['image/png', 'image/jpeg', 'image/jpg'],
 }
 
@@ -39,105 +40,137 @@ export default function FileInput({
   onImageUpload,
   SendImage,
 }: FileInputProps) {
-  const { data } = useUser()
+  const { data: user, isFetching } = useUser()
+  const [fileKey, setFileKey] = useState<string | null>(null)
+
   const previewRef = useRef<string | null>(null)
   const fileInputRef = useRef<HTMLInputElement>(null)
-  const { selectedFile, setSelectedFile } = useFileStore()
+  const { id: roomId, isTemporary } = useRoomStore()
 
-  const { executeAsync: uploadFile, isExecuting } = useAction(uploadImage, {
-    onSuccess: async (result) => {
-      if (result.data?.url) {
+  const { executeAsync: uploadFile, isExecuting: isUploading } = useAction(
+    uploadImage,
+    {
+      onSuccess: async ({ data }) => {
+        if (!data?.url || !fileInputRef.current?.files?.[0]) return
+
         try {
-          const response = await fetch(result.data.url, {
+          const file = fileInputRef.current.files[0]
+
+          const response = await fetch(data.url, {
             method: 'PUT',
-            body: selectedFile,
+            body: file,
             headers: {
-              'Content-Type': selectedFile?.type || 'image/jpeg',
+              'Content-Type': file.type
+                ? encodeURI(file.type)
+                : 'multipart/form-data',
             },
           })
 
-          if (!response.ok) {
-            throw new Error('Failed to upload to URL')
-          }
+          if (!response.ok) throw new Error('Failed to upload to URL')
 
-          // Get the public URL by removing query parameters
-          const publicUrl = `${process.env.NEXT_PUBLIC_CDN_URL}/${result.data.key}`
+          const publicUrl = getPublicUrl(data.key)
+          setFileKey(data.key)
           onImageUpload(publicUrl)
         } catch (error) {
           console.error('Failed to upload to URL:', error)
           toast.error('Failed to upload image')
           handleRemove()
         }
-      }
-    },
-    onError: (error) => {
-      console.error('Failed to upload image:', error)
-      toast.error('Failed to upload image')
-      handleRemove()
-    },
-  })
+      },
+      onError: (error) => {
+        console.error('Failed to upload image:', error)
+        toast.error('Failed to upload image')
+        handleRemove()
+      },
+    }
+  )
+
+  const { executeAsync: deleteFile, isExecuting: isDeleting } = useAction(
+    deleteImage,
+    {
+      onSuccess: () => {
+        handleRemove()
+      },
+      onError: (error) => {
+        console.error('Failed to delete image:', error)
+        toast.error('Failed to delete image')
+      },
+    }
+  )
 
   const handleThumbnailClick = useCallback(() => {
-    if (!data) {
-      toast.info('need to login to send Images')
+    if (!user) {
+      toast.info('Please login to send images')
       return
     }
     fileInputRef.current?.click()
-  }, [data])
+  }, [user])
 
   const handleFileChange = useCallback(
-    (event: React.ChangeEvent<HTMLInputElement>) => {
+    async (event: React.ChangeEvent<HTMLInputElement>) => {
       const file = event.target.files?.[0]
+      if (!file) return
 
-      if (file) {
-        if (!fileValidation.allowedTypes.includes(file.type)) {
-          toast.error('Invalid file type. Please upload a PNG or JPEG image.')
-          return
-        }
-        if (file.size > fileValidation.maxSize) {
-          toast.error(`File size exceeds the limit of 3MB.`)
-          return
-        }
-        const url = URL.createObjectURL(file)
-        setSelectedFile(file)
-        previewRef.current = url
-        uploadFile({
-          filename: file.name,
-          contentType: file.type,
-          isTemporary: true,
-        })
+      if (!fileValidation.allowedTypes.includes(file.type)) {
+        toast.error('Invalid file type. Please upload a PNG or JPEG image.')
+        return
       }
+
+      if (file.size > fileValidation.maxSize) {
+        toast.error('File size exceeds the limit of 3MB.')
+        return
+      }
+
+      const url = URL.createObjectURL(file)
+      previewRef.current = url
+
+      await uploadFile({
+        filename: file.name,
+        contentType: file.type,
+        isTemporary,
+        roomId: roomId ?? '',
+      })
     },
-    [uploadFile, setSelectedFile]
+    [uploadFile, roomId, isTemporary]
   )
 
-  const handleRemove = useCallback(() => {
+  const handleRemove = useCallback(async () => {
+    if (fileKey) {
+      await deleteFile({ key: fileKey })
+      setFileKey(null)
+    }
     if (previewRef.current) {
       URL.revokeObjectURL(previewRef.current)
     }
-    setSelectedFile(null)
     previewRef.current = null
     onImageUpload(null)
     if (fileInputRef.current) {
       fileInputRef.current.value = ''
     }
-  }, [onImageUpload, setSelectedFile])
+  }, [onImageUpload, fileKey, deleteFile])
 
   useEffect(() => {
     return () => {
-      previewRef.current && URL.revokeObjectURL(previewRef.current)
+      if (previewRef.current) URL.revokeObjectURL(previewRef.current)
     }
   }, [])
-
   useEffect(() => {
     if (SendImage === null) {
-      handleRemove()
-    }
-  }, [SendImage, handleRemove])
+      if (previewRef.current) {
+        URL.revokeObjectURL(previewRef.current)
+      }
+      previewRef.current = null
 
-  const previewUrl = selectedFile
-    ? URL.createObjectURL(selectedFile)
-    : SendImage
+      setFileKey(null)
+      onImageUpload(null)
+      if (fileInputRef.current) {
+        fileInputRef.current.value = ''
+      }
+    }
+  }, [SendImage, onImageUpload])
+
+  const previewUrl = previewRef.current || SendImage
+  const isExecuting = isUploading || isDeleting
 
   return (
     <div className="relative items-center">
@@ -181,7 +214,7 @@ export default function FileInput({
             </TooltipProvider>
           </div>
         ) : (
-          <div aria-hidden="true" className="">
+          <div aria-hidden="true">
             <AttachFileIcon className="size-7 rotate-45 opacity-60" />
           </div>
         )}
@@ -192,6 +225,7 @@ export default function FileInput({
           size="icon"
           className="absolute -right-1 -top-px size-[14px] rounded-full border bg-white p-1 text-black hover:bg-gray-300"
           aria-label="Remove image"
+          disabled={isExecuting}
         >
           <X size={1} className="scale-75" />
         </Button>
@@ -201,6 +235,7 @@ export default function FileInput({
         ref={fileInputRef}
         onChange={handleFileChange}
         className="hidden"
+        disabled={isExecuting || isFetching}
         accept="image/*"
         aria-label="Upload image file"
       />

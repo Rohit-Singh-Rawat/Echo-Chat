@@ -36,6 +36,7 @@ export class User {
               messages: {
                 select: {
                   id: true,
+                  image: true,
                   content: true,
                   sender: {
                     select: {
@@ -209,6 +210,7 @@ export class User {
                 : room.messages.map((msg) => ({
                     content: msg.content,
                     id: msg.id,
+                    ...(msg.image && { image: msg.image }),
                     userId: msg.sender.user?.id || msg.sender.tempUserId || '',
                     username:
                       msg.sender.user?.name || msg.sender.tempUsername || '',
@@ -269,8 +271,8 @@ export class User {
             })
             return
           }
-          const { content } = parsedData.payload
-          if (!content || typeof content !== 'string') {
+          const { content, image } = parsedData.payload
+          if ((!content || typeof content !== 'string') && !image) {
             return
           }
           const room = RoomManager.getInstance().rooms.get(this.roomId)
@@ -284,6 +286,7 @@ export class User {
             payload: {
               id: messageId,
               content: content,
+              ...(image && { image }),
               userId: this.id,
               avatar: this.avatar,
               username: this.name,
@@ -306,6 +309,7 @@ export class User {
               data: {
                 id: messageId,
                 content,
+                ...(image && { image }),
                 roomId: this.roomId,
                 senderId: `${this.roomId}-${this.id}`,
               },

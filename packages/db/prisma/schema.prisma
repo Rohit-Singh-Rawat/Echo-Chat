@@ -87,6 +87,7 @@ model RoomParticipant {
 model Message {
   id       String          @id @default(cuid())
   content  String
+  image    String?
   sentAt   DateTime        @default(now())
   roomId   String
   room     Room            @relation("RoomMessages", fields: [roomId], references: [id], onDelete: Cascade)

@@ -48,6 +48,8 @@ export const MessageContent = ({
               src={image}
               alt="Message attachment"
               className="mt-2 w-80 rounded-lg bg-white object-contain"
+              width={320}
+              height={320}
             />
           )}
           {message && (

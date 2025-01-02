@@ -7,3 +7,6 @@ export const uploadFileSchema = z.object({
   expiryTime: z.number().optional(),
   roomId: z.string().optional()
 })
+export const deleteFileSchema = z.object({
+  key: z.string(),
+})

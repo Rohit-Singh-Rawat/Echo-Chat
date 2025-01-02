@@ -16,8 +16,9 @@ const ChatBoxInput = ({
 
   const handleSubmit = (e: FormEvent) => {
     e.preventDefault()
-    if (!message.trim() && !image) return
-    sendMessage(message, image || undefined)
+    const trimmedMessage = message.trim()
+    if (!trimmedMessage && !image) return
+    sendMessage(trimmedMessage ?? '', image || undefined)
     setMessage('')
     setImage(null)
   }

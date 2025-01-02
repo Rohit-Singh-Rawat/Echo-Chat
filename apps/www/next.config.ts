@@ -7,6 +7,10 @@ const nextConfig: NextConfig = {
         protocol: 'https',
         hostname: 'avatar.iran.liara.run',
       },
+      {
+        protocol: 'https',
+        hostname: 'dgjz6k45m8yfq.cloudfront.net',
+      },
     ],
   },
 }
