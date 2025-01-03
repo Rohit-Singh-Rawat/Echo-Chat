@@ -3,8 +3,9 @@
 import { createRoomSchema } from '@echo/lib'
 import { revalidateTag } from 'next/cache'
 import { cookies } from 'next/headers'
+import { z } from 'zod'
 
-import { Rooms } from '@/types'
+import { Message, Rooms } from '@/types'
 
 import { actionClient } from './safe-actions'
 
@@ -114,3 +115,67 @@ export const getRoomsHistory = async (): Promise<Rooms> => {
     throw error
   }
 }
+export const getRoomHistory = actionClient
+  .schema(z.object({ roomId: z.string() }))
+  .action(async ({ parsedInput: { roomId } }) => {
+    try {
+      const cookieStore = await cookies()
+      const token = cookieStore.get('token')
+      if (!token) {
+        throw new Error('Not authenticated')
+      }
+
+      const response = await fetch(
+        `${process.env.NEXT_PUBLIC_SERVER_API_BASE_URL}/api/v1/rooms/history/${roomId}`,
+        {
+          headers: {
+            Authorization: `Bearer ${token.value}`,
+          },
+          next: {
+            tags: ['room-history'],
+          },
+        }
+      )
+
+      if (!response.ok) {
+        throw new Error('Failed to fetch room history')
+      }
+
+      const data: Message[] = await response.json()
+      return data
+    } catch (error) {
+      console.error('Error fetching room history:', error)
+      throw error
+    }
+  })
+export const deleteRoom = actionClient
+  .schema(z.object({ roomId: z.string() }))
+  .action(async ({ parsedInput: { roomId } }) => {
+    try {
+      const cookieStore = await cookies()
+      const token = cookieStore.get('token')
+      if (!token) {
+        throw new Error('Not authenticated')
+      }
+
+      const response = await fetch(
+        `${process.env.NEXT_PUBLIC_SERVER_API_BASE_URL}/api/v1/rooms/remove/${roomId}`,
+        {
+          method: 'DELETE',
+          headers: {
+            Authorization: `Bearer ${token.value}`,
+          }
+        }
+      )
+
+      if (!response.ok) {
+        throw new Error('Failed to delete room')
+      }
+
+      revalidateTag('rooms-history')
+      return { success: true }
+    } catch (error) {
+      console.error('Error deleting room:', error)
+      throw error
+    }
+  })

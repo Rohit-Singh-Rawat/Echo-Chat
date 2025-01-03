@@ -1,4 +1,4 @@
-import DisplayRoomsHistory from '@/components/dashboard/DisplayRoomsHistory'
+import { RoomHistoryContent } from '@/components/history/RoomHistoryContent'
 import { ErrorState } from '@/components/ui/ErrorState'
 import { getRoomsHistory } from '@/lib/actions/RoomActions'
 import { Rooms } from '@/types'
@@ -7,6 +7,7 @@ export default async function HistoryPage() {
   let rooms: Rooms
   try {
     rooms = await getRoomsHistory()
+    console.log(rooms)
   } catch (err) {
     return (
       <ErrorState
@@ -18,12 +19,8 @@ export default async function HistoryPage() {
   }
 
   return (
-    <div className="container mx-auto p-6">
-      <div className="mb-6 flex items-center justify-between">
-        <h1 className="text-2xl font-bold">Room History</h1>
-        <span className="muted-foreground text-sm">Showing closed rooms</span>
-      </div>
-      <DisplayRoomsHistory rooms={rooms} />
+    <div className="container mx-auto px-6 py-10">
+      <RoomHistoryContent initialRooms={rooms} />
     </div>
   )
 }

@@ -1,12 +1,18 @@
 import { LoadingSpinner } from '@echo/ui/icons/spinner.tsx'
-import { ArrowLeftToLine } from 'lucide-react'
 
 import { UserButton } from '@/components/ChatRoom/UserButton'
 import EchoLogo from '@/components/icons/animated/EchoLogo'
+import { LogoutIcon } from '@/components/icons/LogoutIcon'
 import { Button } from '@/components/shared/Button'
 import { useUser } from '@/hooks/useSession'
 
-export const RoomHeader = ({ roomName }: { roomName: string }) => {
+export const RoomHeader = ({
+  roomName,
+  handleExit,
+}: {
+  roomName: string
+  handleExit: () => void
+}) => {
   const { data, isLoading } = useUser()
   return (
     <div className="row-span-1 flex w-full items-center justify-between px-7">
@@ -32,14 +38,13 @@ export const RoomHeader = ({ roomName }: { roomName: string }) => {
         )}
       </div>
       <h1 className="text-2xl font-semibold text-neutral-800">{roomName}</h1>
-      <Button>
-        <ArrowLeftToLine
-          className="-ms-1 me-2 opacity-60"
+      <Button className="group" onClick={handleExit}>
+        Leave{' '}
+        <LogoutIcon
           size={16}
-          strokeWidth={2}
+          className="transition-ease -me-1 opacity-60 group-hover:scale-105 group-hover:opacity-100"
           aria-hidden="true"
         />
-        Exit
       </Button>
     </div>
   )

@@ -10,6 +10,7 @@ import GetAnonomousity from '@/components/ChatRoom/GetAnonomousity'
 import { ParticipantsSidebar } from '@/components/ChatRoom/ParticipantsSidebar'
 import { RoomHeader } from '@/components/ChatRoom/RoomHeader'
 import { RoomSettings } from '@/components/ChatRoom/RoomSettings'
+import { TimeLeftDisplay } from '@/components/ChatRoom/TimeLeftDisplay'
 import { ErrorState } from '@/components/ui/ErrorState'
 import { LoadingState } from '@/components/ui/LoadingState'
 import { useTempUser } from '@/hooks/useTempUser'
@@ -24,9 +25,12 @@ const PageClient = ({ roomId, token }: PageClientProps) => {
   const [timeLeft, setTimeLeft] = useState<Date>(new Date())
   const [isLoading, setIsLoading] = useState(true)
   const [error, setError] = useState('')
+  const [shouldConnect, setShouldConnect] = useState(true)
 
   const { sendMessage, lastMessage, readyState } = useWebSocket(
-    process.env.NEXT_PUBLIC_WS_URL || 'ws://localhost:4000/'
+    process.env.NEXT_PUBLIC_WS_URL || 'ws://localhost:4000/',
+    {},
+    shouldConnect
   )
 
   useEffect(() => {
@@ -265,7 +269,14 @@ const PageClient = ({ roomId, token }: PageClientProps) => {
     },
     [readyState, sendMessage, anonymous]
   )
-
+  const handleExit = useCallback(() => {
+    if (readyState === ReadyState.OPEN) {
+      // Close the WebSocket connection
+      setShouldConnect(false)
+    }
+    // Redirect to dashboard
+    window.location.href = '/dashboard'
+  }, [readyState])
   if (token && anonymous === null) {
     return <GetAnonomousity />
   }
@@ -296,18 +307,20 @@ const PageClient = ({ roomId, token }: PageClientProps) => {
   }
 
   return (
-    <div className="grid h-screen max-h-screen w-screen grid-cols-1 grid-rows-10 justify-center overflow-hidden bg-neutral-100 p-5 pt-0">
-      <RoomHeader roomName={roomName} />
-      <div className="row-span-9 flex w-full gap-5">
-        <ParticipantsSidebar participants={users} />
-        <ChatBox
-          messages={messages}
-          sendMessage={sendChatMessage}
-          sendReaction={sendReaction}
-        />
-        <RoomSettings roomId={roomId} timeLeft={timeLeft} />
+    <TimeLeftDisplay closeTime={timeLeft}>
+      <div className="grid h-screen max-h-screen w-screen grid-cols-1 grid-rows-10 justify-center overflow-hidden bg-neutral-100 p-5 pt-0">
+        <RoomHeader roomName={roomName} handleExit={handleExit} />
+        <div className="row-span-9 flex w-full gap-5">
+          <ParticipantsSidebar participants={users} />
+          <ChatBox
+            messages={messages}
+            sendMessage={sendChatMessage}
+            sendReaction={sendReaction}
+          />
+          <RoomSettings roomId={roomId} timeLeft={timeLeft} />
+        </div>
       </div>
-    </div>
+    </TimeLeftDisplay>
   )
 }
 

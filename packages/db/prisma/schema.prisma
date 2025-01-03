@@ -64,7 +64,7 @@ model Room {
   createdAt    DateTime          @default(now())
   closedAt     DateTime?
   updatedAt    DateTime          @updatedAt
-  Reaction     Reaction[]
+  reactions    Reaction[]
 
   @@index([createdById, createdAt])
 }
@@ -106,8 +106,10 @@ model Reaction {
   sender    RoomParticipant @relation(fields: [senderId], references: [id])
   senderId  String
   updatedAt DateTime        @updatedAt
-  Room      Room?           @relation(fields: [roomId], references: [id])
+  Room      Room?           @relation(fields: [roomId], references: [id], onDelete: Cascade)
   roomId    String?
+
+  @@unique([emoji, messageId, senderId])
 }
 
 model EmailVerificationToken {

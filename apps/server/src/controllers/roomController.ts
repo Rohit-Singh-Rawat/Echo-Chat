@@ -2,6 +2,9 @@ import { Request, Response } from 'express'
 import client from '@echo/db/src'
 import { createRoomSchema } from '@echo/lib'
 import { RoomWithParticipants, UserWithRooms } from '../types'
+import { s3Client } from '../utils/S3Client'
+import getKeyFromUrl from '../utils/getKeyFromUrl'
+import { DeleteObjectCommand } from '@aws-sdk/client-s3'
 
 const validateSubscriptionLimits = (
   user: {
@@ -189,22 +192,115 @@ export const getRoomsHistory = async (
     res.status(400).json({ message: 'Failed to fetch rooms history' })
   }
 }
-
 export const getRoomHistory = async (
   req: Request,
   res: Response
 ): Promise<void> => {
   try {
     const { roomId } = req.params
-    const { page = 1, limit = 50 } = req.query
+
+    const room = await client.room.findFirst({
+      where: {
+        id: roomId,
+        createdBy: {
+          id: req.user!.userId,
+        },
+      },
+    })
+
+    if (!room) {
+      res.status(404).json({ message: 'Room not found' })
+      return
+    }
+
     const messages = await client.message.findMany({
       where: { roomId },
-      orderBy: { sentAt: 'desc' },
-      take: Number(limit),
-      skip: (Number(page) - 1) * Number(limit),
+      select: {
+        id: true,
+        content: true,
+        image: true,
+        sender: {
+          select: {
+            user: {
+              select: {
+                id: true,
+                name: true,
+                image: true,
+              },
+            },
+            tempUserId: true,
+            tempUsername: true,
+            tempUserImage: true,
+          },
+        },
+        reaction: {
+          select: {
+            emoji: true,
+            sender: {
+              select: {
+                user: {
+                  select: {
+                    id: true,
+                    name: true,
+                    image: true,
+                  },
+                },
+                tempUserId: true,
+                tempUsername: true,
+                tempUserImage: true,
+              },
+            },
+          },
+        },
+        sentAt: true,
+      },
+      orderBy: { sentAt: 'asc' },
     })
-    res.json(messages)
+    res.json(
+      messages.map((msg) => {
+        const sender = msg.sender
+        return {
+          content: msg.content,
+          id: msg.id,
+          ...(msg.image && { image: msg.image }),
+          userId: sender.user?.id || sender.tempUserId || '',
+          username: sender.user?.name || sender.tempUsername || '',
+          avatar: sender.user?.image || sender.tempUserImage || '',
+          sentAt: msg.sentAt,
+          reactions: msg.reaction.reduce(
+            (
+              reactions: Record<
+                string,
+                { id: string; name: string; avatar: string }[]
+              >,
+              reaction
+            ) => {
+              const reactionSender = reaction.sender
+              const reactionUser = {
+                id: reactionSender.user?.id || reactionSender.tempUserId || '',
+                name:
+                  reactionSender.user?.name ||
+                  reactionSender.tempUsername ||
+                  '',
+                avatar:
+                  reactionSender.user?.image ||
+                  reactionSender.tempUserImage ||
+                  '',
+              }
+
+              if (!reactions[reaction.emoji]) {
+                reactions[reaction.emoji] = []
+              }
+              reactions[reaction.emoji]!.push(reactionUser)
+              return reactions
+            },
+            {}
+          ),
+        }
+      })
+    )
   } catch (error) {
+    console.error('Error fetching room history:', error)
     res.status(400).json({ message: 'Failed to fetch room history' })
   }
 }
@@ -320,5 +416,55 @@ export const getUserRooms = async (
     return res.json(rooms)
   } catch (error) {
     return res.status(500).json({ message: 'Failed to fetch user rooms' })
+  }
+}
+export const removeRoom = async (req: Request, res: Response) => {
+  try {
+    const { roomId } = req.params
+    const userId = req.user?.userId
+
+    if (!userId) {
+      return res.status(401).json({ message: 'Unauthorized' })
+    }
+
+    const room = await client.room.findFirst({
+      where: {
+        id: roomId,
+        createdBy: { id: userId },
+      },
+      include: { messages: { select: { image: true } } },
+    })
+
+    if (!room) {
+      return res
+        .status(404)
+        .json({ message: 'Room not found or unauthorized to delete' })
+    }
+    if (!room.isTemporary) {
+      for (const message of room.messages) {
+        if (message.image) {
+          try {
+            await s3Client.send(
+              new DeleteObjectCommand({
+                Bucket: process.env.AWS_S3_BUCKET_NAME ?? '',
+                Key: getKeyFromUrl(message.image),
+              })
+            )
+          } catch (err) {
+            console.error('Error deleting image from S3:', err)
+          }
+        }
+      }
+    }
+    await client.room.delete({
+      where: {
+        id: roomId,
+      },
+    })
+
+    return res.status(200).json({ message: 'Room deleted successfully' })
+  } catch (error) {
+    console.error('Error removing room:', error)
+    return res.status(500).json({ message: 'Failed to remove room' })
   }
 }

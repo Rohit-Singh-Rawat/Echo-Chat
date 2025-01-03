@@ -4,6 +4,7 @@ import {
   createRoom,
   getRoomsHistory,
   getRoomHistory,
+  removeRoom,
   // joinRoom,
 } from '../controllers/roomController'
 import { authenticateToken } from '../middleware/authMiddleware'
@@ -17,5 +18,6 @@ router.post('/create', authenticateToken, createRoom)
 router.get('/getRooms', authenticateToken, getUserRooms)
 router.get('/history', authenticateToken, getRoomsHistory)
 router.get('/history/:roomId', authenticateToken, getRoomHistory)
+router.delete('/remove/:roomId', authenticateToken, removeRoom)
 
 export default router
