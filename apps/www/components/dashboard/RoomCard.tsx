@@ -19,6 +19,7 @@ import {
 } from '@echo/ui/components/ui/hover-card.tsx'
 import { Hash, MoreHorizontal } from 'lucide-react'
 
+import { useIdentityStore } from '@/app/store/useIdentityStore'
 import { useTimeLeft } from '@/hooks/useTimeLeft'
 
 import { ClockIcon } from '../icons/animated/clock'
@@ -45,32 +46,40 @@ const RoomHeader = ({
   title: string
   id: string
   onJoin: () => void
-}) => (
-  <div className="flex items-start justify-between gap-2">
-    <div className="flex flex-col gap-1">
-      <h3 className="text-sm font-semibold">{title}</h3>
-      <div className="text-muted-foreground flex items-center gap-1 text-xs">
-        <Hash className="size-3" />
-        <span>{id}</span>
+}) => {
+  const { setAnonymous } = useIdentityStore()
+
+  return (
+    <div className="flex items-start justify-between gap-2">
+      <div className="flex flex-col gap-1">
+        <h3 className="text-sm font-semibold">{title}</h3>
+        <div className="text-muted-foreground flex items-center gap-1 text-xs">
+          <Hash className="size-3" />
+          <span>{id}</span>
+        </div>
       </div>
+      <DropdownMenu>
+        <DropdownMenuTrigger asChild>
+          <Button variant="ghost" className="size-6 p-0">
+            <MoreHorizontal className="size-3" />
+            <span className="sr-only">Open menu</span>
+          </Button>
+        </DropdownMenuTrigger>
+        <DropdownMenuContent align="start">
+          <DropdownMenuItem onClick={onJoin}>Join Room</DropdownMenuItem>
+          <DropdownMenuItem
+            onClick={() => {
+              setAnonymous(true)
+              onJoin()
+            }}
+          >
+            Join Anonymous
+          </DropdownMenuItem>
+        </DropdownMenuContent>
+      </DropdownMenu>
     </div>
-    <DropdownMenu>
-      <DropdownMenuTrigger asChild>
-        <Button variant="ghost" className="size-6 p-0">
-          <MoreHorizontal className="size-3" />
-          <span className="sr-only">Open menu</span>
-        </Button>
-      </DropdownMenuTrigger>
-      <DropdownMenuContent align="start">
-        <DropdownMenuItem onClick={onJoin}>Join Room</DropdownMenuItem>
-        <DropdownMenuItem>Join Anonymous</DropdownMenuItem>
-        <DropdownMenuItem className="text-destructive">
-          Delete Room
-        </DropdownMenuItem>
-      </DropdownMenuContent>
-    </DropdownMenu>
-  </div>
-)
+  )
+}
 
 export const ParticipantAvatar = ({
   participant,

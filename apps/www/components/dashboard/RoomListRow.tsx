@@ -10,6 +10,7 @@ import {
 import { TableRow, TableCell } from '@echo/ui/components/ui/table.tsx'
 import { Hash, MoreHorizontal } from 'lucide-react'
 
+import { useIdentityStore } from '@/app/store/useIdentityStore'
 import { useTimeLeft } from '@/hooks/useTimeLeft'
 
 import { ParticipantsList, RoomStats } from './RoomCard'
@@ -40,6 +41,7 @@ export default function RoomListRow({
   onJoin = () => console.log('Joined the room'),
 }: RoomListRowProps) {
   const timeLeft = useTimeLeft(closedAt)
+  const { setAnonymous } = useIdentityStore()
 
   const displayParticipants = knownParticipants.slice(0, 3)
   const remainingParticipants =
@@ -86,9 +88,13 @@ export default function RoomListRow({
             </DropdownMenuTrigger>
             <DropdownMenuContent align="end">
               <DropdownMenuItem onClick={onJoin}>Join Room</DropdownMenuItem>
-              <DropdownMenuItem>Join Anonymous</DropdownMenuItem>
-              <DropdownMenuItem className="text-destructive">
-                Delete Room
+              <DropdownMenuItem
+                onClick={() => {
+                  setAnonymous(true)
+                  onJoin()
+                }}
+              >
+                Join Anonymous
               </DropdownMenuItem>
             </DropdownMenuContent>
           </DropdownMenu>

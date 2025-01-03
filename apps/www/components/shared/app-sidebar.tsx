@@ -24,17 +24,17 @@ const items = [
   {
     title: 'Dashboard',
     url: '/dashboard',
-    icon: HomeIcon,
+    icon: <HomeIcon />,
   },
   {
     title: 'History',
     url: '/history',
-    icon: History,
+    icon: <History />,
   },
   {
     title: 'Settings',
     url: '/settings',
-    icon: SettingsGearIcon,
+    icon: <SettingsGearIcon />,
   },
 ]
 
@@ -53,7 +53,7 @@ export function AppSidebar() {
                 <SidebarMenuItem key={item.title}>
                   <SidebarMenuButton asChild>
                     <SideBarItem
-                      icon={<item.icon />}
+                      icon={item.icon}
                       title={item.title}
                       url={item.url}
                     />

@@ -17,6 +17,7 @@ import {
   SidebarMenuButton,
   useSidebar,
 } from '@echo/ui/components/ui/sidebar.tsx'
+import { Sparkles } from 'lucide-react'
 
 import { useUser } from '@/hooks/useSession'
 
@@ -88,7 +89,7 @@ export function NavUser() {
         <DropdownMenuGroup>
           {!data?.user?.subscription?.isPro && (
             <Downitem
-              icon={<div className="size-4 rounded-full bg-neutral-200" />}
+              icon={<Sparkles />}
               title="Upgrade to Pro"
               href="/plans"
             />
@@ -96,13 +97,9 @@ export function NavUser() {
         </DropdownMenuGroup>
         <DropdownMenuSeparator />
         <DropdownMenuGroup>
+          <Downitem icon={<UserIcon />} title="Account" href="/account" />
           <Downitem
-            icon={<div className="size-4 rounded-full bg-neutral-200" />}
-            title="Account"
-            href="/account"
-          />
-          <Downitem
-            icon={<div className="size-4 rounded-full bg-neutral-200" />}
+            icon={<LogoutIcon />}
             title="Logout"
             onClick={() => console.log('Logout clicked')}
           />

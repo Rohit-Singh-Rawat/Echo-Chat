@@ -164,7 +164,7 @@ export const deleteRoom = actionClient
           method: 'DELETE',
           headers: {
             Authorization: `Bearer ${token.value}`,
-          }
+          },
         }
       )
 
