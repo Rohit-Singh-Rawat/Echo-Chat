@@ -31,11 +31,6 @@ const items = [
     url: '/history',
     icon: <History />,
   },
-  {
-    title: 'Settings',
-    url: '/settings',
-    icon: <SettingsGearIcon />,
-  },
 ]
 
 export function AppSidebar() {

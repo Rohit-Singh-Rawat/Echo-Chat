@@ -18,16 +18,35 @@ import {
   useSidebar,
 } from '@echo/ui/components/ui/sidebar.tsx'
 import { Sparkles } from 'lucide-react'
+import { useRouter } from 'next/navigation'
+import { useAction } from 'next-safe-action/hooks'
+import { toast } from 'sonner'
 
 import { useUser } from '@/hooks/useSession'
+import { logout } from '@/lib/actions/authActions'
 
 import Downitem from './Downitem'
 import { LogoutIcon } from './icons/animated/logout'
 import { UserIcon } from './icons/animated/user'
+import AccountDialog from './shared/AccountDialog'
+import { useQueryClient } from '@tanstack/react-query'
 
 export function NavUser() {
   const { isMobile } = useSidebar()
   const { data, isLoading } = useUser()
+  const router = useRouter()
+
+  const queryClient = useQueryClient()
+  const { execute: handleLogout } = useAction(logout, {
+    onSuccess: () => {
+      
+      queryClient.invalidateQueries({ queryKey: ['user'] })
+      router.push('/')
+      toast.success('Logged out successfully', {
+        description: 'You have been logged out of your account',
+      })
+    },
+  })
 
   return (
     <DropdownMenu>
@@ -97,11 +116,21 @@ export function NavUser() {
         </DropdownMenuGroup>
         <DropdownMenuSeparator />
         <DropdownMenuGroup>
-          <Downitem icon={<UserIcon />} title="Account" href="/account" />
+          <div>
+            <AccountDialog
+              trigger={
+                <button className="flex w-full items-center gap-3 rounded px-2 py-1.5 text-left text-sm hover:bg-neutral-100">
+                  <UserIcon className="size-4" />
+                  <span className="">Account</span>
+                </button>
+              }
+            />
+          </div>
+
           <Downitem
             icon={<LogoutIcon />}
             title="Logout"
-            onClick={() => console.log('Logout clicked')}
+            onClick={handleLogout}
           />
         </DropdownMenuGroup>
       </DropdownMenuContent>

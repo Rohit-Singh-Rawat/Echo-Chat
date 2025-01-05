@@ -3,7 +3,6 @@ import { emailVerifySchema, signupSchema, loginSchema } from '@echo/lib'
 import { cookies } from 'next/headers'
 
 import { actionClient } from './safe-actions'
-
 export const SendVerificationOtpAction = actionClient
   .schema(emailVerifySchema)
   .action(async ({ parsedInput: { email } }) => {
@@ -20,9 +19,22 @@ export const SendVerificationOtpAction = actionClient
     )
 
     if (!res.ok) {
-      throw new Error(
-        (await res.json()).message || 'Failed to send verification code'
-      )
+      const errorData = await res.json()
+      if (
+        errorData.errors?.email?._errors?.includes(
+          'User already exists with this email'
+        )
+      ) {
+        return {
+          serverError: null,
+          validationErrors: {
+            email: {
+              _errors: ['User already exists with this email'],
+            },
+          },
+        }
+      }
+      throw new Error(errorData.message || 'Failed to send verification code')
     }
 
     const data = await res.json()
@@ -89,12 +101,6 @@ export const LoginAction = actionClient
     throw new Error('Invalid credentials')
   })
 
-export const LogoutAction = actionClient.action(async () => {
-  const cookieStore = await cookies()
-  cookieStore.delete('token')
-  return { message: 'ok' }
-})
-
 export const getSession = actionClient.action(async () => {
   const cookieStore = await cookies()
   const token = cookieStore.get('token')
@@ -109,6 +115,9 @@ export const getSession = actionClient.action(async () => {
           Authorization: `Bearer ${token.value}`,
           'Content-Type': 'application/json',
         },
+        next: {
+          tags: ['user'],
+        },
       }
     )
 
@@ -121,5 +130,22 @@ export const getSession = actionClient.action(async () => {
     }
   } catch (error) {
     return { user: null }
+  }
+})
+
+export const logout = actionClient.action(async () => {
+  const cookieStore = await cookies()
+
+  try {
+    // Remove all cookies
+    const allCookies = cookieStore.getAll()
+    for (const cookie of allCookies) {
+      cookieStore.delete(cookie.name)
+    }
+
+    return { success: true }
+  } catch (error) {
+    console.error('Error logging out:', error)
+    throw error
   }
 })

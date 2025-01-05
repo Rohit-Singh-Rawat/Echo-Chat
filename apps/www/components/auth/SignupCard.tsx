@@ -37,6 +37,7 @@ const SignupCard = () => {
       toast.success('Verification email sent successfully')
     },
     onError: ({ error }) => {
+      console.log(error)
       toast.error(error.serverError || 'An error occurred')
     },
   })
