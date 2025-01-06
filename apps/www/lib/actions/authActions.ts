@@ -4,6 +4,7 @@ import {
   signupSchema,
   loginSchema,
   googleAuthSchema,
+  githubAuthSchema,
 } from '@echo/lib'
 import { cookies } from 'next/headers'
 
@@ -177,6 +178,46 @@ export const GoogleAuthAction = actionClient
           error instanceof Error
             ? error.message
             : 'Failed to authenticate with Google',
+      }
+    }
+  })
+export const GithubAuthAction = actionClient
+  .schema(githubAuthSchema)
+  .action(async ({ parsedInput: { code } }) => {
+    try {
+      const response = await fetch(
+        `${process.env.NEXT_PUBLIC_SERVER_API_BASE_URL}/api/v1/auth/github`,
+        {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({ code }),
+        }
+      )
+
+      const data = await response.json()
+
+      if (!response.ok) {
+        throw new Error(data.message || 'Failed to authenticate with Github')
+      }
+
+      const cookieStore = await cookies()
+      cookieStore.set('token', data.token, {
+        httpOnly: true,
+        secure: process.env.NODE_ENV === 'production',
+        sameSite: 'lax',
+        path: '/',
+      })
+
+      return { success: true }
+    } catch (error) {
+      console.error('Github auth error:', error)
+      throw {
+        serverError:
+          error instanceof Error
+            ? error.message
+            : 'Failed to authenticate with Github',
       }
     }
   })

@@ -47,9 +47,14 @@ export const googleAuthSchema = z.object({
   access_token: z.string(),
 })
 
+export const githubAuthSchema = z.object({
+  code: z.string(),
+})
+
 export type SignupInput = z.infer<typeof signupSchema>
 export type LoginInput = z.infer<typeof loginSchema>
 export type ForgotPasswordInput = z.infer<typeof forgotPasswordSchema>
 export type ResetPasswordInput = z.infer<typeof resetPasswordSchema>
 export type EmailVerifyInput = z.infer<typeof emailVerifySchema>
 export type GoogleAuthInput = z.infer<typeof googleAuthSchema>
+export type GithubAuthInput = z.infer<typeof githubAuthSchema>

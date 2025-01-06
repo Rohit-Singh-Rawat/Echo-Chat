@@ -1,4 +1,5 @@
 'use client'
+import { useRouter } from 'next/navigation'
 import { useAction } from 'next-safe-action/hooks'
 import { toast } from 'sonner'
 
@@ -16,6 +17,7 @@ interface PricingCardButtonProps {
 
 export function PricingCardButton({ name }: PricingCardButtonProps) {
   const { data, isLoading } = useUser()
+  const router = useRouter()
   const action =
     name.toLowerCase() === 'pro'
       ? activateProPlanAction
@@ -23,6 +25,7 @@ export function PricingCardButton({ name }: PricingCardButtonProps) {
   const { executeAsync, isExecuting } = useAction(action, {
     onSuccess: () => {
       toast.success(`Successfully activated ${name} plan`)
+      router.push('/dashboard')
     },
     onError: () => {
       toast.error('Failed to activate plan')
