@@ -1,221 +1,189 @@
-import { Options } from './sendMail'
+interface EmailOptions {
+  tag:
+    | 'verify-email'
+    | 'password_reset'
+    | 'subscription_active'
+    | 'free_trial_active'
+  message?: string
+  email?: string
+  username?: string
+  razorpayId?: string
+  dateOfActivation?: string
+  planId?: string
+  planName?: string
+  duration?: number
+  price?: number
+  dashboardLink?: string
+}
 
-export const getTemplate = (options: Options) => {
+export const getTemplate = (options: EmailOptions): string => {
   const baseTemplate = (content: string) => `
-   <div style="max-width:37.5em;margin:0 auto;font-family:Arial, sans-serif;background-color:#ffffff;">
-  <table role="presentation" width="100%" cellspacing="0" cellpadding="0">
-    <tr>
-      <td style="padding:30px 20px;text-align:center;">
-        <img alt="Echo Chat" height="60" src="https://res.cloudinary.com/ytx/image/upload/v1731270603/Group_124_zru2yd.png" style="max-height: 60px;" />
-      </td>
-    </tr>
-  </table>
-  <table role="presentation" width="100%" cellspacing="0" cellpadding="0">
-    <tr>
-      <td style="padding:0 20px;text-align:center;"> ${content} </td>
-    </tr>
-  </table>
-  <table role="presentation" width="100%" cellspacing="0" cellpadding="0" style="border-top:1px solid #e0e0e0;">
-    <tr>
-      <td style="padding:30px 40px;text-align:center;">
-        <table role="presentation" width="100%" cellspacing="0" cellpadding="0">
-          <tr>
-            <td style="text-align:left;padding-bottom:15px;width:66%">
-              <img alt="Echo Chat" height="36" src="https://res.cloudinary.com/ytx/image/upload/v1731270603/Group_124_zru2yd.png" width="120" />
-            </td>
-            <td style="text-align:right;padding-bottom:15px;">
-              <table role="presentation" cellspacing="0" cellpadding="0" style="width:100%">
-                <tr>
-                  <td style="padding-right:10px;">
-                    <a href="https://x.com/echochat" target="_blank">
-                      <img alt="Twitter" height="32" src="https://res.cloudinary.com/ytx/image/upload/v1731407923/twitter-x_ft91uu.png" width="32" />
-                    </a>
-                  </td>
-                  <td style="padding-right:10px;">
-                    <a href="https://www.instagram.com/echochat" target="_blank">
-                      <img alt="Instagram" height="32" src="https://res.cloudinary.com/ytx/image/upload/v1731407923/instagram_1_z0cos7.png" width="32" />
-                    </a>
-                  </td>
-                  <td>
-                    <a href="https://www.linkedin.com/company/echochat/" target="_blank">
-                      <img alt="LinkedIn" height="32" src="https://res.cloudinary.com/ytx/image/upload/v1731407923/linkdin_igumjq.png" width="32" />
-                    </a>
-                  </td>
-                </tr>
+    <div style="margin-left:auto;margin-right:auto;margin-top:auto;margin-bottom:auto;background-color:rgb(255,255,255);font-family:ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,'Helvetica Neue',Arial,'Noto Sans',sans-serif,'Apple Color Emoji','Segoe UI Emoji','Segoe UI Symbol','Noto Color Emoji'">
+      <table align="center" width="100%" border="0" cellpadding="0" cellspacing="0" role="presentation" style="max-width:500px;margin-left:auto;margin-right:auto;margin-top:2.5rem;margin-bottom:2.5rem;border-radius:0.25rem;border-width:1px;border-style:solid;border-color:rgb(229,231,235);padding-left:2.5rem;padding-right:2.5rem;padding-top:1.25rem;padding-bottom:1.25rem">
+        <tbody>
+          <tr style="width:100%">
+            <td>
+              <table align="center" width="100%" border="0" cellpadding="0" cellspacing="0" role="presentation" style="margin-top:2rem">
+                <tbody>
+                  <tr>
+                    <td>
+                      <img alt="Echo Chat" height="40" src="https://res.cloudinary.com/ytx/image/upload/v1736163180/echo_gmxbwc.png" style="display:block;outline:none;border:none;text-decoration:none;margin-left:auto;margin-right:auto;margin-top:0px;margin-bottom:0px" />
+                    </td>
+                  </tr>
+                </tbody>
               </table>
+              ${content}
             </td>
           </tr>
-        </table>
-        <table role="presentation" width="100%" cellspacing="0" cellpadding="0">
-          <tr>
-            <td style="font-size:12px;color:#b7b7b7;text-align:center;padding-top:15px;padding-bottom:15px;">
-              <a href="https://www.echochat.com/terms-and-conditions" style="color:#b7b7b7;text-decoration:underline;" target="_blank">Terms & Conditions</a> | <a href="https://www.echochat.com/privacy-policy" style="color:#b7b7b7;text-decoration:underline;" target="_blank">Privacy Policy</a> | <a href="https://play.google.com/store/apps/details?id=com.echochat.app" style="color:#b7b7b7;text-decoration:underline;" target="_blank">Download the App</a>
-              <p style="margin-top:20px;">©2024 Echo Chat. All rights reserved.</p>
-            </td>
-          </tr>
-        </table>
-      </td>
-    </tr>
-  </table>
-</div>
+        </tbody>
+      </table>
+    </div>
+  `
 
+  const verifyEmailTemplate = `
+    <h1 style="margin-left:0px;margin-right:0px;margin-top:1.75rem;margin-bottom:1.75rem;padding:0px;text-align:center;font-size:1.25rem;line-height:1.75rem;font-weight:600;color:rgb(0,0,0)">
+      Please confirm your email address
+    </h1>
+    <p style="font-size:0.875rem;line-height:1.5rem;margin:16px 0;margin-left:auto;margin-right:auto">
+      Enter this code on the Echo Chat verify page to complete your sign up:
+    </p>
+    <table align="center" width="100%" border="0" cellpadding="0" cellspacing="0" role="presentation" style="margin-top:2rem;margin-bottom:2rem">
+      <tbody>
+        <tr>
+          <td>
+            <div style="margin-left:auto;margin-right:auto;width:fit-content;border-radius:0.75rem;padding-left:1.5rem;padding-right:1.5rem;padding-top:0.75rem;padding-bottom:0.75rem;text-align:center;font-family:ui-monospace,SFMono-Regular,Menlo,Monaco,Consolas,'Liberation Mono','Courier New',monospace;font-size:1.5rem;line-height:2rem;font-weight:600;letter-spacing:0.25em">
+              ${options.message}
+            </div>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+    <p style="font-size:0.875rem;line-height:1.5rem;margin:16px 0;color:rgb(0,0,0)">
+      This code expires in 10 minutes.
+    </p>
+    <hr style="width:100%;border:none;border-top:1px solid #eaeaea;margin-left:0px;margin-right:0px;margin-top:1.5rem;margin-bottom:1.5rem;border-width:1px;border-color:rgb(229,231,235)">
+    <p style="font-size:12px;line-height:1.5rem;margin:16px 0;color:rgb(107,114,128)">
+      This email was intended for <span style="color:rgb(0,0,0)"><a href="mailto:${options.email}" target="_blank">${options.email}</a></span>. 
+      If you were not expecting this email, you can ignore this email. If you are concerned about your account's safety, 
+      please reply to this email to get in touch with us.
+    </p>
+  `
+
+  const passwordResetTemplate = `
+    <h1 style="margin-left:0px;margin-right:0px;margin-top:1.75rem;margin-bottom:1.75rem;padding:0px;text-align:center;font-size:1.25rem;line-height:1.75rem;font-weight:600;color:rgb(0,0,0)">
+      Reset your password
+    </h1>
+    <p style="font-size:0.875rem;line-height:1.5rem;margin:16px 0;margin-left:auto;margin-right:auto">
+      Enter this code to reset your password:
+    </p>
+    <table align="center" width="100%" border="0" cellpadding="0" cellspacing="0" role="presentation" style="margin-top:2rem;margin-bottom:2rem">
+      <tbody>
+        <tr>
+          <td>
+            <div style="margin-left:auto;margin-right:auto;width:fit-content;border-radius:0.75rem;padding-left:1.5rem;padding-right:1.5rem;padding-top:0.75rem;padding-bottom:0.75rem;text-align:center;font-family:ui-monospace,SFMono-Regular,Menlo,Monaco,Consolas,'Liberation Mono','Courier New',monospace;font-size:1.5rem;line-height:2rem;font-weight:600;letter-spacing:0.25em">
+              ${options.message}
+            </div>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+    <p style="font-size:0.875rem;line-height:1.5rem;margin:16px 0;color:rgb(0,0,0)">
+      This code expires in 10 minutes.
+    </p>
+    <hr style="width:100%;border:none;border-top:1px solid #eaeaea;margin-left:0px;margin-right:0px;margin-top:1.5rem;margin-bottom:1.5rem;border-width:1px;border-color:rgb(229,231,235)">
+    <p style="font-size:12px;line-height:1.5rem;margin:16px 0;color:rgb(107,114,128)">
+      If you did not request this password reset, you can ignore this email.
+    </p>
+  `
+
+  const subscriptionActiveTemplate = `
+    <h1 style="margin-left:0px;margin-right:0px;margin-top:1.75rem;margin-bottom:1.75rem;padding:0px;text-align:center;font-size:1.25rem;line-height:1.75rem;font-weight:600;color:rgb(0,0,0)">
+      Thanks for going Premium!
+    </h1>
+    <p style="font-size:0.875rem;line-height:1.5rem;margin:16px 0;margin-left:auto;margin-right:auto">
+      Your payment has been successfully processed. Here are your order details:
+    </p>
+    <table align="center" width="100%" border="0" cellpadding="0" cellspacing="0" role="presentation" style="margin-top:2rem;margin-bottom:2rem">
+      <tbody>
+        <tr>
+          <td style="background-color:rgb(249,250,251);border-radius:0.75rem;padding:1.5rem">
+            <table style="width:100%">
+              <tr>
+                <td style="padding-bottom:1rem">
+                  <p style="font-size:0.75rem;color:rgb(107,114,128);margin:0">Payment ID</p>
+                  <p style="font-size:0.875rem;margin:0.25rem 0 0">${options.razorpayId}</p>
+                </td>
+                <td style="padding-bottom:1rem">
+                  <p style="font-size:0.75rem;color:rgb(107,114,128);margin:0">Date</p>
+                  <p style="font-size:0.875rem;margin:0.25rem 0 0">${options.dateOfActivation}</p>
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <p style="font-size:0.75rem;color:rgb(107,114,128);margin:0">Plan</p>
+                  <p style="font-size:0.875rem;margin:0.25rem 0 0">${options.planName}</p>
+                </td>
+                <td>
+                  <p style="font-size:0.75rem;color:rgb(107,114,128);margin:0">Amount</p>
+                  <p style="font-size:0.875rem;margin:0.25rem 0 0">₹${options.price}</p>
+                </td>
+              </tr>
+            </table>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+    <hr style="width:100%;border:none;border-top:1px solid #eaeaea;margin-left:0px;margin-right:0px;margin-top:1.5rem;margin-bottom:1.5rem;border-width:1px;border-color:rgb(229,231,235)">
+    <p style="font-size:12px;line-height:1.5rem;margin:16px 0;color:rgb(107,114,128)">
+      You can view your subscription details at any time from your <a href="${options.dashboardLink}" style="color:rgb(37,99,235);text-decoration:none">dashboard</a>.
+    </p>
+  `
+
+  const freeTrialActiveTemplate = `
+    <h1 style="margin-left:0px;margin-right:0px;margin-top:1.75rem;margin-bottom:1.75rem;padding:0px;text-align:center;font-size:1.25rem;line-height:1.75rem;font-weight:600;color:rgb(0,0,0)">
+      Welcome to Echo Chat!
+    </h1>
+    <p style="font-size:0.875rem;line-height:1.5rem;margin:16px 0;margin-left:auto;margin-right:auto">
+      Hi ${options.username}, your free trial is now active. You can create temporary chatrooms with features like:
+    </p>
+    <ul style="font-size:0.875rem;line-height:1.5rem;margin:16px 0;margin-left:2rem;list-style-type:disc">
+      <li>Self-destructing messages</li>
+      <li>End-to-end encrypted chats</li>
+      <li>No registration required for participants</li>
+      <li>Custom room expiry times</li>
+    </ul>
+    <table align="center" width="100%" border="0" cellpadding="0" cellspacing="0" role="presentation" style="margin-top:2rem;margin-bottom:2rem">
+      <tbody>
+        <tr>
+          <td>
+            <div style="margin-left:auto;margin-right:auto;width:fit-content;text-align:center">
+              <a href="${options.dashboardLink}" style="display:inline-block;background-color:rgb(0,0,0);color:rgb(255,255,255);text-decoration:none;padding:0.75rem 1.5rem;border-radius:0.375rem;font-size:0.875rem;font-weight:500">
+                Create Your First Room
+              </a>
+            </div>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+    <p style="font-size:0.875rem;line-height:1.5rem;margin:16px 0;text-align:center;color:rgb(107,114,128)">
+      Your chatrooms will automatically expire after the set duration, ensuring your conversations stay private.
+    </p>
+    <hr style="width:100%;border:none;border-top:1px solid #eaeaea;margin-left:0px;margin-right:0px;margin-top:1.5rem;margin-bottom:1.5rem;border-width:1px;border-color:rgb(229,231,235)">
+    <p style="font-size:12px;line-height:1.5rem;margin:16px 0;color:rgb(107,114,128)">
+      Having trouble setting up a room? <a href="mailto:support@echochat.com" style="color:rgb(37,99,235);text-decoration:none">Contact us</a> for immediate assistance.
+    </p>
   `
 
   switch (options.tag) {
     case 'verify-email':
-      return baseTemplate(`
-       
-        <h1 style="font-size:28px;font-weight:700;margin:30px 0;color:#333;">Confirm Your Email Address</h1>
-    <p style="font-size:18px;margin-bottom:30px;color:#555;">Please use the code below to complete your registration for Echo Chat.</p>
-    
-  
-    <div style="background-color:#f5f4f5; border-radius:8px; padding:25px; text-align:center; max-width:300px; margin:auto; margin-bottom:30px;">
-      <p style="font-size:24px;margin:0;font-weight:bold;color:#333;">${options.message}</p>
-    </div>
-    
-    <p style="font-size:14px;margin:30px 0;color:#555;">If you don't want to create an account, you can ignore this email.</p>
-      `)
-
+      return baseTemplate(verifyEmailTemplate)
     case 'password_reset':
-      return baseTemplate(`
-        <h1 style="font-size:28px;font-weight:700;margin:30px 0;color:#333;">Password Reset Request</h1>
-        <p style="font-size:18px;margin-bottom:30px;color:#555;">We received a request to reset your password. Please use the code below to reset it:</p>
-        
-        <div style="background-color:#f5f4f5; border-radius:8px; padding:25px; text-align:center; max-width:300px; margin:auto; margin-bottom:30px;">
-          <p style="font-size:24px;margin:0;font-weight:bold;color:#333;">${options.message}</p>
-        </div>
-        
-        <p style="font-size:14px;margin:30px 0;color:#555;">If you did not request a password reset, please ignore this email.</p>
-      `)
-
+      return baseTemplate(passwordResetTemplate)
     case 'subscription_active':
-      return baseTemplate(`
-         <table style="max-width: 660px; margin: 0 auto; padding: 20px 0 48px; width: 100%; font-family: Arial, sans-serif; color: #333;">
-  <tr>
-    <td style="text-align: center;">
-      <h1 style="font-size:28px; font-weight:700; margin:30px 0; color:#333;">Thanks for your order</h1>
-    </td>
-  </tr>
-
-  <tr>
-    <td style="text-align: center; margin: 36px 0 40px;">
-      <p style="font-size: 16px; line-height: 24px; font-weight: 500; color: #111111;">
-        Your payment has been successfully processed. Below are the details of your transaction.
-      </p>
-    </td>
-  </tr>
-
-  <tr>
-    <td style="background-color: #f8f8f8; padding: 20px; border-radius: 8px; font-size: 14px; color: #333;">
-      <table style="width: 100%; border-spacing: 0;">
-        <tr>
-          <td style="width: 48%; padding-right: 10px; vertical-align: top;">
-            <p style="font-size: 12px; color: #777; margin: 0;">Payment ID</p>
-            <p style="font-size: 14px; margin: 5px 0;">${options.razorpayId}</p>
-          </td>
-          <td style="width: 48%; padding-left: 10px; vertical-align: top;">
-            <p style="font-size: 12px; color: #777; margin: 0;">Invoice Date</p>
-            <p style="font-size: 14px; margin: 5px 0;">${options.dateOfActivation}</p>
-          </td>
-        </tr>
-
-        <tr>
-          <td style="width: 48%; padding-right: 10px; vertical-align: top;">
-            <p style="font-size: 12px; color: #777; margin: 0;">Order ID</p>
-            <a href="https://example.com/order-details/${options.planId}" style="color: #067df7; text-decoration: none; font-size: 14px;">${options.planId}</a>
-          </td>
-          <td style="width: 48%; padding-left: 10px; vertical-align: top;">
-            <p style="font-size: 12px; color: #777; margin: 0;">Billed To</p>
-            <p style="font-size: 14px; margin: 5px 0;">${options.username}</p>
-          </td>
-        </tr>
-      </table>
-    </td>
-  </tr>
-
-  <tr >
-    <td style="padding: 20px 0; border-radius: 8px;">
-      <table style="width: 100%; border-spacing: 0;">
-        <tr>
-          <td>
-            <p style="font-size: 14px; font-weight: 600; margin: 0;">${options.planName}</p>
-            <p style="font-size: 14px; color: #777; margin: 0;">${options.duration} months</p>
-          </td>
-          <td style="text-align: right;">
-            <p style="font-size: 14px; font-weight: 600; margin: 0;">₹${options.price}</p>
-          </td>
-        </tr>
-      </table>
-    </td>
-  </tr>
-
-  <tr>
-    <td style="width: 100%;  text-align: right; border-top: 1px solid #e0e0e0; border-bottom: 1px solid #e0e0e0;">
-      <table style="width: 100%; border-spacing: 0;">
-        <tr>
-          <td style="text-align: right; padding-right: 20px;width:70%">
-            <p style="font-size: 12px; font-weight: 600; color: #777; margin: 0;">TOTAL</p>
-          </td>
-          <td style="border-left: 1px solid #e0e0e0; height: 48px;"></td>
-          <td style="text-align: right; padding-left: 20px;">
-            <p style="font-size: 16px; font-weight: 600; margin: 0;">₹${options.price}</p>
-          </td>
-        </tr>
-      </table>
-    </td>
-  </tr>
-
-  <tr>
-    <td style="margin-top: 30px; text-align: center;">
-      <p style="font-size: 14px; line-height: 24px; font-weight: 500; color: #111111;">
-        Enjoy your subscription and the benefits it brings! You can manage your subscription at any time from your 
-        <a href="${options.dashboardLink}" style="display: block; margin: 20px; padding: 12px 24px; font-size: 14px; color: #fff; background-color: #067df7; text-decoration: none; border-radius: 5px; font-weight: 600; text-align: center;" target="_blank">
-          Dashboard
-        </a>.
-      </p>
-    </td>
-  </tr>
-
-  <tr>
-    <td style="text-align: center;">
-      <p style="font-size: 14px; line-height: 24px; font-weight: 500; color: #111111;">
-        If you have any questions, feel free to <a href="mailto:support@echochat.com" style="color: #9652f4; text-decoration: none;">contact us</a>.
-      </p>
-      <p style="font-size: 14px; line-height: 24px; font-weight: 500; color: #111111;">
-        Thank you for choosing our service!
-      </p>
-    </td>
-  </tr>
-</table>
-
-
-      `)
+      return baseTemplate(subscriptionActiveTemplate)
     case 'free_trial_active':
-      return baseTemplate(`
-      <div style="font-family: Arial, sans-serif; text-align: center; padding: 20px 0; background-color: #ffffff;">
-  
-  <h2 style="color: #9652f4; font-size: 24px; margin-bottom: 20px;">${options.message} Activated!</h2>
-  
-  <p style="font-size: 18px; color: #333; margin-bottom: 20px;">Dear ${options.username},</p>
-  
-  <p style="font-size: 16px; color: #555; margin-bottom: 30px;">Your subscription is now active. Enjoy all the benefits of our service.</p>
-  
-  <a href="${options.dashboardLink}" 
-     style="display: inline-block; padding: 12px 25px; font-size: 16px; color: white; background-color: #9652f4; text-decoration: none; border-radius: 5px; margin-top: 20px;">
-     Go to Dashboard
-  </a>
-  
-  <p style="font-size: 14px; color: #555; margin-top: 30px;">
-    If you have any questions, feel free to <a href="mailto:support@echochat.com" style="color: #9652f4;">contact us</a>.
-  </p>
-  
-  <p style="font-size: 16px; color: #333; margin-top: 30px;">Thank you for choosing our service!</p>
-
-</div>
-
-      `)
-
+      return baseTemplate(freeTrialActiveTemplate)
     default:
-      return baseTemplate(options.message)
+      return baseTemplate(options.message || '')
   }
 }

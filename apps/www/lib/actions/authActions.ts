@@ -17,23 +17,9 @@ export const SendVerificationOtpAction = actionClient
         credentials: 'include',
       }
     )
-
     if (!res.ok) {
       const errorData = await res.json()
-      if (
-        errorData.errors?.email?._errors?.includes(
-          'User already exists with this email'
-        )
-      ) {
-        return {
-          serverError: null,
-          validationErrors: {
-            email: {
-              _errors: ['User already exists with this email'],
-            },
-          },
-        }
-      }
+
       throw new Error(errorData.message || 'Failed to send verification code')
     }
 

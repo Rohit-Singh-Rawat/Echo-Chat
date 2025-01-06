@@ -2,18 +2,22 @@ import nodemailer from 'nodemailer'
 import { getTemplate } from './getMailTemplate'
 
 export type Options = {
-  email: string
-  subject: string
-  message: string
+  tag:
+    | 'verify-email'
+    | 'password_reset'
+    | 'subscription_active'
+    | 'free_trial_active'
+  message?: string
+  email?: string
   username?: string
-  dashboardLink?: string
-  tag?: string
   razorpayId?: string
+  subject:string
+  dateOfActivation?: string
   planId?: string
-  dateOfActivation?: Date
+  planName?: string
   duration?: number
   price?: number
-  planName?: string
+  dashboardLink?: string
 }
 export const sendMail = async (options: Options) => {
   try {

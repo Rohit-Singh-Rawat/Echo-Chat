@@ -1,5 +1,6 @@
 import client from '@echo/db/src'
 import { Request, Response } from 'express'
+import { sendMail } from '../utils/sendMail'
 
 export const activateFreePlan = async (
   req: Request,
@@ -24,6 +25,16 @@ export const activateFreePlan = async (
       return
     }
 
+    const user = await client.user.findUnique({
+      where: { id: userId },
+      select: { email: true, name: true }
+    })
+
+    if (!user) {
+      res.status(404).json({ message: 'User not found' })
+      return
+    }
+
     const subscription = await client.subscription.create({
       data: {
         isMonthly: false,
@@ -38,6 +49,14 @@ export const activateFreePlan = async (
       data: {
         subscriptionId: subscription.id,
       },
+    })
+    await sendMail({
+      subject: 'Welcome to Echo Chat Free Trial',
+      email: user.email,
+      message: '',
+      tag: 'free_trial_active',
+      username: user.name,
+      dashboardLink: `${process.env.FRONTEND_URL}/dashboard`
     })
 
     res.status(200).json({ message: 'Free plan activated successfully' })
