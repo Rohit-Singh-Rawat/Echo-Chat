@@ -7,6 +7,7 @@ import {
   sendVerificationOtp,
   getSession,
 } from '../controllers/authController'
+import { googleAuth } from '../controllers/googleAuthController'
 import { authenticateToken } from '../middleware/authMiddleware'
 
 const router: Router = Router()
@@ -17,5 +18,6 @@ router.post('/logout', authenticateToken, logout)
 router.post('/signup', createAccount)
 router.post('/verify-email', sendVerificationOtp)
 router.get('/me', authenticateToken, getSession)
+router.post('/google', googleAuth)
 
 export default router

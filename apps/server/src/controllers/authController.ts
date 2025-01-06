@@ -1,6 +1,5 @@
 import { Request, Response } from 'express'
 import jwt, { Secret } from 'jsonwebtoken'
-import { config } from '../config'
 import {
   signupSchema,
   emailVerifySchema,
@@ -18,9 +17,9 @@ export const callback = async (req: Request, res: Response): Promise<void> => {
   try {
     // Simplified: Assume handleOAuthCallback is implemented elsewhere
     const token = 'dummy_token' // Replace with actual token generation
-    res.redirect(`${config.FRONTEND_URL}/auth/success?token=${token}`)
+    res.redirect(`${process.env.FRONTEND_URL}/auth/success?token=${token}`)
   } catch (error) {
-    res.redirect(`${config.FRONTEND_URL}/auth/error`)
+    res.redirect(`${process.env.FRONTEND_URL}/auth/error`)
   }
 }
 
@@ -136,7 +135,6 @@ export const createAccount = async (
     res.status(500).json({ message: 'Failed to create account' })
   }
 }
-
 export const loginWithCredentials = async (
   email: string,
   password: string
@@ -144,6 +142,7 @@ export const loginWithCredentials = async (
   success: boolean
   token?: string
   user?: { id: string; email: string }
+  message?: string
 }> => {
   const user = await client.user.findUnique({
     where: {
@@ -152,12 +151,14 @@ export const loginWithCredentials = async (
   })
 
   if (!user) {
-    return { success: false }
+    return { success: false, message: 'User not found' }
   }
-
+  if (!user.password) {
+    return { success: false, message: 'Invalid login method' }
+  }
   const isValidPassword = await comparePassword(password, user.password)
   if (!isValidPassword) {
-    return { success: false }
+    return { success: false, message: 'Invalid password' }
   }
 
   const token = jwt.sign(
@@ -165,7 +166,12 @@ export const loginWithCredentials = async (
     process.env.JWT_SECRET as Secret
   )
 
-  return { success: true, token, user: { id: user.id, email: user.email } }
+  return {
+    success: true,
+    token,
+    user: { id: user.id, email: user.email },
+    message: 'Login successful',
+  }
 }
 
 export const login = async (req: Request, res: Response): Promise<void> => {
@@ -181,7 +187,9 @@ export const login = async (req: Request, res: Response): Promise<void> => {
     const loginResult = await loginWithCredentials(email, password)
 
     if (!loginResult.success) {
-      res.status(401).json({ message: 'Invalid email or password' })
+      res
+        .status(401)
+        .json({ message: loginResult.message || 'Invalid email or password' })
       return
     }
 
@@ -248,7 +256,7 @@ export const getSession = async (
         email: true,
         name: true,
         subscription: true,
-        image:true,
+        image: true,
         subscriptionId: true,
       },
     })

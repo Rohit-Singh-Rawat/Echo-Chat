@@ -43,8 +43,13 @@ export const emailVerifySchema = z.object({
   email: z.string().min(1, 'Required').email('Invalid email'),
 })
 
+export const googleAuthSchema = z.object({
+  access_token: z.string(),
+})
+
 export type SignupInput = z.infer<typeof signupSchema>
 export type LoginInput = z.infer<typeof loginSchema>
 export type ForgotPasswordInput = z.infer<typeof forgotPasswordSchema>
 export type ResetPasswordInput = z.infer<typeof resetPasswordSchema>
 export type EmailVerifyInput = z.infer<typeof emailVerifySchema>
+export type GoogleAuthInput = z.infer<typeof googleAuthSchema>

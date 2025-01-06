@@ -8,15 +8,18 @@ import { toast } from 'sonner'
 
 import { useRegisterContext } from '@/app/context/RegistryContext'
 import { AuthHeader } from '@/components/auth/auth-header'
-import { SocialAuthButtons } from '@/components/auth/social-auth-buttons'
 import Input from '@/components/shared/Input'
 import { SendVerificationOtpAction } from '@/lib/actions/authActions'
+import { useAuthStore } from '@/store/auth-store'
 
 import { Button } from '../shared/Button'
+
+import AuthProviderButtons from './AuthProviderButtons'
 
 const SignupCard = () => {
   const { setStep, setEmail, setPassword, setFirstName, setLastName } =
     useRegisterContext()
+  const { isAuthenticating, setIsAuthenticating } = useAuthStore()
   const form = useForm<Omit<SignupInput, 'code'>>({
     resolver: zodResolver(signupSchema.omit({ code: true })),
     defaultValues: {
@@ -35,13 +38,16 @@ const SignupCard = () => {
       setLastName(form.getValues('lastName'))
       setStep('verify')
       toast.success('Verification email sent successfully')
+      setIsAuthenticating(false)
     },
     onError: ({ error }) => {
       console.log(error)
       toast.error(error.serverError || 'An error occurred')
+      setIsAuthenticating(false)
     },
   })
   const onSubmit = form.handleSubmit((data) => {
+    setIsAuthenticating(true)
     executeAsync({ email: data.email })
   })
 
@@ -51,12 +57,8 @@ const SignupCard = () => {
         title="Create an account"
         description="Please enter your details to sign up."
       />
-      <form
-        onSubmit={onSubmit}
-        className="mt-5 flex grow flex-col justify-center space-y-4"
-      >
-        <SocialAuthButtons isAuthenticating={isExecuting} />
-
+      <div className="mt-5 flex grow flex-col justify-center space-y-4">
+        <AuthProviderButtons />
         <div className="relative flex items-center">
           <div className="grow border-t border-gray-200"></div>
           <span className="shrink rounded-full border p-1 text-[9px] text-gray-400">
@@ -65,52 +67,55 @@ const SignupCard = () => {
           <div className="grow border-t border-gray-200"></div>
         </div>
 
-        <div className="space-y-4">
-          <div className="flex space-x-2">
+        <form onSubmit={onSubmit} className="space-y-4">
+          <div className="space-y-4">
+            <div className="flex space-x-2">
+              <Input
+                type="text"
+                placeholder="First name"
+                className="w-1/2 rounded-md px-4 py-2"
+                {...form.register('firstName')}
+                error={form.formState.errors.firstName?.message}
+                required
+              />
+              <Input
+                type="text"
+                placeholder="Last name"
+                className="w-1/2 rounded-md px-4 py-2"
+                {...form.register('lastName')}
+                error={form.formState.errors.lastName?.message}
+                required
+              />
+            </div>
             <Input
-              type="text"
-              placeholder="First name"
-              className="w-1/2 rounded-md px-4 py-2"
-              {...form.register('firstName')}
-              error={form.formState.errors.firstName?.message}
+              type="email"
+              placeholder="Email address"
+              className="w-full rounded-md px-4 py-2"
+              {...form.register('email')}
+              error={form.formState.errors.email?.message}
               required
             />
             <Input
-              type="text"
-              placeholder="Last name"
-              className="w-1/2 rounded-md px-4 py-2"
-              {...form.register('lastName')}
-              error={form.formState.errors.lastName?.message}
+              type="password"
+              placeholder="Create password"
+              className="w-full rounded-md px-4 py-2"
+              {...form.register('password')}
+              error={form.formState.errors.password?.message}
               required
             />
           </div>
-          <Input
-            type="email"
-            placeholder="Email address"
-            className="w-full rounded-md px-4 py-2"
-            {...form.register('email')}
-            error={form.formState.errors.email?.message}
-            required
-          />
-          <Input
-            type="password"
-            placeholder="Create password"
-            className="w-full rounded-md px-4 py-2"
-            {...form.register('password')}
-            error={form.formState.errors.password?.message}
-            required
-          />
-        </div>
 
-        <Button
-          type="submit"
-          className="w-full"
-          disabled={isExecuting}
-          isLoading={isExecuting}
-        >
-          Create account
-        </Button>
-      </form>
+          <Button
+            type="submit"
+            className="w-full"
+            disabled={isAuthenticating}
+            isLoading={isExecuting}
+          >
+            Create account
+          </Button>
+        </form>
+      </div>
+
       <p className="mt-6 text-center text-sm text-gray-500">
         Already have an account?{' '}
         <Link

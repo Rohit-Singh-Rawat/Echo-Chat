@@ -1,5 +1,10 @@
 'use server'
-import { emailVerifySchema, signupSchema, loginSchema } from '@echo/lib'
+import {
+  emailVerifySchema,
+  signupSchema,
+  loginSchema,
+  googleAuthSchema,
+} from '@echo/lib'
 import { cookies } from 'next/headers'
 
 import { actionClient } from './safe-actions'
@@ -135,3 +140,43 @@ export const logout = actionClient.action(async () => {
     throw error
   }
 })
+export const GoogleAuthAction = actionClient
+  .schema(googleAuthSchema)
+  .action(async ({ parsedInput: { access_token } }) => {
+    try {
+      const response = await fetch(
+        `${process.env.NEXT_PUBLIC_SERVER_API_BASE_URL}/api/v1/auth/google`,
+        {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({ access_token }),
+        }
+      )
+
+      const data = await response.json()
+
+      if (!response.ok) {
+        throw new Error(data.message || 'Failed to authenticate with Google')
+      }
+
+      const cookieStore = await cookies()
+      cookieStore.set('token', data.token, {
+        httpOnly: true,
+        secure: process.env.NODE_ENV === 'production',
+        sameSite: 'lax',
+        path: '/',
+      })
+
+      return { success: true }
+    } catch (error) {
+      console.error('Google auth error:', error)
+      throw {
+        serverError:
+          error instanceof Error
+            ? error.message
+            : 'Failed to authenticate with Google',
+      }
+    }
+  })
