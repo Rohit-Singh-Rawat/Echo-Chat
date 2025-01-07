@@ -209,13 +209,45 @@ export const forgotPassword = async (
       res.status(400).json({ errors: result.error.flatten().fieldErrors })
       return
     }
-    // const { email } = result.data
-    // Simplified: Assume password reset process is handled elsewhere
-    res.json({ message: 'Password reset instructions sent' })
+    const { email } = result.data
+
+    const user = await client.user.findUnique({
+      where: { email },
+    })
+
+    if (!user) {
+      res.status(400).json({ message: 'No user found with this email' })
+      return
+    }
+
+    await client.passwordResetToken.deleteMany({
+      where: {
+        identifier: email,
+      },
+    })
+
+    const code = generateOTP()
+    await client.passwordResetToken.create({
+      data: {
+        identifier: email,
+        token: code,
+        expires: new Date(Date.now() + 2 * 60 * 1000),
+      },
+    })
+
+    sendMail({
+      subject: `Echo Chat: Reset your password`,
+      email,
+      message: `${code}`,
+      tag: 'password_reset',
+    })
+
+    res.json({
+      message: 'Password reset code sent successfully',
+      success: true,
+    })
   } catch (error) {
-    res
-      .status(500)
-      .json({ message: 'Failed to process forgot password request' })
+    res.status(500).json({ message: 'Failed to process forgot password request' })
   }
 }
 
@@ -229,9 +261,41 @@ export const resetPassword = async (
       res.status(400).json({ errors: result.error.flatten().fieldErrors })
       return
     }
-    // const { password } = result.data
-    // Simplified: Assume password reset is handled elsewhere
-    res.json({ message: 'Password reset successful' })
+    const { email, password, code } = result.data
+
+    const resetToken = await client.passwordResetToken.findUnique({
+      where: {
+        identifier: email,
+        token: code,
+        expires: {
+          gte: new Date(),
+        },
+      },
+    })
+
+    if (!resetToken) {
+      res.status(400).json({ message: 'Invalid or expired reset code' })
+      return
+    }
+
+    await client.passwordResetToken.delete({
+      where: {
+        identifier: email,
+        token: code,
+      },
+    })
+
+    await client.user.update({
+      where: { email },
+      data: {
+        password: await hashPassword(password),
+      },
+    })
+
+    res.json({ 
+      message: 'Password reset successful',
+      success: true
+    })
   } catch (error) {
     res.status(500).json({ message: 'Failed to reset password' })
   }
@@ -272,3 +336,4 @@ export const getSession = async (
     res.status(500).json({ message: 'Failed to get session' })
   }
 }
+

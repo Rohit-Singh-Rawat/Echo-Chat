@@ -22,9 +22,9 @@ export const loginSchema = z.object({
 export const forgotPasswordSchema = z.object({
   email: z.string().min(1, 'Required').email('Invalid email'),
 })
-
 export const resetPasswordSchema = z
   .object({
+    email: z.string().min(1, 'Required').email('Invalid email'),
     password: z
       .string()
       .min(8, 'Min 8 characters')
@@ -32,11 +32,7 @@ export const resetPasswordSchema = z
         /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/,
         'Include uppercase, lowercase, number, special char'
       ),
-    confirmPassword: z.string().min(1, 'Confirm password'),
-  })
-  .refine((data) => data.password === data.confirmPassword, {
-    message: "Passwords don't match",
-    path: ['confirmPassword'],
+    code: z.string().min(6, 'Code must be 6 characters long'),
   })
 
 export const emailVerifySchema = z.object({

@@ -17,6 +17,7 @@ import {
   SidebarMenuButton,
   useSidebar,
 } from '@echo/ui/components/ui/sidebar.tsx'
+import { useQueryClient } from '@tanstack/react-query'
 import { Sparkles } from 'lucide-react'
 import { useRouter } from 'next/navigation'
 import { useAction } from 'next-safe-action/hooks'
@@ -29,7 +30,6 @@ import Downitem from './Downitem'
 import { LogoutIcon } from './icons/animated/logout'
 import { UserIcon } from './icons/animated/user'
 import AccountDialog from './shared/AccountDialog'
-import { useQueryClient } from '@tanstack/react-query'
 
 export function NavUser() {
   const { isMobile } = useSidebar()
@@ -39,7 +39,6 @@ export function NavUser() {
   const queryClient = useQueryClient()
   const { execute: handleLogout } = useAction(logout, {
     onSuccess: () => {
-      
       queryClient.invalidateQueries({ queryKey: ['user'] })
       router.push('/')
       toast.success('Logged out successfully', {
@@ -100,7 +99,9 @@ export function NavUser() {
             </Avatar>
             <div className="grid flex-1 text-left text-sm leading-tight">
               <span className="truncate font-semibold">{data?.user?.name}</span>
-              <span className="truncate text-xs">{data?.user?.email}</span>
+              <span className="truncate text-xs text-gray-500">
+                {data?.user?.email}
+              </span>
             </div>
           </div>
         </DropdownMenuLabel>
@@ -120,8 +121,8 @@ export function NavUser() {
             <AccountDialog
               trigger={
                 <button className="flex w-full items-center gap-3 rounded px-2 py-1.5 text-left text-sm hover:bg-neutral-100">
-                  <UserIcon className="size-4" />
-                  <span className="">Account</span>
+                  <UserIcon className="size-4 text-gray-600" />
+                  <span className="text-gray-600">Account</span>
                 </button>
               }
             />

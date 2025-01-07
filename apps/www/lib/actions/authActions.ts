@@ -5,6 +5,8 @@ import {
   loginSchema,
   googleAuthSchema,
   githubAuthSchema,
+  forgotPasswordSchema,
+  resetPasswordSchema,
 } from '@echo/lib'
 import { cookies } from 'next/headers'
 
@@ -91,6 +93,62 @@ export const LoginAction = actionClient
     }
 
     throw new Error('Invalid credentials')
+  })
+
+export const ForgotPasswordAction = actionClient
+  .schema(forgotPasswordSchema)
+  .action(async ({ parsedInput: { email } }) => {
+    const res = await fetch(
+      `${process.env.NEXT_PUBLIC_SERVER_API_BASE_URL}/api/v1/auth/forgot-password`,
+      {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ email }),
+        credentials: 'include',
+      }
+    )
+
+    const data = await res.json()
+    if (!res.ok) {
+      throw new Error(
+        data.message || 'Failed to process forgot password request'
+      )
+    }
+
+    if (data.success) {
+      return { message: 'ok' }
+    }
+
+    throw new Error('Failed to send reset code')
+  })
+
+export const ResetPasswordAction = actionClient
+  .schema(resetPasswordSchema)
+  .action(async ({ parsedInput: { password, email, code } }) => {
+    const res = await fetch(
+      `${process.env.NEXT_PUBLIC_SERVER_API_BASE_URL}/api/v1/auth/reset-password`,
+      {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ password, email, code }),
+        credentials: 'include',
+      }
+    )
+
+    const data = await res.json()
+    if (!res.ok) {
+      throw new Error(data.message || 'Failed to reset password')
+    }
+
+    if (data.success) {
+      return { message: 'ok' }
+    }
+
+    throw new Error('Failed to reset password')
   })
 
 export const getSession = actionClient.action(async () => {

@@ -28,13 +28,13 @@ const Downitem = ({ icon, title, href, onClick }: Props) => {
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
       onClick={handleClick}
-      className="flex items-center justify-start gap-2.5"
+      className="flex cursor-pointer items-center justify-start gap-2.5"
     >
       {React.cloneElement(icon as React.ReactElement, {
         animate: isHovered,
-        className: 'size-4',
+        className: 'size-4 text-gray-600',
       })}
-      <span className="font-normal">{title}</span>
+      <span className="font-normal text-gray-600">{title}</span>
     </DropdownMenuItem>
   )
 }
