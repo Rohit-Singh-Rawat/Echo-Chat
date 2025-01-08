@@ -3,19 +3,25 @@
 import { useDisplayStore } from '@/app/store/DisplayStore'
 import ChatRoomCard from '@/components/dashboard/RoomCard'
 import RoomList from '@/components/dashboard/RoomList'
-import { Rooms } from '@/types'
+import { Rooms, UserStats } from '@/types'
 
 import NoRooms from './NoRooms'
 
-export default function DisplayRooms({ rooms }: { rooms: Rooms }) {
+export default function DisplayRooms({
+  rooms,
+  stats,
+}: {
+  rooms: Rooms
+  stats: UserStats
+}) {
   const { displayLists } = useDisplayStore()
-  const roomsList = Object.entries(rooms).map(([id, room]) => ({
+  const roomsList = Object.entries(rooms).map(([_id, room]) => ({
     ...room,
   }))
   if (!roomsList.length) {
     return (
       <div className="my-10">
-        <NoRooms />
+        <NoRooms stats={stats} />
       </div>
     )
   }

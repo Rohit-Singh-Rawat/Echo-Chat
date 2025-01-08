@@ -31,7 +31,7 @@ const page = async () => {
           <CreateRoomButton {...stats} />
         </div>
       </div>
-      <DisplayRooms rooms={rooms} />
+      <DisplayRooms rooms={rooms} stats={stats} />
     </div>
   )
 }

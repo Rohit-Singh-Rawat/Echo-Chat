@@ -22,6 +22,7 @@ model User {
   updatedAt       DateTime          @updatedAt
   RoomParticipant RoomParticipant[]
   provider        AuthProvider      @default(EMAIL)
+  purchases       Purchase[]
 }
 
 enum AuthProvider {
@@ -31,18 +32,19 @@ enum AuthProvider {
 }
 
 model Subscription {
-  id        String    @id @default(cuid())
-  user      User      @relation(fields: [userId], references: [id], onDelete: Cascade)
-  userId    String    @unique
-  plan      Plan      @relation(fields: [planId], references: [id], onDelete: Cascade)
+  id        String     @id @default(cuid())
+  user      User       @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId    String     @unique
+  plan      Plan       @relation(fields: [planId], references: [id], onDelete: Cascade)
   planId    String
-  isPro     Boolean   @default(false)
-  startDate DateTime  @default(now())
+  isPro     Boolean    @default(false)
+  startDate DateTime   @default(now())
   endDate   DateTime?
-  isMonthly Boolean   @default(true)
-  autoRenew Boolean   @default(true)
-  createdAt DateTime  @default(now())
-  updatedAt DateTime  @updatedAt
+  isMonthly Boolean    @default(true)
+  autoRenew Boolean    @default(true)
+  createdAt DateTime   @default(now())
+  updatedAt DateTime   @updatedAt
+  purchases Purchase[]
 }
 
 model Plan {
@@ -56,6 +58,24 @@ model Plan {
   createdAt     DateTime       @default(now())
   updatedAt     DateTime       @updatedAt
   subscriptions Subscription[]
+  price         Int            @default(10)
+}
+
+model Purchase {
+  id                String        @id @default(cuid())
+  razorpayOrderId   String        @unique
+  razorpayPaymentId String?       @unique
+  razorpaySignature String?       @unique
+  amount            Int
+  currency          String        @default("INR")
+  status            String        @default("created")
+  user              User          @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId            String
+  planId            String
+  subscription      Subscription? @relation(fields: [subscriptionId], references: [id])
+  subscriptionId    String?
+  createdAt         DateTime      @default(now())
+  updatedAt         DateTime      @updatedAt
 }
 
 model Room {

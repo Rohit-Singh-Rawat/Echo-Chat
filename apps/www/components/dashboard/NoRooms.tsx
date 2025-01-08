@@ -4,6 +4,8 @@ import { Button } from '@echo/ui/components/ui/button.tsx'
 import { CardStack } from '@echo/ui/components/ui/CardStack.tsx'
 import Link from 'next/link'
 
+import { UserStats } from '@/types'
+
 import CreateRoomButton from './CreateRoomButton'
 import DummyCard from './DummyCard'
 
@@ -22,7 +24,7 @@ const dummyRooms = [
   },
 ]
 
-export default function NoRooms() {
+export default function NoRooms({ stats }: { stats: UserStats }) {
   return (
     <div className="relative flex min-h-[400px] flex-col items-center justify-center gap-8">
       {' '}
@@ -53,11 +55,8 @@ export default function NoRooms() {
             Join a Room
           </Button>
         </Link>
-        {/* <CreateRoomButton /> */}
+        <CreateRoomButton {...stats} showStats={false} />
       </div>
-      {/* <p className="text-sm text-gray-500">
-        Need help? Check out our <Link href="/help" className="text-blue-600 hover:underline">getting started guide</Link>
-      </p> */}
     </div>
   )
 }

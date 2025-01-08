@@ -13,6 +13,7 @@ import { zodResolver } from '@hookform/resolvers/zod'
 import { ChevronDown, ChevronUp, Minus, Plus } from 'lucide-react'
 import { useRouter } from 'next/navigation'
 import { useAction } from 'next-safe-action/hooks'
+import { useState } from 'react'
 import { Button, Group, Input, Label, NumberField } from 'react-aria-components'
 import { useForm } from 'react-hook-form'
 import { toast } from 'sonner'
@@ -27,8 +28,10 @@ type CreateRoomInput = z.infer<typeof createRoomSchema>
 export default function CreateRoomButton({
   totalRooms,
   limits,
+  showStats = true,
   savedRooms,
-}: UserStats) {
+}: UserStats & { showStats?: boolean }) {
+  const [open, setOpen] = useState(false)
   const router = useRouter()
   const form = useForm<CreateRoomInput>({
     resolver: zodResolver(createRoomSchema),
@@ -45,7 +48,7 @@ export default function CreateRoomButton({
       if (result.data?.room) {
         toast.success('Room created successfully')
         router.push(`/room/${result.data.room.id}`)
-        document.querySelector('[role="dialog"]')?.closest('dialog')?.close()
+        setOpen(false)
       }
     },
     onError: (error) => {
@@ -64,7 +67,7 @@ export default function CreateRoomButton({
   }
 
   return (
-    <Dialog>
+    <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger asChild>
         <Button2
           disabled={
@@ -74,11 +77,13 @@ export default function CreateRoomButton({
           }
         >
           Create room
-          {totalRooms !== undefined && limits.maxRooms !== undefined && (
-            <span className="border-primary-foreground/30 text-primary-foreground/60 -me-1 ms-1 inline-flex h-5 max-h-full items-center rounded border px-1 font-[inherit] text-[0.625rem] font-medium">
-              {totalRooms}/{limits.maxRooms}
-            </span>
-          )}
+          {showStats &&
+            totalRooms !== undefined &&
+            limits.maxRooms !== undefined && (
+              <span className="border-primary-foreground/30 text-primary-foreground/60 -me-1 ms-1 inline-flex h-5 max-h-full items-center rounded border px-1 font-[inherit] text-[0.625rem] font-medium">
+                {totalRooms}/{limits.maxRooms}
+              </span>
+            )}
         </Button2>
       </DialogTrigger>
       <DialogContent className="animate-scale-in max-h-[95vh] max-w-[500px] overflow-y-auto p-10">
@@ -196,7 +201,7 @@ export default function CreateRoomButton({
               </div>
             </div>
 
-            <div className="border-input has-[[data-state=checked]]:border-ring relative flex w-full items-start gap-2 rounded-lg border p-4 shadow-sm shadow-black/5">
+            {/* <div className="border-input has-[[data-state=checked]]:border-ring relative flex w-full items-start gap-2 rounded-lg border p-4 shadow-sm shadow-black/5">
               <Switch
                 id="private-room"
                 className="order-1 h-4 w-6 after:absolute after:inset-0 [&_span]:size-3 [&_span]:data-[state=checked]:translate-x-2 rtl:[&_span]:data-[state=checked]:-translate-x-2"
@@ -212,7 +217,7 @@ export default function CreateRoomButton({
                   Only invited participants can join this room
                 </p>
               </div>
-            </div>
+            </div> */}
 
             <Button2
               type="submit"

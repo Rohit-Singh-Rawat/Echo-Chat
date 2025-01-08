@@ -48,8 +48,7 @@ const ForgetPassword = () => {
         router.push('/login')
       },
       onError: ({ error }) => {
-        toast.error(error.serverError ?? 'Something went wrong'
-        )
+        toast.error(error.serverError ?? 'Something went wrong')
       },
     })
   const handleSubmit = async (e: React.FormEvent) => {
