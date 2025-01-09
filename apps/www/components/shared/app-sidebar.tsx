@@ -13,7 +13,6 @@ import {
 import EchoLogo from '../icons/animated/EchoLogo'
 import { History } from '../icons/animated/History'
 import { HomeIcon } from '../icons/animated/Home'
-import { SettingsGearIcon } from '../icons/animated/Settiing'
 import { NavUser } from '../Root-user'
 
 import PremiumBox from './PremiumBox'

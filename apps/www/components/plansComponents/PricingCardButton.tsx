@@ -11,6 +11,8 @@ import {
 
 import { Button } from '../shared/Button'
 
+import { ProPlanDialog } from './ProPlanDialog'
+
 interface PricingCardButtonProps {
   name: string
 }
@@ -42,25 +44,18 @@ export function PricingCardButton({ name }: PricingCardButtonProps) {
     }
   }
 
+  if (name.toLowerCase() === 'pro') {
+    return <ProPlanDialog isPro={isPro} isLoading={isLoading} />
+  }
+
   return (
     <Button
-      className={`mt-3 w-full rounded-lg ${
-        name.toLowerCase() === 'pro'
-          ? 'bg-black hover:bg-black/90'
-          : name.toLowerCase() === 'free'
-            ? 'bg-gray-100 text-black hover:bg-gray-200'
-            : 'bg-gray-100 text-black hover:bg-gray-200'
-      }`}
+      className="mt-3 w-full rounded-lg bg-gray-100 text-black hover:bg-gray-200"
       onClick={handleClick}
-      disabled={
-        isExecuting ||
-        (name.toLowerCase() === 'pro' && isPro) ||
-        (name.toLowerCase() === 'free' && isSubscription) ||
-        isLoading
-      }
+      disabled={isExecuting || isSubscription || isLoading}
       isLoading={isExecuting}
     >
-      Get started
+      Get Started
     </Button>
   )
 }

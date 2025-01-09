@@ -2,7 +2,7 @@ import { Button } from '@echo/ui/components/ui/button.tsx'
 
 const PremiumBox = () => {
   return (
-    <div className="space-y-2 rounded-xl border border-neutral-200 bg-white/80 p-4">
+    <div className="space-y-2 rounded-xl border border-neutral-200 bg-white p-4 transition-shadow duration-300 ease-in-out hover:shadow-md hover:shadow-[#87CEEB]">
       <div className="flex items-center gap-2">
         <div className="flex-center size-7 rounded-full bg-neutral-100">🚀</div>
         <h3 className="font-bold">Become Pro</h3>
