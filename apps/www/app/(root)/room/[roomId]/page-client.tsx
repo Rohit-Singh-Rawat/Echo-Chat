@@ -81,6 +81,7 @@ const PageClient = ({ roomId, token }: PageClientProps) => {
     const handlers: Record<string, () => void> = {
       error: () => setError(data.payload.message),
       room_joined: () => {
+        console.log(data.payload)
         setUserId(data.payload.userId)
         setIsLoading(false)
         SetRoomName(data.payload.roomName)

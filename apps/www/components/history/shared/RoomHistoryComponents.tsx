@@ -13,28 +13,21 @@ import {
 import { CalendarIcon, TimerIcon } from 'lucide-react'
 
 import { UsersIcon } from '@/components/icons/animated/users'
+import FilledUser from '@/components/icons/FilledUser'
 
 export interface Participant {
   name: string
   avatar: string
 }
 
-export const ParticipantAvatar = ({
-  participant,
-}: {
-  participant: Participant
-}) => (
+export const ParticipantAvatar = ({ participant }: { participant: Participant }) => (
   <Avatar className="size-6 border-2 border-white">
     <AvatarImage
       src={participant.avatar}
       alt={`${participant.name}'s avatar`}
     />
     <AvatarFallback className="bg-neutral-100 text-xs text-neutral-600">
-      {participant.name
-        .split(' ')
-        .map((n) => n[0])
-        .join('')
-        .toUpperCase()}
+      <FilledUser className="size-5 fill-black/70 stroke-black/80" />
     </AvatarFallback>
   </Avatar>
 )
@@ -76,7 +69,7 @@ export const ParticipantsList = ({
           {knownParticipants.map((participant, index) => (
             <div
               key={index}
-              className="flex items-center gap-2 rounded-lg bg-neutral-50 p-2"
+              className="flex items-center gap-2 rounded-lg bg-neutral-50 p-2 border"
             >
               <ParticipantAvatar participant={participant} />
               <span className="text-sm">{participant.name}</span>

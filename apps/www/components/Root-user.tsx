@@ -17,35 +17,19 @@ import {
   SidebarMenuButton,
   useSidebar,
 } from '@echo/ui/components/ui/sidebar.tsx'
-import { useQueryClient } from '@tanstack/react-query'
 import { Sparkles } from 'lucide-react'
-import { useRouter } from 'next/navigation'
-import { useAction } from 'next-safe-action/hooks'
-import { toast } from 'sonner'
 
 import { useUser } from '@/hooks/useSession'
-import { logout } from '@/lib/actions/authActions'
 
 import Downitem from './Downitem'
-import { LogoutIcon } from './icons/animated/logout'
 import { UserIcon } from './icons/animated/user'
+import FilledUser from './icons/FilledUser'
 import AccountDialog from './shared/AccountDialog'
+import { LogoutButton } from './shared/LogoutButton'
 
 export function NavUser() {
   const { isMobile } = useSidebar()
   const { data, isLoading } = useUser()
-  const router = useRouter()
-
-  const queryClient = useQueryClient()
-  const { execute: handleLogout } = useAction(logout, {
-    onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ['user'] })
-      router.push('/')
-      toast.success('Logged out successfully', {
-        description: 'You have been logged out of your account',
-      })
-    },
-  })
 
   return (
     <DropdownMenu>
@@ -61,10 +45,7 @@ export function NavUser() {
                   alt={data?.user?.name}
                 />
                 <AvatarFallback className="size-6 rounded-lg bg-neutral-200 text-xs font-medium">
-                  {data?.user?.name
-                    .split(' ')
-                    .map((name: string) => name.charAt(0).toUpperCase())
-                    .join('')}
+                  <FilledUser className="size-5 fill-black/70 stroke-black/80" />
                 </AvatarFallback>
               </>
             )}
@@ -89,10 +70,7 @@ export function NavUser() {
                     alt={data?.user?.name}
                   />
                   <AvatarFallback className="size-6 rounded-lg bg-neutral-200 text-xs font-medium">
-                    {data?.user?.name
-                      .split(' ')
-                      .map((name: string) => name.charAt(0).toUpperCase())
-                      .join('')}
+                    <FilledUser className="size-5 fill-black/70 stroke-black/80" />
                   </AvatarFallback>
                 </>
               )}
@@ -128,11 +106,7 @@ export function NavUser() {
             />
           </div>
 
-          <Downitem
-            icon={<LogoutIcon />}
-            title="Logout"
-            onClick={handleLogout}
-          />
+          <LogoutButton />
         </DropdownMenuGroup>
       </DropdownMenuContent>
     </DropdownMenu>

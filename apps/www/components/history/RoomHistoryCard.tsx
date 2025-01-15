@@ -26,6 +26,8 @@ import { ClockIcon } from '@/components/icons/animated/clock'
 import { UsersIcon } from '@/components/icons/animated/users'
 import { Message2Icon } from '@/components/icons/message-2'
 
+import FilledUser from '../icons/FilledUser'
+
 import { DeleteRoomDialog } from './DeleteRoomDialog'
 import { ViewHistoryDialog } from './ViewHistoryDialog'
 
@@ -53,12 +55,7 @@ export const ParticipantAvatar = ({
       alt={`${participant.name}'s avatar`}
     />
     <AvatarFallback className="bg-neutral-100 text-neutral-600">
-      {participant.name
-        .split(' ')
-        .map((name) => name[0])
-        .slice(0, 2)
-        .join('')
-        .toUpperCase()}
+      <FilledUser className="size-5 fill-black/70 stroke-black/80" />
     </AvatarFallback>
   </Avatar>
 )
@@ -100,7 +97,7 @@ export const ParticipantsList = ({
           {knownParticipants.map((participant, index) => (
             <div
               key={index}
-              className="flex items-center gap-2 rounded-lg bg-neutral-50 p-2"
+              className="flex items-center gap-2 rounded-lg border bg-neutral-50 p-2"
             >
               <ParticipantAvatar participant={participant} />
               <span className="text-sm">{participant.name}</span>

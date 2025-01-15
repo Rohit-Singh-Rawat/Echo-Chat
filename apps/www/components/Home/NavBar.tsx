@@ -7,6 +7,7 @@ import { useState, useEffect } from 'react'
 import EchoLogo from '../icons/animated/EchoLogo'
 
 import { AuthLinks } from './AuthLinks'
+import HamburgerMenu from './HamburgerMenu'
 import { NavLinks } from './NavLinks'
 
 export const NavBar = () => {
@@ -47,7 +48,7 @@ export const NavBar = () => {
           duration: 0.6,
           ease: 'easeInOut',
         }}
-        className="z-[60] mx-auto flex min-w-[800px] max-w-7xl items-center justify-between rounded-full p-2.5 px-6 backdrop-blur-md"
+        className="z-[60] mx-auto flex w-full max-w-7xl items-center justify-between rounded-full p-2.5 px-6 backdrop-blur-md lg:min-w-[800px]"
       >
         <motion.div className="z-[100] scale-95">
           <Link href="/">
@@ -58,6 +59,7 @@ export const NavBar = () => {
         <NavLinks />
 
         <AuthLinks isScrolled={isScrolled} />
+        <HamburgerMenu />
       </motion.div>
     </nav>
   )

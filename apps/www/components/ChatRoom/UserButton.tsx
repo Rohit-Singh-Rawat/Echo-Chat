@@ -19,7 +19,10 @@ import Downitem from '../Downitem'
 import { LogoutIcon } from '../icons/animated/logout'
 import { UserIcon } from '../icons/animated/user'
 import EchoRoom from '../icons/EchoRoom'
+import FilledUser from '../icons/FilledUser'
 import { UserIcon as User } from '../icons/UserIcon'
+import AccountDialog from '../shared/AccountDialog'
+import { LogoutButton } from '../shared/LogoutButton'
 
 export function UserButton({
   user,
@@ -59,10 +62,7 @@ export function UserButton({
                     <AvatarImage src={user.avatar} alt={user.name} />
                   ) : (
                     <AvatarFallback className="size-6 rounded-lg bg-neutral-200 font-bold">
-                      {user.name
-                        .split(' ')
-                        .map((name) => name.charAt(0).toUpperCase())
-                        .join('')}
+                      <FilledUser className="size-5 fill-black/70 stroke-black/80" />
                     </AvatarFallback>
                   )}
                 </Avatar>
@@ -93,12 +93,17 @@ export function UserButton({
         <DropdownMenuGroup>
           {user ? (
             <>
-              <Downitem icon={<UserIcon />} title="Account" href="/account" />
-              <Downitem
-                icon={<LogoutIcon />}
-                title="Logout"
-                onClick={() => console.log('Logout clicked')}
-              />
+              <div>
+                <AccountDialog
+                  trigger={
+                    <button className="flex w-full items-center gap-3 rounded px-2 py-1.5 text-left text-sm hover:bg-neutral-100">
+                      <UserIcon className="size-4 text-gray-600" />
+                      <span className="text-gray-600">Account</span>
+                    </button>
+                  }
+                />
+              </div>
+              <LogoutButton/>
             </>
           ) : (
             <Downitem icon={<UserIcon />} title="Login" href="/login" />

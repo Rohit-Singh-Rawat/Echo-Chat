@@ -12,6 +12,7 @@ import {
 import { googleAuth } from '../controllers/googleAuthController'
 import { githubAuth } from '../controllers/githubAuthController'
 import { authenticateToken } from '../middleware/authMiddleware'
+import { passwordResetLimiter } from '../utils/rate-limiting'
 
 const router: Router = Router()
 
@@ -24,6 +25,6 @@ router.get('/me', authenticateToken, getSession)
 router.post('/google', googleAuth)
 router.post('/github', githubAuth)
 router.post('/forgot-password', forgotPassword)
-router.post('/reset-password', resetPassword)
+router.post('/reset-password', passwordResetLimiter, resetPassword)
 
 export default router

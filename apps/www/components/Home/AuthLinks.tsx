@@ -10,7 +10,7 @@ import { Button } from '../shared/Button'
 export const AuthLinks = ({ isScrolled }: { isScrolled: boolean }) => {
   const { data } = useUser()
   return (
-    <motion.div className="z-[60] flex items-center gap-2">
+    <motion.div className="z-[60] hidden items-center gap-2 lg:flex">
       <AnimatePresence initial={false}>
         {data ? (
           <Link href="/dashboard">

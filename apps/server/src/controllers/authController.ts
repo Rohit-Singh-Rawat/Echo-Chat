@@ -247,7 +247,9 @@ export const forgotPassword = async (
       success: true,
     })
   } catch (error) {
-    res.status(500).json({ message: 'Failed to process forgot password request' })
+    res
+      .status(500)
+      .json({ message: 'Failed to process forgot password request' })
   }
 }
 
@@ -292,9 +294,9 @@ export const resetPassword = async (
       },
     })
 
-    res.json({ 
+    res.json({
       message: 'Password reset successful',
-      success: true
+      success: true,
     })
   } catch (error) {
     res.status(500).json({ message: 'Failed to reset password' })
@@ -336,4 +338,3 @@ export const getSession = async (
     res.status(500).json({ message: 'Failed to get session' })
   }
 }
-

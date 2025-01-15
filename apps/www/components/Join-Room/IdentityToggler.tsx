@@ -26,7 +26,10 @@ export default function IdentityToggler({
   return (
     <div className="flex flex-col items-start gap-4">
       <div className="flex flex-col gap-4">
-        <Label htmlFor="identity-switch" className="text-sm font-medium">
+        <Label 
+          htmlFor="identity-switch"
+          className="text-xs font-medium tracking-wide sm:text-sm md:text-base lg:text-lg"
+        >
           Identity
         </Label>
 
@@ -46,7 +49,7 @@ export default function IdentityToggler({
         </div>
       </div>
 
-      <p className="text-muted-foreground w-[350px] text-start text-sm">
+      <p className="text-muted-foreground w-full max-w-[350px] text-start text-xs sm:text-sm ">
         {isAnonymous
           ? 'Your identity will be unkown from other participants'
           : 'Other participants will be able to see your identity'}

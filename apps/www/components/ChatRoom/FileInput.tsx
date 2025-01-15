@@ -77,9 +77,9 @@ export default function FileInput({
           handleRemove()
         }
       },
-      onError: (error) => {
+      onError: ({ error }) => {
         console.error('Failed to upload image:', error)
-        toast.error('Failed to upload image')
+        toast.error(error.serverError ?? 'Failed to upload image')
         handleRemove()
       },
     }
@@ -223,6 +223,7 @@ export default function FileInput({
         <Button
           onClick={handleRemove}
           size="icon"
+          type="button"
           className="absolute -right-1 -top-px size-[14px] rounded-full border bg-white p-1 text-black hover:bg-gray-300"
           aria-label="Remove image"
           disabled={isExecuting}

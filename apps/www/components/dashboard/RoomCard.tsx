@@ -27,6 +27,7 @@ import { MessageCircleMoreIcon } from '../icons/animated/message-circle-more'
 import { UsersIcon } from '../icons/animated/users'
 
 import { UserLabel } from './UserLabel'
+import FilledUser from '../icons/FilledUser'
 
 interface ChatRoomCardProps {
   id: string
@@ -92,12 +93,7 @@ export const ParticipantAvatar = ({
       alt={`${participant.name}'s avatar`}
     />
     <AvatarFallback className="bg-gradient-to-br from-neutral-50 to-neutral-200 font-medium text-white">
-      {participant.name
-        .split(' ')
-        .map((name) => name[0])
-        .slice(0, 2)
-        .join('')
-        .toUpperCase()}
+      <FilledUser className="size-5 fill-black/70 stroke-black/80" />
     </AvatarFallback>
   </Avatar>
 )

@@ -54,7 +54,7 @@ const RoomHistoryList = ({ rooms }: RoomHistoryListProps) => {
             .filter((p) => p.user)
             .map((p) => ({
               name: p.user!.name,
-              avatar: 'https://avatar.iran.liara.run/public',
+              avatar: p.user?.image ?? 'https://avatar.iran.liara.run/public',
             }))
           const displayParticipants = knownParticipants.slice(0, 3)
 

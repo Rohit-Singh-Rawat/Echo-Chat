@@ -25,6 +25,7 @@
     "cors": "^2.8.5",
     "dotenv": "^16.4.6",
     "express": "^4.17.1",
+    "express-rate-limit": "^7.5.0",
     "google-auth-library": "^9.15.0",
     "googleapis": "^144.0.0",
     "jsonwebtoken": "^8.5.1",
