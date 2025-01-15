@@ -56,10 +56,10 @@ const AnonymousDemo = () => {
 
       <div className="flex-center pointer-events-none absolute inset-x-0 bottom-0 z-40 size-full bg-gradient-to-t from-white via-transparent to-white">
         {' '}
-        <div className="shadow- h-1/2 w-1/3 scale-[0.85] rounded-lg bg-white p-2 shadow-[0_20px_50px_-12px_rgba(0,0,0,0.3)] ring-1 ring-gray-900/5 transition-all duration-300 hover:shadow-2xl group-hover:scale-90">
+        <div className=" scale-[0.85] rounded-lg bg-white p-2 shadow-[0_20px_50px_-12px_rgba(0,0,0,0.3)] ring-1 ring-gray-900/5 transition-all duration-300 hover:shadow-2xl group-hover:scale-90 w-24 h-32 lg:w-[100px]">
           <div className="relative h-full overflow-hidden rounded bg-gradient-to-br from-gray-100 to-gray-200 shadow-inner">
             <div className="flex size-full items-center justify-center">
-              <AnonymousIcon className="size-14 text-black/80" />
+              <AnonymousIcon className="size-10 text-black/80 sm:size-12 lg:size-14" />
             </div>
 
             <div className="absolute inset-0 rounded bg-black/5 ring-1 ring-inset ring-black/5" />

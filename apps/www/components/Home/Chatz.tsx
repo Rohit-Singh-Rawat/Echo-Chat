@@ -10,9 +10,13 @@ import ChatMessages from './ChatMessages'
 
 const Chatz = () => {
   return (
-    <BlurFadeIn delay={0.8} className="flex-center w-full" blur={true}>
-      <div className="w-[70%] rounded-xl border-2 border-neutral-200/60 bg-white">
-        <div className="border-b-2 border-neutral-200/60 p-2 px-5">
+    <BlurFadeIn
+      delay={0.8}
+      className="flex-center w-full px-4 sm:px-0"
+      blur={true}
+    >
+      <div className="w-full rounded-xl border-2 border-neutral-200/60 bg-white md:w-[95%] lg:w-[70%]">
+        <div className="border-b-2 border-neutral-200/60 p-2 px-3 sm:px-5">
           <div className="flex items-center justify-between">
             <div className="flex items-center">
               <ShieldIcon size={16} className="mr-2" />
@@ -21,7 +25,7 @@ const Chatz = () => {
             <Ellipsis size={16} />
           </div>
         </div>
-        <div className="relative h-[50vh] p-10">
+        <div className="relative h-fit p-4 sm:p-6 md:p-8 lg:p-10">
           <GridPattern
             width={30}
             height={30}

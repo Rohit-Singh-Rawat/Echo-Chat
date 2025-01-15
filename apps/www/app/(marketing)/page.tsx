@@ -6,7 +6,7 @@ import { Hero } from '@/components/Home/Hero'
 const Page = () => {
   return (
     <div className="bg-white">
-      <div className="container">
+      <div className="container px-2 md:px-4 lg:px-8 xl:px-12">
         <Hero />
         <BentoSection />
         <FeatureCards />

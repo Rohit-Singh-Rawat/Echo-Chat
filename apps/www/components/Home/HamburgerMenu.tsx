@@ -1,23 +1,29 @@
-import React, { useState } from 'react'
+import React from 'react'
 
 import Hamburger from '../icons/Hamburger'
 
-const HamburgerMenu = ({ className }: { className?: string }) => {
-  const [isMenuOpen, setMenuOpen] = useState(false)
-
+const HamburgerMenu = ({
+  className,
+  isOpen,
+  setIsOpen,
+}: {
+  className?: string
+  isOpen: boolean
+  setIsOpen: (isOpen: boolean) => void
+}) => {
   const toggleMenu = () => {
-    setMenuOpen((prevState) => !prevState)
+    setIsOpen(!isOpen)
   }
 
   return (
     <button
-      className={`bg- outline-none lg:hidden ${className}`}
+      className={`outline-none lg:hidden ${className}`}
       onClick={toggleMenu}
     >
-      <div className={`hamburger-icon pl-5 ${isMenuOpen ? 'open' : ''}`}>
+      <div className={`hamburger-icon pl-5 ${isOpen ? 'open' : ''}`}>
         <Hamburger
           className="size-5 stroke-black dark:stroke-white"
-          isOpen={isMenuOpen}
+          isOpen={isOpen}
         />
       </div>
     </button>

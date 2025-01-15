@@ -25,7 +25,7 @@ const Message = ({
   const isInView = useInView(ref, { once: true })
 
   return (
-    <div className="mb-4 flex items-end gap-2" ref={ref}>
+    <div className="mb-4 flex items-end gap-2 px-2 md:px-4" ref={ref}>
       {isInView && (
         <>
           {!isSent && (
@@ -33,13 +33,14 @@ const Message = ({
               initial={{ opacity: 0, scale: 0.5 }}
               animate={{ opacity: 1, scale: 1 }}
               transition={{ duration: 0.3, delay }}
-              className="size-8 shrink-0 overflow-hidden rounded-full"
+              className="size-6 shrink-0 overflow-hidden rounded-full md:size-8"
             >
               <Image
                 src="/images/RohitSinghRawat.jpg"
                 alt="Avatar"
                 width={50}
                 height={50}
+                className="size-full object-cover"
               />
             </motion.div>
           )}
@@ -49,7 +50,7 @@ const Message = ({
               animate={{ opacity: 1, y: -5, filter: 'blur(0px)' }}
               transition={{ duration: 0.5, delay }}
               className={cn(
-                'w-fit max-w-[80%] rounded-2xl px-4 py-2',
+                'w-fit max-w-[85%] rounded-2xl px-3 py-1.5 text-sm md:max-w-[80%] md:px-4 md:py-2 md:text-base',
                 isSent
                   ? 'ml-auto rounded-br-none bg-gray-100'
                   : 'rounded-bl-none border-[1.5px] border-neutral-200 bg-slate-50/50 text-gray-900'
@@ -68,10 +69,13 @@ const Message = ({
                   stiffness: 100,
                   damping: 20,
                 }}
-                className="flex-center absolute left-2 top-[40%] mt-2 size-6 rounded-2xl border border-neutral-200 bg-white"
+                className="flex-center absolute left-1 top-[40%] mt-2 size-5 rounded-2xl border border-neutral-200 bg-white md:left-2 md:size-6"
               >
                 {reactions.map((reaction, index) => (
-                  <span key={index} className="size-4 text-xs">
+                  <span
+                    key={index}
+                    className="size-3 text-[10px] md:size-4 md:text-xs"
+                  >
                     {reaction}
                   </span>
                 ))}
@@ -83,13 +87,14 @@ const Message = ({
               initial={{ opacity: 0, scale: 0.5 }}
               animate={{ opacity: 1, scale: 1 }}
               transition={{ duration: 0.3, delay }}
-              className="size-8 shrink-0 overflow-hidden rounded-full"
+              className="size-6 shrink-0 overflow-hidden rounded-full md:size-8"
             >
               <Image
                 src="/images/eren.jpg"
                 alt="Avatar"
                 width={50}
                 height={50}
+                className="size-full object-cover"
               />
             </motion.div>
           )}

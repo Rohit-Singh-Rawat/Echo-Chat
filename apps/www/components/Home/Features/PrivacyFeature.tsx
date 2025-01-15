@@ -9,7 +9,10 @@ const PrivacyFeature = () => {
   const [isHovered, setIsHovered] = useState(false)
 
   return (
-    <GridItem delay={0.2} className="col-span-2 row-span-1">
+    <GridItem
+      delay={0.2}
+      className="col-span-1 row-span-1 xl:col-span-2 xl:row-span-1"
+    >
       <div
         onMouseEnter={() => setIsHovered(true)}
         onMouseLeave={() => setIsHovered(false)}

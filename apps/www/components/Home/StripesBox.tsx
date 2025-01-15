@@ -4,7 +4,7 @@ interface StripesBoxProps {
 
 const StripesBox = ({ children }: StripesBoxProps) => {
   return (
-    <div className="flex-center relative w-1/2 border border-dashed">
+    <div className="flex-center relative h-[400px] w-full flex-1 border border-dashed lg:w-1/2">
       <div className="absolute -left-4 -top-4 size-4 border-b border-r border-dashed before:absolute before:-bottom-1 before:-right-1 before:block before:size-2 before:rounded-full before:border before:border-black/20 before:bg-white before:shadow-sm" />
       <div className="absolute -right-4 -top-4 size-4 border-b border-l border-dashed before:absolute before:-bottom-1 before:-left-1 before:block before:size-2 before:rounded-full before:border before:border-black/20 before:bg-white before:shadow-sm" />
       <div className="absolute -bottom-4 -left-4 size-4 border-r border-t border-dashed before:absolute before:-right-1 before:-top-1 before:block before:size-2 before:rounded-full before:border before:border-black/20 before:bg-white before:shadow-sm" />

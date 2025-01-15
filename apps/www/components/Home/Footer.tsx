@@ -5,8 +5,8 @@ import EchoLogo from '../icons/animated/EchoLogo'
 const Footer = () => {
   return (
     <footer className="mt-10 border-t border-neutral-200 bg-white">
-      <div className="container mx-auto px-20 py-24">
-        <div className="flex items-start justify-between">
+      <div className="container mx-auto px-4 py-12 sm:px-8 md:px-12 lg:px-20 lg:py-24">
+        <div className="flex flex-col space-y-12 lg:flex-row lg:items-start lg:justify-between lg:space-y-0">
           <div className="space-y-3">
             <Link href="/">
               <EchoLogo />
@@ -17,7 +17,7 @@ const Footer = () => {
             </p>
           </div>
 
-          <div className="flex items-start gap-24">
+          <div className="grid grid-cols-2 gap-12 sm:grid-cols-3 sm:gap-16 md:gap-24">
             <div className="flex flex-col space-y-5">
               <h3 className="font-medium text-black">Pages</h3>
               <Link

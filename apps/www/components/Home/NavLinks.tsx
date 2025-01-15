@@ -14,7 +14,7 @@ export const NavLinks = () => {
   ]
 
   return (
-    <motion.div className="absolute  inset-0 hidden lg:flex flex-1 flex-row items-center justify-center space-x-2 text-sm font-medium text-zinc-600 transition duration-200 hover:text-zinc-800 lg:flex lg:space-x-2">
+    <motion.div className="absolute inset-0 flex flex-1 flex-row items-center justify-center space-x-2 text-sm font-medium text-zinc-600 transition duration-200 hover:text-zinc-800 lg:flex lg:space-x-2">
       <ul className="z-50 flex items-center">
         {navLinks.map(({ href, label }) => (
           <li
