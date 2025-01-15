@@ -66,7 +66,7 @@ const plans = [
 
 export function PricingPlans() {
   return (
-    <div className="flex flex-col items-stretch gap-6 md:flex-row">
+    <div className="mx-auto grid w-full max-w-[90rem] grid-cols-1 gap-6 px-4 sm:px-6 md:grid-cols-2 lg:grid-cols-2 lg:gap-8 lg:px-8">
       {plans.map((plan) => (
         <PricingCard key={plan.name} {...plan} />
       ))}
