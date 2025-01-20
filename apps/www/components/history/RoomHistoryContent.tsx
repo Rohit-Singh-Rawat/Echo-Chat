@@ -23,19 +23,19 @@ export function RoomHistoryContent({ initialRooms }: RoomHistoryContentProps) {
     : (rooms ?? initialRooms)
 
   return (
-    <div className="space-y-10">
-      <h1 className="text-2xl font-bold">
+    <div className="space-y-6 md:space-y-10">
+      <h1 className="text-xl font-bold md:text-2xl">
         Room History ({Object.keys(filteredRooms).length})
       </h1>
-      <div className="flex items-center justify-between gap-4">
+      <div className="flex flex-row items-center justify-between gap-4">
         <Input
           type="search"
           placeholder="Search rooms..."
-          className="w-[300px]"
+          className="w-full md:w-[300px]"
           value={searchQuery}
           onChange={(e) => setSearchQuery(e.target.value)}
         />
-        <div className="flex items-center gap-10">
+        <div className="flex items-center gap-4 md:gap-10">
           <DisplaySwitch />
         </div>
       </div>

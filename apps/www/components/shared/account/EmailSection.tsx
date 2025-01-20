@@ -20,9 +20,9 @@ export function EmailSection({ email }: EmailSectionProps) {
       title="Email Address"
       description="Your account email address."
     >
-      <div className="flex w-full max-w-md gap-2">
+      <div className="flex w-full max-w-md gap-2 md:gap-3">
         <Input
-          className="bg-neutral-50 text-sm"
+          className="bg-neutral-50 text-xs md:text-sm"
           type="email"
           value={email}
           disabled
@@ -30,10 +30,10 @@ export function EmailSection({ email }: EmailSectionProps) {
         <Button
           variant="ghost"
           size="icon"
-          className="size-9 shrink-0"
+          className="size-8 shrink-0 md:size-9"
           onClick={handleCopy}
         >
-          <Copy className="size-4" />
+          <Copy className="size-3.5 md:size-4" />
         </Button>
       </div>
     </AccountCard>

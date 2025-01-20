@@ -1,15 +1,9 @@
 'use client'
 
 import { Button } from '@echo/ui/components/ui/button.tsx'
-import {
-  Dialog,
-  DialogContent,
-  DialogHeader,
-  DialogTitle,
-  DialogTrigger,
-  DialogOverlay,
-} from '@echo/ui/components/ui/dialog.tsx'
 import { useState } from 'react'
+
+import { ResponsiveModal } from '../ui/responsive-modal'
 
 import { ViewHistoryContent } from './ViewHistoryContent'
 
@@ -26,31 +20,37 @@ export function ViewHistoryDialog({
 }: ViewHistoryDialogProps) {
   const [isOpen, setIsOpen] = useState(false)
 
-  const defaultTrigger = (
-    <Button
-      variant="outline"
-      size="sm"
-      className="h-8 px-3 text-sm font-medium transition-colors hover:bg-neutral-100"
-    >
-      View History
-    </Button>
-  )
+  const defaultTrigger = <div>View History</div>
 
   return (
-    <Dialog modal open={isOpen} onOpenChange={setIsOpen}>
-      <DialogTrigger asChild>{trigger || defaultTrigger}</DialogTrigger>
-
-      <DialogContent className="sm:max-w-[900px]">
-        <DialogHeader className="">
-          <DialogTitle className="text-center text-2xl font-bold tracking-tight">
-            {name}
-          </DialogTitle>
-        </DialogHeader>
-
-        <div className="relative min-h-[600px] rounded-lg bg-white">
-          {isOpen && <ViewHistoryContent roomId={roomId} />}
+    <>
+      <Button
+        variant="outline"
+        size="sm"
+        className={
+          trigger
+            ? 'border-0 p-0 shadow-none'
+            : 'h-7 border px-2 text-xs font-medium transition-colors hover:bg-neutral-100 md:h-8 md:px-3 md:text-sm'
+        }
+        onClick={() => setIsOpen(true)}
+      >
+        {trigger || defaultTrigger}
+      </Button>
+      <ResponsiveModal
+        open={isOpen}
+        onOpenChange={setIsOpen}
+        title={name}
+        className="sm:max-w-[900px] overflow-hidden p-5"
+      >
+        <div>
+          {isOpen && (
+            <div className="relative min-h-[400px] rounded-lg bg-white p-2 pt-5 md:min-h-[600px] md:p-6">
+              {' '}
+              <ViewHistoryContent roomId={roomId} />{' '}
+            </div>
+          )}
         </div>
-      </DialogContent>
-    </Dialog>
+      </ResponsiveModal>
+    </>
   )
 }

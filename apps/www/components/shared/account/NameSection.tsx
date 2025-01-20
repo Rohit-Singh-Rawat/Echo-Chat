@@ -52,9 +52,9 @@ export function NameSection({ defaultName }: NameSectionProps) {
       title="Your Name"
       description="This will be your display name."
       footer={
-        <div className="flex items-center justify-between space-x-4">
+        <div className="flex flex-col md:flex-row md:items-center md:justify-between md:space-x-4 space-y-2 md:space-y-0">
           <p className="text-xs text-neutral-500">Max 32 characters.</p>
-          <div className="w-32">
+          <div className="w-full md:w-32">
             <Button
               disabled={!hasChanges || isUpdating || status === 'hasSucceeded'}
               className={`${!hasChanges || isUpdating ? 'opacity-50' : ''} w-full min-w-full`}

@@ -106,13 +106,13 @@ export function ProfileSection({ image }: ProfileSectionProps) {
       title="Profile Photo"
       description="Your profile picture will be shown publicly."
       footer={
-        <div className="flex items-center justify-between space-x-4">
+        <div className="flex flex-col space-y-4 md:flex-row md:items-center md:justify-between md:space-x-4 md:space-y-0">
           <div className="flex flex-col">
             <p className="text-xs text-neutral-500">
               Supported formats: JPG, PNG, GIF
             </p>
           </div>
-          <div className="w-32">
+          <div className="w-full md:w-32">
             <Button
               disabled={!hasChanges || isUploading || status == 'hasSucceeded'}
               className={`${!hasChanges || isUploading ? 'opacity-50' : ''} w-full min-w-full rounded-md bg-black px-4 py-2 text-sm font-medium text-white transition-colors hover:bg-gray-900 focus:outline-none focus:ring-2 focus:ring-gray-900 focus:ring-offset-2`}
@@ -128,14 +128,14 @@ export function ProfileSection({ image }: ProfileSectionProps) {
       <div className="flex items-center gap-3">
         <div className="relative inline-flex">
           <Button
-            className="relative size-16 overflow-hidden rounded-full bg-none hover:bg-neutral-100"
+            className="relative size-12 overflow-hidden rounded-full bg-none hover:bg-neutral-100 md:size-16"
             onClick={handleThumbnailClick}
             onMouseEnter={() => setIsHovered(true)}
             onMouseLeave={() => setIsHovered(false)}
             aria-label={imageUrl ? 'Change image' : 'Upload image'}
           >
             <Upload
-              className="absolute size-6 text-neutral-500 transition-opacity duration-200"
+              className="absolute size-5 text-neutral-500 transition-opacity duration-200 md:size-6"
               style={{
                 opacity: isHovered ? 1 : 0,
                 zIndex: 1,
@@ -156,7 +156,7 @@ export function ProfileSection({ image }: ProfileSectionProps) {
             ) : (
               <div aria-hidden="true">
                 <CircleUserRound
-                  className="size-8 opacity-60"
+                  className="size-6 opacity-60 md:size-8"
                   strokeWidth={2}
                 />
               </div>

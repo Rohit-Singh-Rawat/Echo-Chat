@@ -17,14 +17,14 @@ export const MessageAvatar = ({
   showAvatar,
 }: MessageAvatarProps) => {
   if (!showAvatar) {
-    return <div className="size-8" />
+    return <div className="size-8 md:size-10" />
   }
 
   return (
-    <Avatar className="size-8">
+    <Avatar className="size-8 md:size-10">
       <AvatarImage src={avatar} alt={`${userName}'s avatar`} />
       <AvatarFallback>
-        <LoadingSpinner className="size-4" />
+        <LoadingSpinner className="size-4 md:size-5" />
       </AvatarFallback>
     </Avatar>
   )

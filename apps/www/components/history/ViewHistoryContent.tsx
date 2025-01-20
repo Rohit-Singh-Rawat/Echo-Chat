@@ -30,7 +30,7 @@ export function ViewHistoryContent({ roomId }: ViewHistoryContentProps) {
 
   if (status === 'executing') {
     return (
-      <ScrollArea className="h-[600px] p-4">
+      <ScrollArea className="h-[600px] md:p-4">
         <div className="">
           {Array.from({ length: 8 }).map((_, index) => (
             <HistoryMessageSkeleton
@@ -44,7 +44,7 @@ export function ViewHistoryContent({ roomId }: ViewHistoryContentProps) {
   }
 
   return (
-    <ScrollArea className="h-[600px] rounded-md p-4">
+    <ScrollArea className="rounded-md md:p-4 h-[600px]">
       <div className="space-y-2">
         {messages.map((message, index) => (
           <HistoryMessage
@@ -76,15 +76,15 @@ export function ViewHistoryContent({ roomId }: ViewHistoryContentProps) {
           />
         ))}
         {messages.length === 0 && (
-          <div className="flex h-[500px] flex-col items-center justify-center gap-4">
-            <div className="flex size-20 items-center justify-center rounded-full bg-neutral-100">
-              <Message2Icon className="size-10 text-neutral-400" />
+          <div className="flex h-[300px] flex-col items-center justify-center gap-4 md:h-[500px]">
+            <div className="flex size-16 items-center justify-center rounded-full bg-neutral-100 md:size-20">
+              <Message2Icon className="size-8 text-neutral-400 md:size-10" />
             </div>
             <div className="flex flex-col items-center gap-1">
-              <h3 className="text-lg font-semibold text-neutral-700">
+              <h3 className="text-base font-semibold text-neutral-700 md:text-lg">
                 No messages yet
               </h3>
-              <p className="text-sm text-neutral-500">
+              <p className="text-xs text-neutral-500 md:text-sm">
                 This chat history is empty
               </p>
             </div>

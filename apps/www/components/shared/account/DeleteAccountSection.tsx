@@ -50,7 +50,7 @@ export function DeleteAccountSection() {
         footer={
           <div className="flex items-center justify-end">
             <Button
-              className="group flex h-8 items-center justify-center gap-2 bg-red-500 text-sm hover:bg-red-600"
+              className="group flex h-8 items-center justify-center gap-2 bg-red-500 text-sm hover:bg-red-600 w-full md:w-auto"
               onClick={() => setShowConfirmDialog(true)}
               disabled={isLoading}
               isLoading={isLoading}
@@ -63,7 +63,7 @@ export function DeleteAccountSection() {
         <></>
       </AccountCard>
       <Dialog open={showConfirmDialog} onOpenChange={setShowConfirmDialog}>
-        <DialogContent className="sm:max-w-[425px]">
+        <DialogContent className="mx-4 md:mx-auto max-w-[95%] md:max-w-[425px]">
           <DialogHeader>
             <DialogTitle className="text-xl font-semibold text-red-600">
               Delete Account
@@ -96,11 +96,11 @@ export function DeleteAccountSection() {
               />
             </div>
           </div>
-          <DialogFooter className="gap-2 sm:gap-0">
+          <DialogFooter className="flex-col md:flex-row gap-2">
             <Button
               onClick={() => setShowConfirmDialog(false)}
               disabled={isLoading}
-              className="flex-1 hover:bg-neutral-100"
+              className="w-full md:w-auto hover:bg-neutral-100"
             >
               Cancel
             </Button>
@@ -108,7 +108,7 @@ export function DeleteAccountSection() {
               onClick={() => handleDelete()}
               disabled={confirmText !== 'delete my account' || isLoading}
               isLoading={isLoading}
-              className="flex-1 bg-red-600 hover:bg-red-700 focus-visible:ring-red-500"
+              className="w-full md:w-auto bg-red-600 hover:bg-red-700 focus-visible:ring-red-500"
             >
               Delete Account
             </Button>

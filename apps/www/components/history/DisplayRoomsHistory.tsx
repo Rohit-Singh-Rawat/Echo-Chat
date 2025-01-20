@@ -28,7 +28,7 @@ export default function DisplayRoomsHistory({ rooms }: { rooms: Rooms }) {
           <RoomHistoryList rooms={roomsList} />
         </div>
       ) : (
-        <div className="my-10 grid grid-cols-2 gap-10 xl:grid-cols-3">
+        <div className="my-10 grid grid-cols-1 gap-6 lg:grid-cols-2 lg:gap-10 xl:grid-cols-3">
           {roomsList.map((room) => (
             <RoomHistoryCard
               key={room.id}

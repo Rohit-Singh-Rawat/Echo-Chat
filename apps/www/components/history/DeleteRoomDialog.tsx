@@ -52,7 +52,7 @@ export function DeleteRoomDialog({
     <Button
       variant="ghost"
       size="icon"
-      className="size-7 rounded-full text-neutral-500 hover:bg-red-50 hover:text-red-600"
+      className="size-7 rounded-full text-neutral-500 hover:bg-red-50 hover:text-red-600 md:size-8"
     >
       <Trash2 className="size-4" />
     </Button>
@@ -65,27 +65,27 @@ export function DeleteRoomDialog({
   return (
     <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger asChild>{trigger || defaultTrigger}</DialogTrigger>
-      <DialogContent className="sm:max-w-[425px]">
+      <DialogContent className="max-w-[90vw] sm:max-w-[425px]">
         <DialogHeader>
-          <DialogTitle className="text-lg font-semibold">
+          <DialogTitle className="text-base font-semibold md:text-lg">
             Delete Room History
           </DialogTitle>
-          <DialogDescription className="space-y-6 text-sm">
-            <div className="space-y-6">
-              <div className="flex flex-col items-center space-y-3">
+          <DialogDescription className="space-y-4 text-xs md:space-y-6 md:text-sm">
+            <div className="space-y-4 md:space-y-6">
+              <div className="flex flex-col items-center space-y-2 md:space-y-3">
                 <p className="text-neutral-600">
                   Are you sure you want to delete this room history?
                 </p>
-                <div className="w-full max-w-sm rounded-lg border border-neutral-200 bg-neutral-50 p-4 text-center shadow-sm">
-                  <p className="font-medium text-neutral-900">{roomTitle}</p>
+                <div className="w-full max-w-sm rounded-lg border border-neutral-200 bg-neutral-50 p-3 text-center shadow-sm md:p-4">
+                  <p className="text-sm font-medium text-neutral-900 md:text-base">{roomTitle}</p>
                 </div>
               </div>
 
-              <div className="flex items-start gap-3 rounded-lg border border-red-200 bg-red-50 p-4">
-                <AlertCircle className="mt-0.5 size-5 shrink-0 text-red-600" />
+              <div className="flex items-start gap-2 rounded-lg border border-red-200 bg-red-50 p-3 md:gap-3 md:p-4">
+                <AlertCircle className="mt-0.5 size-4 shrink-0 text-red-600 md:size-5" />
                 <div className="space-y-1">
-                  <p className="font-medium text-red-900">Warning</p>
-                  <p className="text-sm text-red-700">
+                  <p className="text-sm font-medium text-red-900 md:text-base">Warning</p>
+                  <p className="text-xs text-red-700 md:text-sm">
                     This action cannot be undone. All messages, reactions and
                     room data will be permanently deleted.
                   </p>
@@ -98,7 +98,7 @@ export function DeleteRoomDialog({
           <Button
             type="button"
             variant="outline"
-            className="flex-1 hover:bg-neutral-50"
+            className="flex-1 text-xs hover:bg-neutral-50 md:text-sm"
             onClick={() => setOpen(false)}
             disabled={isExecuting}
           >
@@ -108,7 +108,7 @@ export function DeleteRoomDialog({
             type="button"
             variant="destructive"
             onClick={handleDelete}
-            className="flex-1 bg-red-600 hover:bg-red-700"
+            className="flex-1 bg-red-600 text-xs hover:bg-red-700 md:text-sm"
             disabled={isExecuting}
           >
             {isExecuting ? 'Deleting...' : 'Delete Room'}

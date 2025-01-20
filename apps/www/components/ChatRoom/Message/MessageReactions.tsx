@@ -41,17 +41,17 @@ export const MessageReactions = ({
         transition={{ duration: 0.3, delay: index * 0.1 }}
         className="flex items-center justify-between"
       >
-        <div className="flex items-center gap-5">
+        <div className="flex items-center gap-3 md:gap-5">
           <MessageAvatar
             avatar={user.avatar}
             showAvatar={true}
             userName={user.id === participantId ? 'You' : user.name}
           />
-          <p className="text-sm font-medium text-black/70">
+          <p className="text-xs font-medium text-black/70 md:text-sm">
             {user.id === participantId ? 'You' : user.name}
           </p>
         </div>
-        <p className="text-2xl">{emoji}</p>
+        <p className="text-xl md:text-2xl">{emoji}</p>
       </motion.div>
     ))
 
@@ -59,16 +59,16 @@ export const MessageReactions = ({
     <Popover>
       <PopoverTrigger asChild>
         <button
-          className={`absolute bottom-0 ${side === 'left' ? 'right-0' : 'left-0'} z-50 mx-2 w-fit translate-y-2/3 rounded-full border border-neutral-200 bg-white p-1.5`}
+          className={`absolute bottom-0 ${side === 'left' ? 'right-0' : 'left-0'} z-50 mx-1.5 md:mx-2 w-fit translate-y-2/3 rounded-full border border-neutral-200 bg-white p-1 md:p-1.5`}
         >
           <div className="flex items-center justify-center gap-0.5">
             {reactions.slice(0, 3).map((reaction) => (
-              <span key={reaction.emoji} className="text-xs">
+              <span key={reaction.emoji} className="text-[10px] md:text-xs">
                 {reaction.emoji}
               </span>
             ))}
             {totalReactions > 1 && (
-              <div className="px-1 text-xs font-medium text-gray-600">
+              <div className="px-0.5 md:px-1 text-[10px] md:text-xs font-medium text-gray-600">
                 {totalReactions}
               </div>
             )}
@@ -79,14 +79,14 @@ export const MessageReactions = ({
         <div className="">
           <Tabs defaultValue="all">
             <ScrollArea>
-              <TabsList className="border-border text-foreground mb-3 h-auto rounded-none bg-transparent px-0 py-1">
+              <TabsList className="border-border text-foreground mb-2 md:mb-3 h-auto rounded-none bg-transparent px-0 py-0.5 md:py-1">
                 <TabsTrigger
                   value="all"
-                  className="hover:bg-accent hover:text-foreground data-[state=active]:after:bg-primary data-[state=active]:hover:bg-accent relative px-1.5 after:absolute after:inset-x-0 after:bottom-0 after:-mb-1 after:h-0.5 data-[state=active]:bg-transparent data-[state=active]:shadow-none"
+                  className="hover:bg-accent hover:text-foreground data-[state=active]:after:bg-primary data-[state=active]:hover:bg-accent relative px-1 md:px-1.5 after:absolute after:inset-x-0 after:bottom-0 after:-mb-1 after:h-0.5 data-[state=active]:bg-transparent data-[state=active]:shadow-none"
                 >
                   All{' '}
                   <Badge
-                    className="bg-primary/15 hover:bg-primary/15 ms-1.5 min-w-5 px-1.5"
+                    className="bg-primary/15 hover:bg-primary/15 ms-1 md:ms-1.5 min-w-4 md:min-w-5 px-1 md:px-1.5"
                     variant="secondary"
                   >
                     {totalReactions}
@@ -96,11 +96,11 @@ export const MessageReactions = ({
                   <TabsTrigger
                     key={reaction.emoji}
                     value={reaction.emoji}
-                    className="after:-mb-.5 hover:bg-accent hover:text-foreground data-[state=active]:after:bg-primary data-[state=active]:hover:bg-accent relative px-1.5 after:absolute after:inset-x-0 after:bottom-0 after:h-0.5 data-[state=active]:bg-transparent data-[state=active]:shadow-none"
+                    className="after:-mb-.5 hover:bg-accent hover:text-foreground data-[state=active]:after:bg-primary data-[state=active]:hover:bg-accent relative px-1 md:px-1.5 after:absolute after:inset-x-0 after:bottom-0 after:h-0.5 data-[state=active]:bg-transparent data-[state=active]:shadow-none"
                   >
                     {reaction.emoji}
                     <Badge
-                      className="bg-primary/15 hover:bg-primary/15 ms-1.5 min-w-5 px-1.5"
+                      className="bg-primary/15 hover:bg-primary/15 ms-1 md:ms-1.5 min-w-4 md:min-w-5 px-1 md:px-1.5"
                       variant="secondary"
                     >
                       {reaction.total}
@@ -111,7 +111,7 @@ export const MessageReactions = ({
               <ScrollBar orientation="horizontal" />
             </ScrollArea>
 
-            <TabsContent value="all" className="space-y-2">
+            <TabsContent value="all" className="space-y-1.5 md:space-y-2">
               {reactions.map((reaction, index) => (
                 <motion.div
                   key={index}
@@ -128,7 +128,7 @@ export const MessageReactions = ({
               <TabsContent
                 key={reaction.emoji}
                 value={reaction.emoji}
-                className="space-y-2"
+                className="space-y-1.5 md:space-y-2"
               >
                 {renderUsers(reaction.users, reaction.emoji)}
               </TabsContent>

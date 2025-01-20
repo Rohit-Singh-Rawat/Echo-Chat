@@ -3,11 +3,15 @@ import { ErrorState } from '@/components/ui/ErrorState'
 import { getRoomsHistory } from '@/lib/actions/RoomActions'
 import { Rooms } from '@/types'
 
+export const metadata = {
+  title: 'Room History',
+  description: 'View your past chat rooms',
+}
+
 export default async function HistoryPage() {
   let rooms: Rooms
   try {
     rooms = await getRoomsHistory()
-    console.log(rooms)
   } catch (err) {
     return (
       <ErrorState
@@ -19,8 +23,10 @@ export default async function HistoryPage() {
   }
 
   return (
-    <div className="container mx-auto px-6 py-10">
-      <RoomHistoryContent initialRooms={rooms} />
+    <div className="items-center justify-center p-4 max-md:border-t max-md:border-neutral-200 md:p-6 lg:p-10">
+      <div className="mt-4 md:mt-6">
+        <RoomHistoryContent initialRooms={rooms} />
+      </div>
     </div>
   )
 }

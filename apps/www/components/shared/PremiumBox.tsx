@@ -3,18 +3,21 @@ import Link from 'next/link'
 
 const PremiumBox = () => {
   return (
-    <div className="space-y-2 rounded-xl border border-neutral-200 bg-white p-4 transition-shadow duration-300 ease-in-out hover:shadow-md hover:shadow-[#87CEEB]">
+    <div className="space-y-2.5 rounded-lg border border-neutral-200 bg-white p-4 transition-all duration-200 ease-in-out hover:border-neutral-300 shadow">
       <div className="flex items-center gap-2">
-        <div className="flex-center size-7 rounded-full bg-neutral-100">🚀</div>
-        <h3 className="font-bold">Become Pro</h3>
+        <div className="flex-center size-6 rounded-md bg-neutral-100 text-sm">✨</div>
+        <h3 className="text-sm font-medium">Upgrade to Pro</h3>
       </div>
-      <div className="text-black/60">Upgrade for premium</div>
-      <Link href="/plans">
-        <Button className="w-full bg-black transition-all duration-300 ease-in-out hover:bg-black/90 active:scale-95 active:bg-black/80 mt-4">
+      <div className="text-xs text-neutral-500">
+        Unlock premium features and enhanced capabilities
+      </div>
+      <Link href="/plans" className="block">
+        <Button className="mt-1 w-full bg-neutral-900 text-xs font-medium transition-all duration-200 ease-in-out hover:bg-neutral-800 active:scale-[0.98]">
           Get Echo Pro
         </Button>
       </Link>
     </div>
   )
 }
+
 export default PremiumBox

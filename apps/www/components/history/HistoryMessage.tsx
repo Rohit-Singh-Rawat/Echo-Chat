@@ -31,7 +31,7 @@ export function HistoryMessage({
 }: HistoryMessageProps) {
   return (
     <div
-      className={`group relative flex items-start gap-3 ${
+      className={`group relative flex items-start gap-2 md:gap-3 ${
         isOwnMessage ? 'flex-row-reverse' : 'flex-row'
       }`}
     >
@@ -41,16 +41,16 @@ export function HistoryMessage({
         showAvatar={!isPrevMessageSameSender}
       />
 
-      <div className={`flex-1 ${message.totalReactions > 0 ? 'mb-5' : ''}`}>
+      <div className={`flex-1 ${message.totalReactions > 0 ? 'mb-4 md:mb-5' : ''}`}>
         {/* Header - only show if different sender */}
         {!isPrevMessageSameSender && (
           <div
-            className={`mb-1 flex items-center gap-2 ${
+            className={`mb-1 flex items-center gap-1.5 md:gap-2 ${
               isOwnMessage ? 'flex-row-reverse' : 'flex-row'
             }`}
           >
-            <span className="text-sm font-medium">{message.username}</span>
-            <span className="text-xs text-neutral-500">
+            <span className="text-xs font-medium md:text-sm">{message.username}</span>
+            <span className="text-[10px] text-neutral-500 md:text-xs">
               {format(message.sentAt, 'h:mm a')}
             </span>
           </div>

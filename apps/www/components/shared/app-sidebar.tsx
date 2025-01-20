@@ -36,9 +36,11 @@ export function AppSidebar() {
   return (
     <Sidebar variant="inset" className="bg-neutral-100">
       <SidebarContent className="ju flex flex-col">
-        <SidebarHeader className="flex flex-row items-center justify-between max-md:p-2">
+        <SidebarHeader className="flex flex-row items-center justify-between max-md:p-4">
           <EchoLogo />
-          <NavUser />
+          <div className='max-md:hidden'>
+            <NavUser />
+          </div>
         </SidebarHeader>
         <SidebarGroup className="mt-10 flex-1">
           <SidebarGroupContent>

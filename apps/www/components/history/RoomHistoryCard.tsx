@@ -179,7 +179,7 @@ export default function RoomHistoryCard({
     knownParticipants.length - displayParticipants.length
 
   return (
-    <Card className="w-full max-w-96 border-dashed">
+    <Card className="w-full overflow-hidden border-dashed">
       <CardContent className="p-4">
         <div className="flex items-start justify-between gap-2">
           <div className="flex flex-col gap-1">

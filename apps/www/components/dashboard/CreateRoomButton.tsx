@@ -14,7 +14,6 @@ import { z } from 'zod'
 
 import { Button as Button2 } from '@/components/shared/Button'
 import { ResponsiveModal } from '@/components/ui/responsive-modal'
-import { useMediaQuery } from '@/hooks/use-media-query'
 import { createRooms } from '@/lib/actions/RoomActions'
 import { UserStats } from '@/types'
 
@@ -226,7 +225,6 @@ export default function CreateRoomButton({
       <ResponsiveModal
         title="Create Room"
         onOpenChange={setOpen}
-        showTitle={false}
         open={open}
       >
         <CreateRoomContent
