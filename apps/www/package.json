@@ -34,6 +34,7 @@
     "react-hook-form": "^7.53.2",
     "react-use-websocket": "^4.11.1",
     "sonner": "^1.7.0",
+    "uuid": "^11.0.3",
     "zod": "^3.23.8",
     "zustand": "^5.0.1"
   },

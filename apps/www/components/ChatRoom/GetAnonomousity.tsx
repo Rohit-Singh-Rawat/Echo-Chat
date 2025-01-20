@@ -18,17 +18,16 @@ export default function GetAnonomousity() {
   }
 
   return (
-    <div className="flex-center mx-auto h-screen w-screen flex-col bg-[radial-gradient(#e5e7eb_1px,transparent_1px)] p-10 [background-size:16px_16px]">
-      {' '}
+    <div className="flex-center mx-auto h-screen w-screen flex-col bg-[radial-gradient(#e5e7eb_1px,transparent_1px)] p-4 [background-size:16px_16px] sm:p-6 lg:p-10">
       <div className="">
         <EchoLogo />
       </div>
-      <div className="transition-ease m-auto w-full max-w-[90%] space-y-4 rounded-2xl border-2 border-neutral-300 bg-white p-6 shadow-xl hover:shadow-2xl sm:max-w-[450px] sm:space-y-6 sm:p-8 md:p-10">
+      <div className="transition-ease m-auto w-full max-w-[95%] space-y-4 rounded-2xl border-2 border-neutral-300 bg-white p-4 shadow-xl hover:shadow-2xl xs:max-w-[90%] sm:max-w-[450px] sm:space-y-6 sm:p-8 md:p-10">
         <div>
-          <h1 className="mb-3 text-2xl font-semibold sm:mb-4 sm:text-3xl">
+          <h1 className="mb-2 text-xl font-semibold sm:mb-4 sm:text-2xl md:text-3xl">
             Choose Your Identity
           </h1>
-          <p className="mb-4 text-sm text-gray-600 sm:mb-6 sm:text-base">
+          <p className="mb-3 text-xs text-gray-600 sm:mb-6 sm:text-base">
             Select how you want to appear in this chat room. You can choose to
             participate anonymously or use your account identity.
           </p>

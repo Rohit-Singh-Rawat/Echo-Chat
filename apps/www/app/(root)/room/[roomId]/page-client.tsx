@@ -309,8 +309,12 @@ const PageClient = ({ roomId, token }: PageClientProps) => {
 
   return (
     <TimeLeftDisplay closeTime={timeLeft}>
-      <div className="grid h-screen max-h-screen w-screen grid-cols-1 grid-rows-10 justify-center overflow-hidden bg-neutral-100 p-5 pt-0">
-        <RoomHeader roomName={roomName} handleExit={handleExit} />
+      <div className="grid h-screen max-h-screen w-screen grid-cols-1 grid-rows-10 justify-center overflow-hidden bg-neutral-100 pt-0 md:p-5">
+        <RoomHeader
+          roomName={roomName}
+          handleExit={handleExit}
+          timeLeft={timeLeft}
+        />
         <div className="row-span-9 flex w-full gap-5">
           <ParticipantsSidebar participants={users} />
           <ChatBox

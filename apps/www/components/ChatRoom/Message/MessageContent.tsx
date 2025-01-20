@@ -29,15 +29,15 @@ export const MessageContent = ({
 }: MessageContentProps) => {
   return (
     <div
-      className={`group flex w-full items-center gap-3 ${isOwnMessage ? 'flex-row-reverse' : 'flex-row'}`}
+      className={`group flex w-full items-center gap-2 md:gap-3 ${isOwnMessage ? 'flex-row-reverse' : 'flex-row'}`}
     >
-      <div className={`${image ? 'w-80' : 'max-w-[70%]'} relative`}>
+      <div className={`${image ? 'w-60 md:w-80' : 'max-w-[70%]'} relative`}>
         <div
-          className={`flex w-full min-w-20 flex-col items-center justify-start overflow-hidden text-ellipsis text-wrap text-start ${
+          className={`flex w-full min-w-16 md:min-w-20 flex-col items-center justify-start overflow-hidden text-ellipsis text-wrap text-start ${
             isPrevMessageSameSender
               ? 'rounded-[14px]'
               : `${isOwnMessage ? 'rounded-[14px] rounded-tr-none' : 'rounded-[14px] rounded-tl-none'}`
-          } p-2 px-4 ${
+          } p-1.5 md:p-2 px-3 md:px-4 ${
             isOwnMessage
               ? 'border-[1.5px] border-transparent bg-neutral-100'
               : 'border-[1.5px] border-neutral-200 bg-white'
@@ -47,13 +47,13 @@ export const MessageContent = ({
             <Image
               src={image}
               alt="Message attachment"
-              className="mt-2 w-80 rounded-lg bg-white object-contain"
+              className="mt-1 md:mt-2 w-60 md:w-80 rounded-lg bg-white object-contain"
               width={320}
               height={320}
             />
           )}
           {message && (
-            <p className="max-w-[48ch] break-words text-sm">{message}</p>
+            <p className="max-w-[48ch] break-words text-xs md:text-sm">{message}</p>
           )}
         </div>{' '}
         <MessageReactions

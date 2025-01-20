@@ -57,8 +57,8 @@ const MessageBox = ({
 
   return (
     <div
-      className={`flex items-start gap-3 px-6 ${
-        userId == prevMessageSender ? 'pt-1' : 'pt-6'
+      className={`flex items-start gap-1.5 px-2 md:gap-3 md:px-6 ${
+        userId == prevMessageSender ? 'pt-0.5 md:pt-1' : 'pt-3 md:pt-6'
       } ${isOwnMessage ? 'flex-row-reverse justify-end' : 'justify-start'} z-40`}
     >
       <MessageAvatar
@@ -81,7 +81,7 @@ const MessageBox = ({
         )}
 
         <motion.div
-          className={`relative min-h-[30px] ${totalReactions > 0 ? 'mb-5' : ''} w-full ${
+          className={`relative min-h-[24px] md:min-h-[30px] ${totalReactions > 0 ? 'mb-3 md:mb-5' : ''} w-full ${
             isOwnMessage ? 'items-end' : 'items-start'
           }`}
         >

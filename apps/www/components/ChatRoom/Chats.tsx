@@ -19,7 +19,7 @@ const Chats = ({ messages, sendReaction }: Props) => {
 
   return (
     <div
-      className="chat-scroll z-40 flex h-full flex-col overflow-y-auto scroll-smooth p-4"
+      className="chat-scroll z-40 flex h-full flex-col overflow-y-auto scroll-smooth p-2 md:p-4"
       ref={ref}
     >
       <AnimatePresence>
@@ -29,6 +29,7 @@ const Chats = ({ messages, sendReaction }: Props) => {
             initial={{ opacity: 0, y: 50 }}
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0 }}
+            className="w-full md:w-auto"
           >
             <MessageBox
               reactions={message.reactions}

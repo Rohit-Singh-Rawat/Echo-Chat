@@ -1,8 +1,9 @@
 import { useEffect, useState } from 'react'
+import { v4 as uuidv4 } from 'uuid'
 
 import { adjectives, nouns } from '@/constants'
 
-const generateRandomId = () => crypto.randomUUID().slice(0, 16)
+const generateRandomId = () => uuidv4().slice(0, 16)
 const generateRandomName = () => {
   const randomAdjective =
     adjectives[Math.floor(Math.random() * adjectives.length)]

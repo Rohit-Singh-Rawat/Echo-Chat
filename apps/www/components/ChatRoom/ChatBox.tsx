@@ -18,7 +18,7 @@ interface ChatBoxProps {
 
 const ChatBox = ({ messages, sendMessage, sendReaction }: ChatBoxProps) => {
   return (
-    <div className="relative size-full flex-1 rounded-xl border border-neutral-200 bg-white p-2">
+    <div className="relative size-full flex-1 rounded-xl border border-neutral-200 bg-white p-2 md:p-4 overflow-x-hidden">
       {' '}
       <GridPattern
         width={30}
@@ -32,7 +32,7 @@ const ChatBox = ({ messages, sendMessage, sendReaction }: ChatBoxProps) => {
           'fill-neutral-400/30 stroke-neutral-400/20'
         )}
       />
-      <div className="relative h-[calc(100%-10px)] flex-1 overflow-hidden pb-12">
+      <div className="relative h-[calc(100%-10px)] md:h-[calc(100%-16px)] flex-1 overflow-hidden pb-12 md:pb-16">
         <Chats
           sendReaction={sendReaction}
           messages={messages.map((message) => ({

@@ -26,7 +26,7 @@ const ChatBoxInput = ({
   return (
     <form
       onSubmit={handleSubmit}
-      className="absolute bottom-5 right-1/2 z-50 flex w-[90%] translate-x-1/2 items-center rounded-full border border-neutral-200 bg-white p-1 px-2"
+      className="absolute bottom-2 md:bottom-5 right-1/2 z-50 flex w-[95%] md:w-[90%] translate-x-1/2 items-center rounded-full border border-neutral-200 bg-white p-0.5 md:p-1 px-1 md:px-2"
     >
       <FileInput onImageUpload={setImage} SendImage={image} />
       <Textarea
@@ -39,15 +39,15 @@ const ChatBoxInput = ({
             handleSubmit(e)
           }
         }}
-        className="chat-scroll mx-2 max-h-20 min-h-7 w-full flex-1 resize-none overflow-auto border-none shadow-none outline-none ring-0 [field-sizing:content] focus-within:outline-none focus-visible:ring-0"
+        className="chat-scroll mx-1 md:mx-2 max-h-16 md:max-h-20 min-h-6 md:min-h-7 w-full flex-1 resize-none overflow-auto border-none shadow-none outline-none ring-0 [field-sizing:content] focus-within:outline-none focus-visible:ring-0 text-sm md:text-base"
         placeholder="Enter your message"
       />
       <Button
         type="submit"
-        className="flex-center h-auto rounded-full p-[10px]"
+        className="flex-center h-auto rounded-full p-2 md:p-[10px]"
         aria-label={'send message'}
       >
-        <Send size={30} className="size-12 p-0" />
+        <Send size={24} className="size-8 md:size-12 p-0" />
       </Button>
     </form>
   )

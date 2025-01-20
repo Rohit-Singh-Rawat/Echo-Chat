@@ -21,7 +21,7 @@ export const MessageAvatar = ({
   }
 
   return (
-    <Avatar className="size-8 md:size-10">
+    <Avatar className="size-8 ">
       <AvatarImage src={avatar} alt={`${userName}'s avatar`} />
       <AvatarFallback>
         <LoadingSpinner className="size-4 md:size-5" />
