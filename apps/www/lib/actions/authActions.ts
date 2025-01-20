@@ -21,7 +21,7 @@ export const SendVerificationOtpAction = actionClient
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify({ email }),
+        body: JSON.stringify({ email: email.toLowerCase() }),
         credentials: 'include',
       }
     )
@@ -50,7 +50,13 @@ export const CreateUserAccountAction = actionClient
           headers: {
             'Content-Type': 'application/json',
           },
-          body: JSON.stringify({ email, code, firstName, lastName, password }),
+          body: JSON.stringify({
+            email: email.toLowerCase(),
+            code,
+            firstName,
+            lastName,
+            password,
+          }),
           credentials: 'include',
         }
       )
@@ -78,7 +84,7 @@ export const LoginAction = actionClient
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify({ email, password }),
+        body: JSON.stringify({ email: email.toLowerCase(), password }),
         credentials: 'include',
       }
     )
@@ -105,7 +111,7 @@ export const ForgotPasswordAction = actionClient
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify({ email }),
+        body: JSON.stringify({ email: email.toLowerCase() }),
         credentials: 'include',
       }
     )
@@ -134,7 +140,7 @@ export const ResetPasswordAction = actionClient
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify({ password, email, code }),
+        body: JSON.stringify({ password, email: email.toLowerCase(), code }),
         credentials: 'include',
       }
     )

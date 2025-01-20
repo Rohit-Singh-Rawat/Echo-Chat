@@ -26,9 +26,9 @@ const dummyRooms = [
 
 export default function NoRooms({ stats }: { stats: UserStats }) {
   return (
-    <div className="relative flex min-h-[400px] flex-col items-center justify-center gap-8">
+    <div className="relative flex min-h-[300px] flex-col items-center justify-center gap-6 md:min-h-[400px] md:gap-8">
       {' '}
-      <div className="relative flex h-60 w-96 translate-y-20 items-center justify-center">
+      <div className="relative flex h-40 w-72 translate-y-16 items-center justify-center md:h-60 md:w-96 md:translate-y-20">
         <div
           style={{
             position: 'absolute',
@@ -42,20 +42,22 @@ export default function NoRooms({ stats }: { stats: UserStats }) {
         <CardStack items={dummyRooms} />
       </div>
       <div className="z-50 text-center">
-        <h2 className="text-xl font-semibold text-gray-900">
+        <h2 className="text-lg font-semibold text-gray-900 md:text-xl">
           No active rooms found
         </h2>
-        <p className="mt-2 text-gray-500">
+        <p className="mt-2 text-sm text-gray-500 md:text-base">
           Start by creating a new room or join an existing one
         </p>
       </div>
-      <div className="flex gap-4">
-        <Link href="/join-room">
-          <Button variant="outline" className="min-w-[120px]">
+      <div className="flex w-full flex-col gap-3 px-4 md:w-auto md:flex-row md:gap-4 md:px-0">
+        <Link href="/join-room" className="w-full md:w-auto">
+          <Button variant="outline" className="w-full md:w-[120px]">
             Join a Room
           </Button>
         </Link>
-        <CreateRoomButton {...stats} showStats={false} />
+        <div className="w-full md:w-auto">
+          <CreateRoomButton {...stats} showStats={false} />
+        </div>
       </div>
     </div>
   )

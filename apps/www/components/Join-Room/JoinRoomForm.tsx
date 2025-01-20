@@ -29,7 +29,10 @@ export const JoinRoomForm = ({
     router.push(`/room/${formData.roomId}`)
   }
   return (
-    <form onSubmit={submitForm} className="flex flex-col items-center">
+    <form
+      onSubmit={submitForm}
+      className="flex flex-col items-center max-md:my-3"
+    >
       <div className="rounded-full border border-gray-200 bg-white p-2 shadow-sm">
         <EchoRoom className="size-5" />
       </div>

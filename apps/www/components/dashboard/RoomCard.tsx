@@ -25,9 +25,9 @@ import { useTimeLeft } from '@/hooks/useTimeLeft'
 import { ClockIcon } from '../icons/animated/clock'
 import { MessageCircleMoreIcon } from '../icons/animated/message-circle-more'
 import { UsersIcon } from '../icons/animated/users'
+import FilledUser from '../icons/FilledUser'
 
 import { UserLabel } from './UserLabel'
-import FilledUser from '../icons/FilledUser'
 
 interface ChatRoomCardProps {
   id: string
@@ -53,7 +53,7 @@ const RoomHeader = ({
   return (
     <div className="flex items-start justify-between gap-2">
       <div className="flex flex-col gap-1">
-        <h3 className="text-sm font-semibold">{title}</h3>
+        <h3 className="text-sm font-semibold md:text-base">{title}</h3>
         <div className="text-muted-foreground flex items-center gap-1 text-xs">
           <Hash className="size-3" />
           <span>{id}</span>
@@ -61,8 +61,8 @@ const RoomHeader = ({
       </div>
       <DropdownMenu>
         <DropdownMenuTrigger asChild>
-          <Button variant="ghost" className="size-6 p-0">
-            <MoreHorizontal className="size-3" />
+          <Button variant="ghost" className="size-6 p-0 md:size-8">
+            <MoreHorizontal className="size-3 md:size-4" />
             <span className="sr-only">Open menu</span>
           </Button>
         </DropdownMenuTrigger>
@@ -87,7 +87,7 @@ export const ParticipantAvatar = ({
 }: {
   participant: { name: string; avatar: string }
 }) => (
-  <Avatar className="border-background size-6 border-2">
+  <Avatar className="border-background size-6 border-2 md:size-8">
     <AvatarImage
       src={participant.avatar}
       alt={`${participant.name}'s avatar`}
@@ -108,9 +108,9 @@ export const ParticipantsList = ({
 }) => {
   if (knownParticipants.length === 0) {
     return (
-      <div className="text-muted-foreground/80 flex items-center gap-2 text-sm italic">
-        <UsersIcon className="size-4" />
-        <span>No participants yet</span>
+      <div className="text-muted-foreground/80 flex items-center gap-2 text-sm md:text-base">
+        <UsersIcon className="size-4 md:size-5" />
+        <span className="text-xs">No participants yet</span>
       </div>
     )
   }
@@ -118,12 +118,12 @@ export const ParticipantsList = ({
   return (
     <HoverCard>
       <HoverCardTrigger>
-        <div className="flex -space-x-2">
+        <div className="flex -space-x-2 md:-space-x-3">
           {displayParticipants.map((participant, index) => (
             <ParticipantAvatar key={index} participant={participant} />
           ))}
           {remainingParticipants > 0 && (
-            <button className="border-background bg-muted text-muted-foreground z-20 flex size-6 items-center justify-center rounded-full border-2 text-[10px] font-medium">
+            <button className="border-background bg-muted text-muted-foreground z-20 flex size-6 items-center justify-center rounded-full border-2 text-[10px] font-medium md:size-8 md:text-xs">
               +{remainingParticipants}
             </button>
           )}
@@ -144,10 +144,12 @@ export const RoomStats = ({
   messageCount,
   userCount,
   timeLeft,
+  isList = false,
 }: {
   messageCount: number
   userCount: number
   timeLeft: { hours: number; minutes: number; seconds: number }
+  isList?: boolean
 }) => {
   const formatTime = (time: typeof timeLeft) => {
     const parts = []
@@ -160,17 +162,19 @@ export const RoomStats = ({
   }
 
   return (
-    <div className="text-muted-foreground flex items-center gap-3 text-sm">
+    <div
+      className={`text-muted-foreground flex ${isList ? 'flex-row' : 'flex-col md:flex-row'} items-start gap-1 text-xs md:items-center md:gap-3 md:text-sm`}
+    >
       <div className="flex items-center gap-1">
-        <MessageCircleMoreIcon className="size-4" />
+        <MessageCircleMoreIcon className="size-3 md:size-4" />
         <span>{messageCount}</span>
       </div>
       <div className="flex items-center gap-1">
-        <UsersIcon className="size-4" />
+        <UsersIcon className="size-3 md:size-4" />
         <span>{userCount}</span>
       </div>
-      <div className="mx-w-28 flex w-28 items-center gap-1">
-        <ClockIcon className="size-4" />
+      <div className="md:mx-w-28 flex items-center gap-1 md:w-28">
+        <ClockIcon className="size-3 md:size-4" />
         <span>{formatTime(timeLeft)}</span>
       </div>
     </div>
@@ -198,10 +202,10 @@ export default function ChatRoomCard({
     knownParticipants.length - displayParticipants.length
 
   return (
-    <Card className="w-full max-w-96 transition-all duration-300 ease-in-out hover:shadow-xl">
-      <CardContent className="p-3">
+    <Card className="w-full max-w-96 overflow-hidden transition-all duration-300 ease-in-out hover:shadow-xl">
+      <CardContent className="p-3 md:p-4">
         <RoomHeader title={title} id={id} onJoin={onJoin} />
-        <div className="mt-5 flex items-center justify-between">
+        <div className="mt-5 flex flex-col gap-3 md:flex-row md:items-center md:justify-between">
           <ParticipantsList
             displayParticipants={displayParticipants}
             remainingParticipants={remainingParticipants}
@@ -214,8 +218,11 @@ export default function ChatRoomCard({
           />
         </div>
       </CardContent>
-      <CardFooter className="p-2">
-        <Button className="h-auto w-full py-2 text-sm" onClick={onJoin}>
+      <CardFooter className="p-2 md:p-3">
+        <Button
+          className="h-auto w-full py-2 text-sm md:py-2.5 md:text-base"
+          onClick={onJoin}
+        >
           Join Room
         </Button>
       </CardFooter>

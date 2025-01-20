@@ -17,10 +17,14 @@ const RoomList = ({ rooms }: { rooms: RoomWithParticipants[] }) => {
     <Table>
       <TableHeader className="">
         <TableRow className="">
-          <TableCell className="py-3 pl-10">Room</TableCell>
-          <TableCell className="py-3">Participants</TableCell>
-          <TableCell className="py-3 pl-12">Stats</TableCell>
-          <TableCell className="py-3 pr-10 text-right">Actions</TableCell>
+          <TableCell className="py-3 pl-4 md:pl-10">Room</TableCell>
+          <TableCell className="hidden py-3 md:table-cell">
+            Participants
+          </TableCell>
+          <TableCell className="table-cell py-3 pl-12">Stats</TableCell>
+          <TableCell className="py-3 pr-4 text-right md:pr-10">
+            Actions
+          </TableCell>
         </TableRow>
       </TableHeader>
       <TableBody>
@@ -38,7 +42,7 @@ const RoomList = ({ rooms }: { rooms: RoomWithParticipants[] }) => {
             totalParticipants={room.participants.length}
             messageCount={room._count.messages}
             closedAt={new Date(room.closedAt)}
-            onJoin={() => (window.location.href = '/room/room-1')}
+            onJoin={() => (window.location.href = `/room/${room.id}`)}
           />
         ))}
       </TableBody>

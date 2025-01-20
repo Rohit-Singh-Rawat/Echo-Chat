@@ -3,6 +3,7 @@
 import { ViewVerticalIcon } from '@radix-ui/react-icons'
 import { Slot } from '@radix-ui/react-slot'
 import { VariantProps, cva } from 'class-variance-authority'
+import { Columns2 } from 'lucide-react'
 import * as React from 'react'
 
 import { useIsMobile } from '../../hooks/use-mobile'
@@ -199,7 +200,7 @@ const Sidebar = React.forwardRef<
           <SheetContent
             data-sidebar="sidebar"
             data-mobile="true"
-            className="bg-sidebar text-sidebar-foreground w-[--sidebar-width] p-0 [&>button]:hidden"
+            className="text-sidebar-foreground w-[250px] bg-neutral-100 p-0 [&>button]:hidden"
             style={
               {
                 '--sidebar-width': SIDEBAR_WIDTH_MOBILE,
@@ -279,7 +280,7 @@ const SidebarTrigger = React.forwardRef<
       }}
       {...props}
     >
-      <ViewVerticalIcon />
+      <Columns2 />
       <span className="sr-only">Toggle Sidebar</span>
     </Button>
   )

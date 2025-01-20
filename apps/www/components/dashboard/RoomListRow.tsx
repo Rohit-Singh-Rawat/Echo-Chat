@@ -55,20 +55,23 @@ export default function RoomListRow({
             <span>{title}</span>
             <div className="text-muted-foreground flex items-center gap-1 text-xs">
               <Hash className="size-3" />
-              <span>{id}</span>
+              <span className="max-w-[10ch] truncate md:max-w-[20ch]">
+                {id}
+              </span>
             </div>
           </div>
         </div>
       </TableCell>
-      <TableCell>
+      <TableCell className="hidden md:table-cell">
         <ParticipantsList
           displayParticipants={displayParticipants}
           remainingParticipants={remainingParticipants}
           knownParticipants={knownParticipants}
         />
       </TableCell>
-      <TableCell>
+      <TableCell className="table-cell">
         <RoomStats
+          isList={true}
           messageCount={messageCount}
           userCount={totalParticipants}
           timeLeft={timeLeft}
@@ -76,7 +79,7 @@ export default function RoomListRow({
       </TableCell>
       <TableCell className="text-right">
         <div className="flex items-center justify-end gap-2">
-          <Button onClick={onJoin} size="sm">
+          <Button onClick={onJoin} size="sm" className="hidden md:inline-flex">
             Join Room
           </Button>
           <DropdownMenu>

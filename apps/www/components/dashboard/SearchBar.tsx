@@ -19,10 +19,10 @@ export default function SearchBar() {
   }, [inputValue])
 
   return (
-    <div className="relative">
+    <div className="relative w-full lg:w-96">
       <Input
         id="input-27"
-        className="peer pe-9 ps-9"
+        className="peer w-full pe-9 ps-9"
         placeholder="Search..."
         type="search"
         value={inputValue}
