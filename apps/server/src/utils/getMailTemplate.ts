@@ -18,26 +18,26 @@ interface EmailOptions {
 
 export const getTemplate = (options: EmailOptions): string => {
   const baseTemplate = (content: string) => `
-    <div style="margin-left:auto;margin-right:auto;margin-top:auto;margin-bottom:auto;background-color:rgb(255,255,255);font-family:ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,'Helvetica Neue',Arial,'Noto Sans',sans-serif,'Apple Color Emoji','Segoe UI Emoji','Segoe UI Symbol','Noto Color Emoji'">
-      <table align="center" width="100%" border="0" cellpadding="0" cellspacing="0" role="presentation" style="max-width:500px;margin-left:auto;margin-right:auto;margin-top:2.5rem;margin-bottom:2.5rem;border-radius:0.25rem;border-width:1px;border-style:solid;border-color:rgb(229,231,235);padding-left:2.5rem;padding-right:2.5rem;padding-top:1.25rem;padding-bottom:1.25rem">
-        <tbody>
-          <tr style="width:100%">
-            <td>
-              <table align="center" width="100%" border="0" cellpadding="0" cellspacing="0" role="presentation" style="margin-top:2rem">
-                <tbody>
-                  <tr>
-                    <td>
-                      <img alt="Echo Chat" height="40" src="https://res.cloudinary.com/ytx/image/upload/v1736163180/echo_gmxbwc.png" style="display:block;outline:none;border:none;text-decoration:none;margin-left:auto;margin-right:auto;margin-top:0px;margin-bottom:0px" />
-                    </td>
-                  </tr>
-                </tbody>
-              </table>
-              ${content}
-            </td>
-          </tr>
-        </tbody>
-      </table>
-    </div>
+      <div style="margin-left:auto;margin-right:auto;margin-top:auto;margin-bottom:auto;background-color:rgb(255,255,255);font-family:ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,'Helvetica Neue',Arial,'Noto Sans',sans-serif,'Apple Color Emoji','Segoe UI Emoji','Segoe UI Symbol','Noto Color Emoji'">
+        <table align="center" width="100%" border="0" cellpadding="0" cellspacing="0" role="presentation" style="max-width:500px;margin-left:auto;margin-right:auto;margin-top:2.5rem;margin-bottom:2.5rem;border-radius:0.25rem;border-width:1px;border-style:solid;border-color:rgb(229,231,235);padding-left:2.5rem;padding-right:2.5rem;padding-top:1.25rem;padding-bottom:1.25rem">
+          <tbody>
+            <tr style="width:100%">
+              <td>
+                <table align="center" width="100%" border="0" cellpadding="0" cellspacing="0" role="presentation" style="margin-top:2rem">
+                  <tbody>
+                    <tr>
+                      <td>
+                        <img alt="Echo Chat" height="40" src="https://res.cloudinary.com/ytx/image/upload/v1736163180/echo_gmxbwc.png" style="display:block;outline:none;border:none;text-decoration:none;margin-left:auto;margin-right:auto;margin-top:0px;margin-bottom:0px" />
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+                ${content}
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
   `
 
   const verifyEmailTemplate = `
@@ -170,7 +170,7 @@ export const getTemplate = (options: EmailOptions): string => {
     </p>
     <hr style="width:100%;border:none;border-top:1px solid #eaeaea;margin-left:0px;margin-right:0px;margin-top:1.5rem;margin-bottom:1.5rem;border-width:1px;border-color:rgb(229,231,235)">
     <p style="font-size:12px;line-height:1.5rem;margin:16px 0;color:rgb(107,114,128)">
-      Having trouble setting up a room? <a href="mailto:support@echochat.com" style="color:rgb(37,99,235);text-decoration:none">Contact us</a> for immediate assistance.
+      Having trouble setting up a room? <a href="mailto:echochat.com@gmail.com" style="color:rgb(37,99,235);text-decoration:none">Contact us</a> for immediate assistance.
     </p>
   `
 

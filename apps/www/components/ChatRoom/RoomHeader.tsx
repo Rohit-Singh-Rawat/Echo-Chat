@@ -1,4 +1,5 @@
 import { LoadingSpinner } from '@echo/ui/icons/spinner.tsx'
+import { AudioLines } from 'lucide-react'
 
 import { UserButton } from '@/components/ChatRoom/UserButton'
 import EchoLogo from '@/components/icons/animated/EchoLogo'
@@ -7,9 +8,6 @@ import { Button } from '@/components/shared/Button'
 import { useUser } from '@/hooks/useSession'
 
 import Countdown from './Countdown'
-import Echo from '../icons/Echo'
-import { EchoLoading } from '../ui/EchoLoading'
-import { AudioLines } from 'lucide-react'
 
 export const RoomHeader = ({
   roomName,
@@ -65,7 +63,7 @@ export const RoomHeader = ({
           <AudioLines className="size-10 invert-0" />
         </Button>
       </div>
-      <h1 className="max-w-[150px] truncate text-xl px-2 font-semibold text-neutral-800">
+      <h1 className="max-w-[150px] truncate px-2 text-xl font-semibold text-neutral-800">
         ffni enifkdnnnnndkne{roomName}
       </h1>
       <div className="flex-center gap-5">
