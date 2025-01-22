@@ -33,6 +33,9 @@ export function DeleteAccountSection() {
 
         queryClient.invalidateQueries({ queryKey: ['user'] })
         router.push('/')
+        setTimeout(() => {
+          window.location.reload()
+        }, 1000)
       },
       onError: (error) => {
         console.error('Failed to delete account:', error)
@@ -50,7 +53,7 @@ export function DeleteAccountSection() {
         footer={
           <div className="flex items-center justify-end">
             <Button
-              className="group flex h-8 items-center justify-center gap-2 bg-red-500 text-sm hover:bg-red-600 w-full md:w-auto"
+              className="group flex h-8 w-full items-center justify-center gap-2 bg-red-500 text-sm hover:bg-red-600 md:w-auto"
               onClick={() => setShowConfirmDialog(true)}
               disabled={isLoading}
               isLoading={isLoading}
@@ -63,7 +66,7 @@ export function DeleteAccountSection() {
         <></>
       </AccountCard>
       <Dialog open={showConfirmDialog} onOpenChange={setShowConfirmDialog}>
-        <DialogContent className="mx-4 md:mx-auto max-w-[95%] md:max-w-[425px]">
+        <DialogContent className="mx-4 max-w-[95%] md:mx-auto md:max-w-[425px]">
           <DialogHeader>
             <DialogTitle className="text-xl font-semibold text-red-600">
               Delete Account
@@ -96,11 +99,11 @@ export function DeleteAccountSection() {
               />
             </div>
           </div>
-          <DialogFooter className="flex-col md:flex-row gap-2">
+          <DialogFooter className="flex-col gap-2 md:flex-row">
             <Button
               onClick={() => setShowConfirmDialog(false)}
               disabled={isLoading}
-              className="w-full md:w-auto hover:bg-neutral-100"
+              className="w-full hover:bg-neutral-100 md:w-auto"
             >
               Cancel
             </Button>
@@ -108,7 +111,7 @@ export function DeleteAccountSection() {
               onClick={() => handleDelete()}
               disabled={confirmText !== 'delete my account' || isLoading}
               isLoading={isLoading}
-              className="w-full md:w-auto bg-red-600 hover:bg-red-700 focus-visible:ring-red-500"
+              className="w-full bg-red-600 hover:bg-red-700 focus-visible:ring-red-500 md:w-auto"
             >
               Delete Account
             </Button>

@@ -118,7 +118,7 @@ model Message {
   sentAt   DateTime        @default(now())
   roomId   String
   room     Room            @relation("RoomMessages", fields: [roomId], references: [id], onDelete: Cascade)
-  sender   RoomParticipant @relation(fields: [senderId], references: [id])
+  sender   RoomParticipant @relation(fields: [senderId], references: [id],onDelete: Cascade)
   senderId String
   reaction Reaction[]      @relation("MessageReactions")
 }
