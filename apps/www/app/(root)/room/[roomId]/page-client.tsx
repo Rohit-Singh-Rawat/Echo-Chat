@@ -2,6 +2,7 @@
 
 import { useEffect, useState, useCallback } from 'react'
 import useWebSocket, { ReadyState } from 'react-use-websocket'
+import { toast } from 'sonner'
 
 import useRoomStore from '@/app/store/RoomStore'
 import { useIdentityStore } from '@/app/store/useIdentityStore'
@@ -81,7 +82,6 @@ const PageClient = ({ roomId, token }: PageClientProps) => {
     const handlers: Record<string, () => void> = {
       error: () => setError(data.payload.message),
       room_joined: () => {
-        console.log(data.payload)
         setUserId(data.payload.userId)
         setIsLoading(false)
         SetRoomName(data.payload.roomName)
@@ -275,7 +275,7 @@ const PageClient = ({ roomId, token }: PageClientProps) => {
       // Close the WebSocket connection
       setShouldConnect(false)
     }
-    // Redirect to dashboard
+    toast.info('Redirecting to dashboard...')
     window.location.href = '/dashboard'
   }, [readyState])
   if (token && anonymous === null) {
@@ -308,7 +308,7 @@ const PageClient = ({ roomId, token }: PageClientProps) => {
   }
 
   return (
-    <TimeLeftDisplay closeTime={timeLeft}>
+    <TimeLeftDisplay closeTime={timeLeft} isPublic={roomId == 'public'}>
       <div className="grid h-screen max-h-screen w-screen grid-cols-1 grid-rows-10 justify-center overflow-hidden bg-neutral-100 pt-0 md:p-5">
         <RoomHeader
           roomName={roomName}

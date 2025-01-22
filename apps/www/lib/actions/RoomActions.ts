@@ -8,8 +8,11 @@ import { z } from 'zod'
 import { Message, Rooms } from '@/types'
 
 import { actionClient } from './safe-actions'
-
-export async function getRooms() {
+export async function getRooms({
+  search = '',
+}: {
+  search?: string
+} = {}) {
   const cookieStore = await cookies()
   const token = cookieStore.get('token')
   if (!token) {
@@ -17,18 +20,24 @@ export async function getRooms() {
   }
 
   try {
-    const response = await fetch(
-      `${process.env.NEXT_PUBLIC_SERVER_API_BASE_URL}/api/v1/rooms/getRooms`,
-      {
-        headers: {
-          Authorization: `Bearer ${token.value}`,
-          'Content-Type': 'application/json',
-        },
-        next: {
-          tags: ['rooms'],
-        },
-      }
-    )
+    const queryParams = new URLSearchParams()
+    if (search) {
+      queryParams.append('search', search)
+    }
+
+    const url = `${process.env.NEXT_PUBLIC_SERVER_API_BASE_URL}/api/v1/rooms/getRooms${
+      queryParams.toString() ? `?${queryParams.toString()}` : ''
+    }`
+
+    const response = await fetch(url, {
+      headers: {
+        Authorization: `Bearer ${token.value}`,
+        'Content-Type': 'application/json',
+      },
+      next: {
+        tags: ['rooms'],
+      },
+    })
 
     if (!response.ok) {
       throw new Error('Failed to fetch rooms')

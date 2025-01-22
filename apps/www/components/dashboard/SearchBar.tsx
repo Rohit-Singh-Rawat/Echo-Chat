@@ -2,31 +2,36 @@
 
 import { Input } from '@echo/ui/components/ui/input.tsx'
 import { LoaderCircle, Search } from 'lucide-react'
+import { useRouter, useSearchParams } from 'next/navigation'
 import { useEffect, useState } from 'react'
 
-export default function SearchBar() {
-  const [inputValue, setInputValue] = useState('')
-  const [isLoading, setIsLoading] = useState<boolean>(false)
+import { useDebounce } from '@/hooks/useDebounce'
+
+export default function SearchBar({ search }: { search: string }) {
+  const router = useRouter()
+  const searchParams = useSearchParams()
+  const [value, setValue] = useState(search)
+  const debouncedValue = useDebounce(value, 500)
+  const isLoading = value !== debouncedValue
 
   useEffect(() => {
-    if (inputValue) {
-      setIsLoading(true)
-      const timer = setTimeout(() => {
-        setIsLoading(false)
-      }, 500)
-      return () => clearTimeout(timer)
+    const params = new URLSearchParams(searchParams)
+    if (debouncedValue) {
+      params.set('search', debouncedValue)
+    } else {
+      params.delete('search')
     }
-  }, [inputValue])
+    router.push(`/dashboard?${params.toString()}`)
+  }, [debouncedValue, router, searchParams])
 
   return (
     <div className="relative w-full lg:w-96">
       <Input
-        id="input-27"
         className="peer w-full pe-9 ps-9"
         placeholder="Search..."
         type="search"
-        value={inputValue}
-        onChange={(e) => setInputValue(e.target.value)}
+        value={value}
+        onChange={(e) => setValue(e.target.value)}
       />
       <div className="text-muted-foreground/80 pointer-events-none absolute inset-y-0 start-0 flex items-center justify-center ps-3 peer-disabled:opacity-50">
         {isLoading ? (

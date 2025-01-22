@@ -9,6 +9,7 @@ import {
   resetPasswordSchema,
 } from '@echo/lib'
 import { cookies } from 'next/headers'
+import { redirect } from 'next/navigation'
 
 import { actionClient } from './safe-actions'
 export const SendVerificationOtpAction = actionClient
@@ -199,6 +200,7 @@ export const logout = actionClient.action(async () => {
       cookieStore.delete(cookie.name)
     }
 
+    redirect('/login')
     return { success: true }
   } catch (error) {
     console.error('Error logging out:', error)

@@ -12,7 +12,10 @@ import { toast } from 'sonner'
 
 import { useRegisterContext } from '@/app/context/RegistryContext'
 import { AuthHeader } from '@/components/auth/auth-header'
-import { CreateUserAccountAction } from '@/lib/actions/authActions'
+import {
+  CreateUserAccountAction,
+  SendVerificationOtpAction,
+} from '@/lib/actions/authActions'
 
 import { Button } from '../shared/Button'
 
@@ -33,6 +36,18 @@ const VerifyEmailCard = () => {
       setIsInvalidCode(true)
     },
   })
+
+  const { executeAsync: resendCode, isExecuting: isResending } = useAction(
+    SendVerificationOtpAction,
+    {
+      async onSuccess() {
+        toast.success('Verification code resent!')
+      },
+      onError({ error }) {
+        toast.error(error.serverError)
+      },
+    }
+  )
 
   if (!email || !password) {
     router.push('/register')
@@ -104,11 +119,8 @@ const VerifyEmailCard = () => {
           <button
             type="button"
             className="transition-ease font-medium underline underline-offset-2 hover:text-black"
-            onClick={() => {
-              // Add logic to resend verification code
-              toast.info('Resending verification code...')
-            }}
-            disabled={isExecuting}
+            onClick={() => resendCode({ email })}
+            disabled={isExecuting || isResending}
           >
             Resend
           </button>

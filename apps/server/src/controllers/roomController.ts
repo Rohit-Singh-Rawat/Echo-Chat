@@ -310,6 +310,8 @@ export const getUserRooms = async (
   res: Response
 ): Promise<Response> => {
   try {
+    const search = req.query.search as string | undefined
+
     const user = (await client.user.findUnique({
       where: {
         id: req.user!.userId,
@@ -318,6 +320,9 @@ export const getUserRooms = async (
         rooms: {
           where: {
             closedAt: { gte: new Date() },
+            ...(search && {
+              OR: [{ name: { contains: search, mode: 'insensitive' } }],
+            }),
           },
           include: {
             _count: {
@@ -358,6 +363,9 @@ export const getUserRooms = async (
                   id: 'public',
                 },
               ],
+              ...(search && {
+                OR: [{ name: { contains: search, mode: 'insensitive' } }],
+              }),
             },
           },
           include: {

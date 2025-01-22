@@ -64,7 +64,7 @@ export const RoomHeader = ({
         </Button>
       </div>
       <h1 className="max-w-[150px] truncate px-2 text-xl font-semibold text-neutral-800">
-        ffni enifkdnnnnndkne{roomName}
+        {roomName}
       </h1>
       <div className="flex-center gap-5">
         <div className="flex-center h-8 w-24 rounded-2xl border-2 border-black">
