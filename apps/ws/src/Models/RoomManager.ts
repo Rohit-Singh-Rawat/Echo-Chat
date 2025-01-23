@@ -60,7 +60,6 @@ export class RoomManager {
         },
       })
     room.users.push(user)
-    console.log(room)
     return true
   }
   public broadcast(data: WebSocketMessage, user: User, roomId: string) {

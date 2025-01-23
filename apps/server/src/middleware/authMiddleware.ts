@@ -20,7 +20,6 @@ export const authenticateToken = (
     return
   }
 
-  console.log('desd')
 
   try {
     const user = jwt.verify(

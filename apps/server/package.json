@@ -4,7 +4,7 @@
   "main": "dist/index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "build": "tsc",
+    "build": "npx esbuild src/index.ts --bundle --platform=node --outfile=dist/index.js",
     "start": "node dist/index.js",
     "dev": "ts-node src/index.ts",
     "watch": "tsc -w"
@@ -18,9 +18,10 @@
     "@aws-sdk/s3-request-presigner": "^3.717.0",
     "@echo/db": "workspace:*",
     "@echo/lib": "workspace:*",
-    "@types/bcrypt": "^5.0.2",
+    "@types/bcryptjs": "^2.4.6",
+    "@types/morgan": "^1.9.9",
     "axios": "^1.7.9",
-    "bcrypt": "^5.1.1",
+    "bcryptjs": "^2.4.3",
     "cookie-parser": "^1.4.7",
     "cors": "^2.8.5",
     "dotenv": "^16.4.6",
@@ -29,17 +30,22 @@
     "google-auth-library": "^9.15.0",
     "googleapis": "^144.0.0",
     "jsonwebtoken": "^8.5.1",
+    "morgan": "^1.10.0",
     "nodemailer": "^6.9.16",
     "razorpay": "^2.9.5",
     "redis": "^4.1.0",
+    "ts-node": "^10.9.2",
+    "winston": "^3.17.0",
     "zod": "^3.23.8"
   },
   "devDependencies": {
+    "@echo/typescript-config": "workspace:*",
     "@types/cors": "^2.8.12",
     "@types/express": "^4.17.13",
     "@types/jsonwebtoken": "^8.5.5",
     "@types/node": "^16.11.7",
     "@types/nodemailer": "^6.4.17",
+    "esbuild": "0.24.2",
     "typescript": "^4.5.2"
   }
 }

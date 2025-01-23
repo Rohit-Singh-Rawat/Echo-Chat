@@ -33,14 +33,7 @@ export const uploadFile = async (
           ? 'temporary=false'
           : 'temporary=true',
     })
-    console.log(
-      contentType,
-      isTemporary,
-      roomId,
-      filename,
-      process.env.AWS_S3_ACCESS_KEY,
-      process.env.AWS_S3_SECRET_ACCESS_KEY
-    )
+   
     const presignedUrl = await getSignedUrl(s3Client, command, {
       expiresIn: 300,
     })

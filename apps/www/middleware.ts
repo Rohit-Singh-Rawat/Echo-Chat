@@ -4,11 +4,12 @@ import type { NextRequest } from 'next/server'
 import { getSession } from '@/lib/actions/authActions'
 import { User } from '@/types'
 
-export async function middleware(request: NextRequest) {
-  const token = request.cookies.get('token')
+const protectedPaths = ['/dashboard', '/history', '/profile']
+const authPaths = ['/login', '/register']
 
-  // Protected routes that require authentication
-  const protectedPaths = ['/dashboard', '/history', '/profile']
+export async function middleware(request: NextRequest) {
+  const token = request.cookies.get('token')?.value
+
   const isProtectedPath = protectedPaths.some((path) =>
     request.nextUrl.pathname.startsWith(path)
   )
@@ -18,23 +19,34 @@ export async function middleware(request: NextRequest) {
   }
 
   if (token) {
-    const session = (await getSession()) as { data: { user: User } } | null
-    console.log(session)
+    try {
+      const session = (await getSession()) as { data: { user: User } } | null
 
-    if (!session?.data?.user && isProtectedPath) {
-      return NextResponse.redirect(new URL('/login', request.url))
-    }
-    if (
-      session?.data?.user &&
-      !session?.data?.user.subscription &&
-      request.nextUrl.pathname !== '/plans'
-    ) {
-      return NextResponse.redirect(new URL('/plans', request.url))
-    }
+      if (!session?.data?.user) {
+        const response = NextResponse.redirect(
+          new URL('/login?error=no_user_found', request.url)
+        )
+        response.cookies.delete('token')
+        return response
+      }
 
-    const authPaths = ['/login', '/register']
-    if (authPaths.some((path) => request.nextUrl.pathname.startsWith(path))) {
-      return NextResponse.redirect(new URL('/dashboard', request.url))
+      if (
+        session.data.user &&
+        !session.data.user.subscription &&
+        request.nextUrl.pathname !== '/plans'
+      ) {
+        return NextResponse.redirect(new URL('/plans', request.url))
+      }
+
+      if (authPaths.some((path) => request.nextUrl.pathname.startsWith(path))) {
+        return NextResponse.redirect(new URL('/dashboard', request.url))
+      }
+    } catch (error) {
+      const response = NextResponse.redirect(
+        new URL('/error?code=something_went_wrong', request.url)
+      )
+      response.cookies.delete('token')
+      return response
     }
   }
 
@@ -44,11 +56,9 @@ export async function middleware(request: NextRequest) {
 export const config = {
   matcher: [
     '/dashboard/:path*',
-    '/settings/:path*',
-    '/profile/:path*',
     '/history/:path*',
     '/login',
     '/register',
-    '/plans',
+    '/((?!api|_next/static|_next/image|favicon.ico|sitemap.xml|robots.txt).*)',
   ],
 }

@@ -10,6 +10,7 @@ export function useUser() {
     queryKey: ['user'],
     queryFn: async () => {
       const session = await getSession()
+      console.log('uer')
       if (!session) {
         throw new Error('Session fetch failed')
       }

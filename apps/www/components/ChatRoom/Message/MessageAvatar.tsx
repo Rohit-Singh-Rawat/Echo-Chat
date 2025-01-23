@@ -17,7 +17,7 @@ export const MessageAvatar = ({
   showAvatar,
 }: MessageAvatarProps) => {
   if (!showAvatar) {
-    return <div className="size-8 md:size-10" />
+    return <div className="size-8 md:size-8" />
   }
 
   return (

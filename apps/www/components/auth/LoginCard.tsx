@@ -4,6 +4,7 @@ import { zodResolver } from '@hookform/resolvers/zod'
 import Link from 'next/link'
 import { useRouter } from 'next/navigation'
 import { useAction } from 'next-safe-action/hooks'
+import { useEffect } from 'react'
 import { useForm } from 'react-hook-form'
 import { toast } from 'sonner'
 
@@ -16,7 +17,11 @@ import { Button } from '../shared/Button'
 
 import AuthProviderButtons from './AuthProviderButtons'
 
-const LoginCard = () => {
+interface LoginCardProps {
+  error?: string
+}
+
+const LoginCard = ({ error }: LoginCardProps) => {
   const router = useRouter()
 
   const { isAuthenticating, setIsAuthenticating } = useAuthStore()
@@ -40,6 +45,14 @@ const LoginCard = () => {
       setIsAuthenticating(false)
     },
   })
+
+  useEffect(() => {
+    if (error) {
+      setTimeout(() => {
+        toast.error(error)
+      }, 500)
+    }
+  }, [error])
 
   const onSubmit = form.handleSubmit((data) => {
     setIsAuthenticating(true)

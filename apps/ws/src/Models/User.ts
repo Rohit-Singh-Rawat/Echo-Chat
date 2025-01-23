@@ -22,7 +22,6 @@ export class User {
   private initHandlers() {
     this.ws.on('message', async (data) => {
       const parsedData = JSON.parse(data.toString())
-      console.log(parsedData, data.toString)
       switch (parsedData.type) {
         case 'join': {
           const { roomId, token, tempId, tempName, tempAvatar } =
@@ -257,7 +256,6 @@ export class User {
                   })),
             },
           })
-          console.log('Rooms:', [...RoomManager.getInstance().rooms.entries()])
           break
         }
         case 'message': {

@@ -74,7 +74,6 @@ export const updateProfile = async (
         image: true,
       },
     })
-    console.log('object')
     res.json(updatedUser)
   } catch (error) {
     console.error('Error updating profile:', error)

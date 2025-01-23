@@ -90,7 +90,6 @@ export const createRoom = async (
       isTemporary
     )
 
-    console.log('objecwwwt', validationError)
     if (validationError) {
       res
         .status(validationError.status)
@@ -112,7 +111,6 @@ export const createRoom = async (
       },
     })
 
-    console.log('objecwwwt')
     await client.user.update({
       where: { id: user.id },
       data: isTemporary
@@ -420,7 +418,6 @@ export const getUserRooms = async (
     })
 
     const rooms = Object.fromEntries(roomMap)
-    console.log(rooms, user)
     return res.json(rooms)
   } catch (error) {
     return res.status(500).json({ message: 'Failed to fetch user rooms' })

@@ -174,10 +174,12 @@ export const getSession = actionClient.action(async () => {
         },
         next: {
           tags: ['user'],
+          revalidate: 60,
         },
+        cache: 'force-cache',
       }
     )
-
+    console.log('called')
     if (response.ok) {
       const data = await response.json()
 
