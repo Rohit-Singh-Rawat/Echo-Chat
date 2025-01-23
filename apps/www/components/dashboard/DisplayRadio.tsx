@@ -3,7 +3,7 @@
 import { Switch } from '@echo/ui/components/ui/switch.tsx'
 import { LayoutGrid, Rows3 } from 'lucide-react'
 
-import { useDisplayStore } from '@/app/store/DisplayStore'
+import { useDisplayStore } from '@/lib/store/DisplayStore'
 
 export default function DisplaySwitch() {
   const { displayLists, ChangeDisplay: setDisplayLists } = useDisplayStore()

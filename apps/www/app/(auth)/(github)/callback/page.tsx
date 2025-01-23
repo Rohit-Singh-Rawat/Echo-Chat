@@ -3,12 +3,12 @@
 import { Github } from 'lucide-react'
 import { useRouter, useSearchParams } from 'next/navigation'
 import { useAction } from 'next-safe-action/hooks'
-import { useEffect } from 'react'
+import { Suspense, useEffect } from 'react'
 import { toast } from 'sonner'
 
 import { GithubAuthAction } from '@/lib/actions/authActions'
 
-export default function GitHubCallbackPage() {
+function GitHubCallbackContent() {
   const router = useRouter()
   const searchParams = useSearchParams()
   const error = searchParams.get('error')
@@ -69,5 +69,22 @@ export default function GitHubCallbackPage() {
         </div>
       </div>
     </div>
+  )
+}
+
+export default function GitHubCallbackPage() {
+  return (
+    <Suspense
+      fallback={
+        <div className="gridGradient flex-center h-screen w-screen place-items-center">
+          <div className="grid gap-4 text-center">
+            <Github className="mx-auto size-12 animate-pulse text-gray-800" />
+            <div className="text-lg font-medium">Loading...</div>
+          </div>
+        </div>
+      }
+    >
+      <GitHubCallbackContent />
+    </Suspense>
   )
 }

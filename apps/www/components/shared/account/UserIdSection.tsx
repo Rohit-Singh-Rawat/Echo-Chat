@@ -17,7 +17,7 @@ export function UserIdSection({ userId }: UserIdSectionProps) {
 
   return (
     <AccountCard title="User ID" description="Your unique account identifier.">
-      <div className="flex w-full md:max-w-md gap-2">
+      <div className="flex w-full gap-2 md:max-w-md">
         <Input
           className="bg-neutral-50 font-mono text-sm"
           type="text"

@@ -1,5 +1,5 @@
 'use client'
-import { RegisterProvider } from '@/app/context/RegistryContext'
+import { RegisterProvider } from '@/context/RegistryContext'
 
 import RegistryFlow from './RegistryFlow'
 

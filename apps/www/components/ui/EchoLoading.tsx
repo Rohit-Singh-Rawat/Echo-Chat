@@ -1,7 +1,7 @@
 'use client'
 
 import { cn } from '@echo/utils/src'
-import { motion, useAnimation } from 'framer-motion'
+import { motion } from 'framer-motion'
 
 interface EchoLoadingProps {
   className?: string
@@ -9,8 +9,6 @@ interface EchoLoadingProps {
 }
 
 const EchoLoading = ({ className, duration = 2 }: EchoLoadingProps) => {
-  const controls = useAnimation()
-
   return (
     <div className={cn('flex items-center justify-center', className)}>
       <motion.svg

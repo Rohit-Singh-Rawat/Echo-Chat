@@ -1,7 +1,8 @@
 import React from 'react'
 
+import { PricingFeature } from '@/types'
+
 import { IconWrapper } from './IconWrapper'
-import { PricingFeature } from './PricingCard'
 
 export function Feature({ icon, title, description }: PricingFeature) {
   return (

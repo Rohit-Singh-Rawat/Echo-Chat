@@ -26,4 +26,4 @@ export const CubeOff = ({
     <path d="M3.27 6.96l8.73 5.04" />
     <path d="M3 3l18 18" />
   </svg>
-) 
+)

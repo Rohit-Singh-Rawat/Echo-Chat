@@ -1,6 +1,6 @@
 'use client'
 
-import { useDisplayStore } from '@/app/store/DisplayStore'
+import { useDisplayStore } from '@/lib/store/DisplayStore'
 import { Rooms } from '@/types'
 
 import { NoRoomsFound } from './NoRoomsFound'
@@ -9,7 +9,7 @@ import RoomHistoryList from './RoomHistoryList'
 
 export default function DisplayRoomsHistory({ rooms }: { rooms: Rooms }) {
   const { displayLists } = useDisplayStore()
-  const roomsList = Object.entries(rooms).map(([id, room]) => ({
+  const roomsList = Object.entries(rooms).map(([, room]) => ({
     ...room,
   }))
 

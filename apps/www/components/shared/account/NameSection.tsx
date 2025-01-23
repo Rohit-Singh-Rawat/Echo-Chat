@@ -52,7 +52,7 @@ export function NameSection({ defaultName }: NameSectionProps) {
       title="Your Name"
       description="This will be your display name."
       footer={
-        <div className="flex flex-col md:flex-row md:items-center md:justify-between md:space-x-4 space-y-2 md:space-y-0">
+        <div className="flex flex-col space-y-2 md:flex-row md:items-center md:justify-between md:space-x-4 md:space-y-0">
           <p className="text-xs text-neutral-500">Max 32 characters.</p>
           <div className="w-full md:w-32">
             <Button

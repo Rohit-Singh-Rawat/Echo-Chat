@@ -77,14 +77,18 @@ export function DeleteRoomDialog({
                   Are you sure you want to delete this room history?
                 </p>
                 <div className="w-full max-w-sm rounded-lg border border-neutral-200 bg-neutral-50 p-3 text-center shadow-sm md:p-4">
-                  <p className="text-sm font-medium text-neutral-900 md:text-base">{roomTitle}</p>
+                  <p className="text-sm font-medium text-neutral-900 md:text-base">
+                    {roomTitle}
+                  </p>
                 </div>
               </div>
 
               <div className="flex items-start gap-2 rounded-lg border border-red-200 bg-red-50 p-3 md:gap-3 md:p-4">
                 <AlertCircle className="mt-0.5 size-4 shrink-0 text-red-600 md:size-5" />
                 <div className="space-y-1">
-                  <p className="text-sm font-medium text-red-900 md:text-base">Warning</p>
+                  <p className="text-sm font-medium text-red-900 md:text-base">
+                    Warning
+                  </p>
                   <p className="text-xs text-red-700 md:text-sm">
                     This action cannot be undone. All messages, reactions and
                     room data will be permanently deleted.

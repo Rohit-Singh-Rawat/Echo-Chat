@@ -59,7 +59,7 @@ export default function AccountDialog({ trigger }: AccountDialogProps) {
     <Dialog open={isOpen} onOpenChange={setIsOpen}>
       <DialogTrigger asChild>{trigger || defaultTrigger}</DialogTrigger>
       <DialogContent
-        className="h-[600px] max-h-[600px] max-md:max-w-[96vw] gap-0 border-neutral-200 bg-neutral-100 p-2 text-neutral-900  md:max-w-[800px]"
+        className="h-[600px] max-h-[600px] gap-0 border-neutral-200 bg-neutral-100 p-2 text-neutral-900 max-md:max-w-[96vw] md:max-w-[800px]"
         showCloseButton={false}
       >
         <SidebarProvider className="min-h-[400px]">
@@ -90,13 +90,12 @@ export default function AccountDialog({ trigger }: AccountDialogProps) {
               </SidebarGroup>
             </SidebarContent>
           </Sidebar>
-          <SidebarInset className="relative max-h-full min-h-full overflow-hidden rounded-2xl  p-4 md:border md:border-neutral-200/80 bg-white">
+          <SidebarInset className="relative max-h-full min-h-full overflow-hidden rounded-2xl bg-white p-4 md:border md:border-neutral-200/80">
             <div className="flex items-center justify-between border-b border-neutral-200 p-4 pt-0 md:hidden">
               <div>
                 <h2 className="text-lg font-semibold">Account</h2>
                 <p className="text-sm text-neutral-500">Manage your account</p>
               </div>
-             
             </div>
             {isLoading ? (
               <div className="flex h-full items-center justify-center">

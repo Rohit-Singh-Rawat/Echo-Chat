@@ -16,7 +16,6 @@ import {
 import { Sparkles } from 'lucide-react'
 
 import Downitem from '../Downitem'
-import { LogoutIcon } from '../icons/animated/logout'
 import { UserIcon } from '../icons/animated/user'
 import EchoRoom from '../icons/EchoRoom'
 import FilledUser from '../icons/FilledUser'
@@ -103,7 +102,7 @@ export function UserButton({
                   }
                 />
               </div>
-              <LogoutButton/>
+              <LogoutButton />
             </>
           ) : (
             <Downitem icon={<UserIcon />} title="Login" href="/login" />

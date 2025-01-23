@@ -4,8 +4,6 @@ import { useEffect, useState, useCallback } from 'react'
 import useWebSocket, { ReadyState } from 'react-use-websocket'
 import { toast } from 'sonner'
 
-import useRoomStore from '@/app/store/RoomStore'
-import { useIdentityStore } from '@/app/store/useIdentityStore'
 import ChatBox from '@/components/ChatRoom/ChatBox'
 import GetAnonomousity from '@/components/ChatRoom/GetAnonomousity'
 import { ParticipantsSidebar } from '@/components/ChatRoom/ParticipantsSidebar'
@@ -15,6 +13,8 @@ import { TimeLeftDisplay } from '@/components/ChatRoom/TimeLeftDisplay'
 import { ErrorState } from '@/components/ui/ErrorState'
 import { LoadingState } from '@/components/ui/LoadingState'
 import { useTempUser } from '@/hooks/useTempUser'
+import useRoomStore from '@/lib/store/RoomStore'
+import { useIdentityStore } from '@/lib/store/useIdentityStore'
 import { Message, PageClientProps, UserIdentity } from '@/types'
 
 const PageClient = ({ roomId, token }: PageClientProps) => {

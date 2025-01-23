@@ -3,9 +3,9 @@
 import { Info } from 'lucide-react'
 import { useState } from 'react'
 
-import { useIdentityStore } from '@/app/store/useIdentityStore'
 import IdentityToggler from '@/components/Join-Room/IdentityToggler'
 import { Button } from '@/components/shared/Button'
+import { useIdentityStore } from '@/lib/store/useIdentityStore'
 
 import EchoLogo from '../icons/animated/EchoLogo'
 
@@ -22,7 +22,7 @@ export default function GetAnonomousity() {
       <div className="">
         <EchoLogo />
       </div>
-      <div className="transition-ease m-auto w-full max-w-[95%] space-y-4 rounded-2xl border-2 border-neutral-300 bg-white p-4 shadow-xl hover:shadow-2xl xs:max-w-[90%] sm:max-w-[450px] sm:space-y-6 sm:p-8 md:p-10">
+      <div className="transition-ease xs:max-w-[90%] m-auto w-full max-w-[95%] space-y-4 rounded-2xl border-2 border-neutral-300 bg-white p-4 shadow-xl hover:shadow-2xl sm:max-w-[450px] sm:space-y-6 sm:p-8 md:p-10">
         <div>
           <h1 className="mb-2 text-xl font-semibold sm:mb-4 sm:text-2xl md:text-3xl">
             Choose Your Identity

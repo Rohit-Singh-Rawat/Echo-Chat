@@ -3,9 +3,9 @@
 import { Input } from '@echo/ui/components/ui/input.tsx'
 import { useEffect, useState } from 'react'
 
-import { useRoomStore } from '@/app/store/roomHistoryStore'
 import DisplaySwitch from '@/components/dashboard/DisplayRadio'
 import DisplayRoomsHistory from '@/components/history/DisplayRoomsHistory'
+import { useRoomStore } from '@/lib/store/roomHistoryStore'
 import { Rooms } from '@/types'
 
 interface RoomHistoryContentProps {

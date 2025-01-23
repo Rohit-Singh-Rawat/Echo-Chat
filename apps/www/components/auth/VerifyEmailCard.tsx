@@ -10,8 +10,8 @@ import { useAction } from 'next-safe-action/hooks'
 import { useState } from 'react'
 import { toast } from 'sonner'
 
-import { useRegisterContext } from '@/app/context/RegistryContext'
 import { AuthHeader } from '@/components/auth/auth-header'
+import { useRegisterContext } from '@/context/RegistryContext'
 import {
   CreateUserAccountAction,
   SendVerificationOtpAction,

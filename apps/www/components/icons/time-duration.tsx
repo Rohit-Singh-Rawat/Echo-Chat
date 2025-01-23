@@ -23,4 +23,4 @@ export function TimeDurationIcon(props: React.SVGProps<SVGSVGElement>) {
       <path d="M12 21a9 9 0 0 0 0 -18" />
     </svg>
   )
-} 
+}

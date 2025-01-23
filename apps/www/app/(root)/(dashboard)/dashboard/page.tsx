@@ -13,17 +13,15 @@ export const metadata = {
   description: 'View and manage your chat rooms',
 }
 
-interface PageProps {
-  searchParams: {
+export default async function Page(props: {
+  searchParams?: Promise<{
     search?: string
-    display?: string
-  }
-}
+  }>
+}) {
+  const searchParams = await props.searchParams
+  const search = searchParams?.search ?? ''
 
-const page = async ({ searchParams }: PageProps) => {
-  const search = searchParams.search ?? ''
-
-  await new Promise((resolve) => setTimeout(resolve, 0)) // Ensure async context
+  await new Promise((resolve) => setTimeout(resolve, 0))
 
   const [rooms, stats] = await Promise.all([
     getRooms({ search }),
@@ -55,4 +53,3 @@ const page = async ({ searchParams }: PageProps) => {
     </div>
   )
 }
-export default page

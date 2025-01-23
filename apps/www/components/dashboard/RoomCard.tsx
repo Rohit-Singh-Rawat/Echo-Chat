@@ -19,8 +19,8 @@ import {
 } from '@echo/ui/components/ui/hover-card.tsx'
 import { Hash, MoreHorizontal } from 'lucide-react'
 
-import { useIdentityStore } from '@/app/store/useIdentityStore'
 import { useTimeLeft } from '@/hooks/useTimeLeft'
+import { useIdentityStore } from '@/lib/store/useIdentityStore'
 
 import { ClockIcon } from '../icons/animated/clock'
 import { MessageCircleMoreIcon } from '../icons/animated/message-circle-more'

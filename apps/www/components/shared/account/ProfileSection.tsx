@@ -1,5 +1,5 @@
 'use client'
-import { QueryClient, useQueryClient } from '@tanstack/react-query'
+import { useQueryClient } from '@tanstack/react-query'
 import { CircleUserRound, Upload } from 'lucide-react'
 import Image from 'next/image'
 import { useAction } from 'next-safe-action/hooks'

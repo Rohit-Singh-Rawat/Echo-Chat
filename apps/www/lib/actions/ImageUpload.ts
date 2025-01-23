@@ -1,6 +1,7 @@
 'use server'
 import { deleteFileSchema, uploadFileSchema } from '@echo/lib'
 import { cookies } from 'next/headers'
+
 import { actionClient } from './safe-actions'
 
 export const uploadImage = actionClient
@@ -38,7 +39,7 @@ export const uploadImage = actionClient
       }
       const { url, key } = await response.json()
 
-      return { url, key } 
+      return { url, key }
     }
   )
 

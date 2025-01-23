@@ -51,7 +51,12 @@ export function CardFooterButton({
   ...props
 }: React.ComponentProps<typeof Button>) {
   return (
-    <Button type="submit" variant="ghost" className="h-7 text-xs md:h-8 md:text-sm" {...props}>
+    <Button
+      type="submit"
+      variant="ghost"
+      className="h-7 text-xs md:h-8 md:text-sm"
+      {...props}
+    >
       {children}
     </Button>
   )

@@ -1,8 +1,8 @@
 'use client'
 
-import { useDisplayStore } from '@/app/store/DisplayStore'
 import ChatRoomCard from '@/components/dashboard/RoomCard'
 import RoomList from '@/components/dashboard/RoomList'
+import { useDisplayStore } from '@/lib/store/DisplayStore'
 import { Rooms, UserStats } from '@/types'
 
 import NoRooms from './NoRooms'

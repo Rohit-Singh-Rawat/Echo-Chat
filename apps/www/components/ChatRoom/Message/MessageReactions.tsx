@@ -13,7 +13,7 @@ import {
 } from '@echo/ui/components/ui/tabs.tsx'
 import { motion } from 'framer-motion'
 
-import { useIdentityStore } from '@/app/store/useIdentityStore'
+import { useIdentityStore } from '@/lib/store/useIdentityStore'
 import { Reaction } from '@/types'
 
 import { MessageAvatar } from './MessageAvatar'

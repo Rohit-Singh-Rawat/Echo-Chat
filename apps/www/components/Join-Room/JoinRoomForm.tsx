@@ -5,9 +5,9 @@ import { Hash } from 'lucide-react'
 import { useRouter } from 'next/navigation'
 import { useState } from 'react'
 
-import { useIdentityStore } from '@/app/store/useIdentityStore'
 import EchoRoom from '@/components/icons/EchoRoom'
 import IdentityToggler from '@/components/Join-Room/IdentityToggler'
+import { useIdentityStore } from '@/lib/store/useIdentityStore'
 
 import { Button } from '../shared/Button'
 

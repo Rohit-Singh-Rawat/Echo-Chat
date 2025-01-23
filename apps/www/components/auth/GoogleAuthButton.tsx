@@ -7,7 +7,7 @@ import { useAction } from 'next-safe-action/hooks'
 import { toast } from 'sonner'
 
 import { GoogleAuthAction } from '@/lib/actions/authActions'
-import { useAuthStore } from '@/store/auth-store'
+import { useAuthStore } from '@/lib/store/auth-store'
 
 export function GoogleAuthButton() {
   const { isAuthenticating, setIsAuthenticating } = useAuthStore()

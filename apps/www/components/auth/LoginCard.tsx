@@ -10,7 +10,7 @@ import { toast } from 'sonner'
 import { AuthHeader } from '@/components/auth/auth-header'
 import Input from '@/components/shared/Input'
 import { LoginAction } from '@/lib/actions/authActions'
-import { useAuthStore } from '@/store/auth-store'
+import { useAuthStore } from '@/lib/store/auth-store'
 
 import { Button } from '../shared/Button'
 

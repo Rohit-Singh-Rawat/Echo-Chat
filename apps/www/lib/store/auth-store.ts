@@ -8,4 +8,4 @@ interface AuthStore {
 export const useAuthStore = create<AuthStore>((set) => ({
   isAuthenticating: false,
   setIsAuthenticating: (isAuthenticating) => set({ isAuthenticating }),
-})) 
+}))

@@ -50,7 +50,7 @@ export const EmojiPickerPopover = ({
         </PopoverTrigger>
         <PopoverContent
           side={side}
-          className="z-[101] border-none bg-transparent p-0 md:p-1 shadow-none"
+          className="z-[101] border-none bg-transparent p-0 shadow-none md:p-1"
         >
           <EmojiPickerContent
             userEmoji={userEmoji}

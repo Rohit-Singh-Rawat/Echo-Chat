@@ -1,6 +1,7 @@
 'use client'
 
-import { Room } from '@/types'
+import { RoomWithParticipants as Room } from '@/types'
+
 import RoomHistoryCard from './RoomHistoryCard'
 
 interface RoomHistoryListProps {
@@ -15,4 +16,4 @@ export default function RoomHistoryList({ rooms }: RoomHistoryListProps) {
       ))}
     </div>
   )
-} 
+}

@@ -40,7 +40,7 @@ export function ViewHistoryDialog({
         open={isOpen}
         onOpenChange={setIsOpen}
         title={name}
-        className="sm:max-w-[900px] overflow-hidden p-5"
+        className="overflow-hidden p-5 sm:max-w-[900px]"
       >
         <div>
           {isOpen && (

@@ -222,11 +222,7 @@ export default function CreateRoomButton({
   return (
     <>
       {trigger}
-      <ResponsiveModal
-        title="Create Room"
-        onOpenChange={setOpen}
-        open={open}
-      >
+      <ResponsiveModal title="Create Room" onOpenChange={setOpen} open={open}>
         <CreateRoomContent
           onSubmit={onSubmit}
           form={form}

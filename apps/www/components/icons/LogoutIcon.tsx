@@ -24,4 +24,4 @@ export const LogoutIcon = ({
     <path d="M15 12h-12l3 -3" />
     <path d="M6 15l-3 -3" />
   </svg>
-) 
+)

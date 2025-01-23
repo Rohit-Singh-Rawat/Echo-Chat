@@ -14,9 +14,9 @@ import { useAction } from 'next-safe-action/hooks'
 import React, { useCallback, useEffect, useRef, useState } from 'react'
 import { toast } from 'sonner'
 
-import useRoomStore from '@/app/store/RoomStore'
 import { useUser } from '@/hooks/useSession'
 import { uploadImage, deleteImage } from '@/lib/actions/ImageUpload'
+import useRoomStore from '@/lib/store/RoomStore'
 import getPublicUrl from '@/utils'
 
 import { AttachFileIcon } from '../icons/animated/attach-file'

@@ -1,14 +1,13 @@
 'use client'
 
-import { navLinks } from '@/constants'
 import { motion } from 'framer-motion'
 import Link from 'next/link'
 import { useState } from 'react'
 
+import { navLinks } from '@/constants'
+
 export const NavLinks = () => {
   const [activeLink, setActiveLink] = useState<string | null>(null)
-
- 
 
   return (
     <motion.div className="absolute inset-0 flex flex-1 flex-row items-center justify-center space-x-2 text-sm font-medium text-zinc-600 transition duration-200 hover:text-zinc-800 lg:flex lg:space-x-2">

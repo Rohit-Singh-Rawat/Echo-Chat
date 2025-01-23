@@ -10,8 +10,8 @@ import {
 import { TableRow, TableCell } from '@echo/ui/components/ui/table.tsx'
 import { Hash, MoreHorizontal } from 'lucide-react'
 
-import { useIdentityStore } from '@/app/store/useIdentityStore'
 import { useTimeLeft } from '@/hooks/useTimeLeft'
+import { useIdentityStore } from '@/lib/store/useIdentityStore'
 
 import { ParticipantsList, RoomStats } from './RoomCard'
 

@@ -225,7 +225,6 @@ export class User {
                         ? msg.reaction[0].emoji
                         : '',
                     sentAt: msg.sentAt,
-                    // eslint-disable-next-line @typescript-eslint/no-explicit-any
                     reactions: msg.reaction.reduce(
                       (
                         reactions: Record<

@@ -26,7 +26,7 @@ const BentoSection = () => {
           </p>
         </motion.div>
 
-        <div className="mt-24 grid min-h-[500px] gap-6 sm:grid-cols-2 sm:grid-rows-3 sm:px-0 sm:px-10 lg:px-20 xl:grid-cols-6 xl:grid-rows-2 xl:px-0">
+        <div className="mt-24 grid min-h-[500px] gap-6 sm:grid-cols-2 sm:grid-rows-3 sm:px-0 md:px-10 lg:px-20 xl:grid-cols-6 xl:grid-rows-2 xl:px-0">
           <InstantRooms />
           <PrivacyFeature />
           <AnonymousMode />

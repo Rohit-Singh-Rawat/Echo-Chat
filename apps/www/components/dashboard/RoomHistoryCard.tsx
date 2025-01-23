@@ -1,7 +1,8 @@
 'use client'
 
-import { Room } from '@/types'
 import { CalendarDays, MessageSquare, Users } from 'lucide-react'
+
+import { RoomWithParticipants as Room } from '@/types'
 
 interface RoomHistoryCardProps {
   room: Room
@@ -17,15 +18,15 @@ export default function RoomHistoryCard({ room }: RoomHistoryCardProps) {
 
       <div className="mt-4 grid grid-cols-3 gap-4">
         <div className="flex items-center gap-2">
-          <Users className="h-4 w-4" />
+          <Users className="size-4" />
           <span>{room.participants.length} participants</span>
         </div>
         <div className="flex items-center gap-2">
-          <MessageSquare className="h-4 w-4" />
+          <MessageSquare className="size-4" />
           <span>{room._count.messages} messages</span>
         </div>
         <div className="flex items-center gap-2">
-          <CalendarDays className="h-4 w-4" />
+          <CalendarDays className="size-4" />
           <span>{new Date(room.closedAt).toLocaleDateString()}</span>
         </div>
       </div>
@@ -47,4 +48,4 @@ export default function RoomHistoryCard({ room }: RoomHistoryCardProps) {
       </div>
     </div>
   )
-} 
+}

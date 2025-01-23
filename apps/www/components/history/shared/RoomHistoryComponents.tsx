@@ -20,7 +20,11 @@ export interface Participant {
   avatar: string
 }
 
-export const ParticipantAvatar = ({ participant }: { participant: Participant }) => (
+export const ParticipantAvatar = ({
+  participant,
+}: {
+  participant: Participant
+}) => (
   <Avatar className="size-5 border-2 border-white md:size-6">
     <AvatarImage
       src={participant.avatar}

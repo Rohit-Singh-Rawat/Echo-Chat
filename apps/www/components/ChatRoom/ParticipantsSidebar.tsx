@@ -1,7 +1,7 @@
 import NumberFlow from '@number-flow/react'
 import Image from 'next/image'
 
-import { useIdentityStore } from '@/app/store/useIdentityStore'
+import { useIdentityStore } from '@/lib/store/useIdentityStore'
 import { UserIdentity } from '@/types'
 
 import { UsersIcon } from '../icons/animated/users'
@@ -21,7 +21,9 @@ export const ParticipantsSidebar = ({
         <div className="mb-2 flex items-center justify-between sm:mb-4">
           <div className="flex items-center gap-1 sm:gap-2">
             <UsersIcon className="size-3 sm:size-4 lg:size-5" />
-            <h2 className="text-2xs font-medium sm:text-xs lg:text-sm">Participants</h2>
+            <h2 className="text-2xs font-medium sm:text-xs lg:text-sm">
+              Participants
+            </h2>
           </div>
           <div className="flex items-center">
             <span className="text-2xs text-gray-500 sm:text-xs lg:text-sm">
@@ -53,7 +55,7 @@ export const ParticipantsSidebar = ({
                     height={40}
                   />
                   <div className="flex flex-col">
-                    <span className="truncate text-2xs font-medium sm:text-xs lg:text-sm">
+                    <span className="text-2xs truncate font-medium sm:text-xs lg:text-sm">
                       {user.userId === userId
                         ? `${user.username} (You)`
                         : user.username}

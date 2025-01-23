@@ -38,7 +38,7 @@ export function AppSidebar() {
       <SidebarContent className="ju flex flex-col">
         <SidebarHeader className="flex flex-row items-center justify-between max-md:p-4">
           <EchoLogo />
-          <div className='max-md:hidden'>
+          <div className="max-md:hidden">
             <NavUser />
           </div>
         </SidebarHeader>

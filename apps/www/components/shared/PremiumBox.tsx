@@ -3,9 +3,11 @@ import Link from 'next/link'
 
 const PremiumBox = () => {
   return (
-    <div className="space-y-2.5 rounded-lg border border-neutral-200 bg-white p-4 transition-all duration-200 ease-in-out hover:border-neutral-300 shadow">
+    <div className="space-y-2.5 rounded-lg border border-neutral-200 bg-white p-4 shadow transition-all duration-200 ease-in-out hover:border-neutral-300">
       <div className="flex items-center gap-2">
-        <div className="flex-center size-6 rounded-md bg-neutral-100 text-sm">✨</div>
+        <div className="flex-center size-6 rounded-md bg-neutral-100 text-sm">
+          ✨
+        </div>
         <h3 className="text-sm font-medium">Upgrade to Pro</h3>
       </div>
       <div className="text-xs text-neutral-500">

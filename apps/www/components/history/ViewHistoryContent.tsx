@@ -44,7 +44,7 @@ export function ViewHistoryContent({ roomId }: ViewHistoryContentProps) {
   }
 
   return (
-    <ScrollArea className="rounded-md md:p-4 h-[600px]">
+    <ScrollArea className="h-[600px] rounded-md md:p-4">
       <div className="space-y-2">
         {messages.map((message, index) => (
           <HistoryMessage

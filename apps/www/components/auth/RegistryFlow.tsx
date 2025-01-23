@@ -1,6 +1,6 @@
 'use client'
 
-import { useRegisterContext } from '@/app/context/RegistryContext'
+import { useRegisterContext } from '@/context/RegistryContext'
 
 import SignupCard from './SignupCard'
 import VerifyEmailCard from './VerifyEmailCard'

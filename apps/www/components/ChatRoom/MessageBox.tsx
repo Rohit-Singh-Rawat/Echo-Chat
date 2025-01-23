@@ -1,6 +1,6 @@
-import { AnimatePresence, motion } from 'framer-motion'
+import { motion } from 'framer-motion'
 
-import { useIdentityStore } from '@/app/store/useIdentityStore'
+import { useIdentityStore } from '@/lib/store/useIdentityStore'
 
 import { MessageAvatar } from './Message/MessageAvatar'
 import { MessageContent } from './Message/MessageContent'

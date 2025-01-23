@@ -3,7 +3,7 @@
 import { Button } from '@echo/ui/components/ui/button.tsx'
 import { useRouter } from 'next/navigation'
 
-import { useAuthStore } from '@/store/auth-store'
+import { useAuthStore } from '@/lib/store/auth-store'
 
 export function GitHubAuthButton() {
   const router = useRouter()
