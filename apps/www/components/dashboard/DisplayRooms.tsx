@@ -33,7 +33,7 @@ export default function DisplayRooms({
           <RoomList rooms={roomsList} />
         </div>
       ) : (
-        <div className="my-10 grid grid-cols-1 gap-6 md:grid-cols-2 md:gap-10 xl:grid-cols-3">
+        <div className="my-10 grid grid-cols-1 gap-6 sm:grid-cols-2 md:gap-10 xl:grid-cols-3">
           {roomsList.map((room) => (
             <ChatRoomCard
               key={room.id}

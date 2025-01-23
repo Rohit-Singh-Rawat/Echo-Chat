@@ -1,3 +1,5 @@
+import { LucideIcon } from "lucide-react"
+
 export type User = {
   email: string
   id: string
@@ -99,4 +101,19 @@ export type Reaction = {
     name: string
     avatar: string
   }[]
+}
+
+export interface PricingFeature {
+  icon: LucideIcon
+  title: string
+  description: string
+}
+
+export interface PricingPlan {
+  name: string
+  icon: LucideIcon
+  description: string
+  price: string
+  badge: string | null
+  features: PricingFeature[]
 }

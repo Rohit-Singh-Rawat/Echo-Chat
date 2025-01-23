@@ -10,11 +10,12 @@ const EchoLogo = () => {
   return (
     <Link
       href={'/'}
-      className="flex items-center gap-2"
+      className="z-[60] flex items-center gap-2"
       onMouseEnter={() => controls.start('animate')}
       onMouseLeave={() => controls.start('normal')}
+      aria-label="Echo Home"
     >
-      <Echo className="h-5 w-16" />{' '}
+      <Echo className="h-5 w-16" aria-hidden="true" />{' '}
       <div>
         <svg
           xmlns="http://www.w3.org/2000/svg"
@@ -26,6 +27,8 @@ const EchoLogo = () => {
           strokeWidth="2.5"
           strokeLinecap="round"
           strokeLinejoin="round"
+          aria-hidden="true"
+          role="presentation"
         >
           <path d="M2 10v3" />
           <motion.path

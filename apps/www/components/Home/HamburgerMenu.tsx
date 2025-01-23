@@ -18,9 +18,17 @@ const HamburgerMenu = ({
   return (
     <button
       className={`outline-none lg:hidden ${className}`}
+      aria-label={isOpen ? 'Close menu' : 'Open menu'}
+      aria-expanded={isOpen}
+      aria-controls="mobile-navigation"
+      aria-haspopup="true"
       onClick={toggleMenu}
+      type="button"
     >
-      <div className={`hamburger-icon pl-5 ${isOpen ? 'open' : ''}`}>
+      <div
+        className={`hamburger-icon pl-5 ${isOpen ? 'open' : ''}`}
+        role="presentation"
+      >
         <Hamburger
           className="size-5 stroke-black dark:stroke-white"
           isOpen={isOpen}

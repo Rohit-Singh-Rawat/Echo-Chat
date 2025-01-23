@@ -18,7 +18,9 @@ import AuthProviderButtons from './AuthProviderButtons'
 
 const LoginCard = () => {
   const router = useRouter()
+
   const { isAuthenticating, setIsAuthenticating } = useAuthStore()
+
   const form = useForm<LoginInput>({
     resolver: zodResolver(loginSchema),
     defaultValues: {

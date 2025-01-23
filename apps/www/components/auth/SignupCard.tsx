@@ -19,7 +19,9 @@ import AuthProviderButtons from './AuthProviderButtons'
 const SignupCard = () => {
   const { setStep, setEmail, setPassword, setFirstName, setLastName } =
     useRegisterContext()
+
   const { isAuthenticating, setIsAuthenticating } = useAuthStore()
+
   const form = useForm<Omit<SignupInput, 'code'>>({
     resolver: zodResolver(signupSchema.omit({ code: true })),
     defaultValues: {
@@ -35,17 +37,17 @@ const SignupCard = () => {
       setEmail(form.getValues('email'))
       setPassword(form.getValues('password'))
       setFirstName(form.getValues('firstName'))
-      setLastName(form.getValues('lastName'))
+      setLastName(form.getValues('lastName') ?? '')
       setStep('verify')
       toast.success('Verification email sent successfully')
       setIsAuthenticating(false)
     },
     onError: ({ error }) => {
-      console.log(error)
       toast.error(error.serverError || 'An error occurred')
       setIsAuthenticating(false)
     },
   })
+
   const onSubmit = form.handleSubmit((data) => {
     setIsAuthenticating(true)
     executeAsync({ email: data.email })
@@ -84,7 +86,6 @@ const SignupCard = () => {
                 className="w-1/2 rounded-md px-4 py-2"
                 {...form.register('lastName')}
                 error={form.formState.errors.lastName?.message}
-                required
               />
             </div>
             <Input

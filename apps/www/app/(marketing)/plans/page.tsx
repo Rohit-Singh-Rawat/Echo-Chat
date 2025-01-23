@@ -29,9 +29,9 @@ const page = () => {
           <h1 className="mb-2 text-4xl font-semibold text-black/80">
             Choose your plan
           </h1>
-          <h4 className="text-center text-gray-600">
+          <p className="text-center text-gray-600">
             Find a plan that fits your needs
-          </h4>
+          </p>
         </div>
         <div>
           <PricingPlans />

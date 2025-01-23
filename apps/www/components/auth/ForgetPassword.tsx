@@ -22,13 +22,12 @@ import { Button } from '../shared/Button'
 
 const ForgetPassword = () => {
   const router = useRouter()
+
   const [step, setStep] = useState('email')
   const [email, setEmail] = useState('')
   const [code, setCode] = useState('')
   const [newPassword, setNewPassword] = useState('')
   const [confirmPassword, setConfirmPassword] = useState('')
-  const passwordRegex =
-    /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/
 
   const { execute: executeForgotPassword, isExecuting: isExecutingForgot } =
     useAction(ForgotPasswordAction, {
@@ -51,6 +50,7 @@ const ForgetPassword = () => {
         toast.error(error.serverError ?? 'Something went wrong')
       },
     })
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
     const passwordRegex =

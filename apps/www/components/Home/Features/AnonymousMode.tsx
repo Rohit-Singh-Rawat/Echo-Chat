@@ -5,7 +5,10 @@ import AnonymousDemo from './AnonymousDemo'
 
 const AnonymousMode = () => {
   return (
-    <GridItem delay={0.4} className="xl:col-span-2 xl:row-span-2 col-span-1 row-span-2">
+    <GridItem
+      delay={0.4}
+      className="col-span-1 row-span-2 xl:col-span-2 xl:row-span-2"
+    >
       {' '}
       <GridItemHeading
         title="Stay Anonymous"

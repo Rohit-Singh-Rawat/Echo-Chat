@@ -246,8 +246,10 @@ const PageClient = ({ roomId, token }: PageClientProps) => {
     }
 
     const handler = handlers[data.type]
+
     if (handler) handler()
   }, [lastMessage, anonymous, setUserId, userId])
+
   const sendChatMessage = useCallback(
     (content: string, image?: string) => {
       if (anonymous === null || readyState !== ReadyState.OPEN) return

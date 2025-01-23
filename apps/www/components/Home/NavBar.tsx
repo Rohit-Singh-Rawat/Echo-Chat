@@ -4,6 +4,8 @@ import { motion, useScroll } from 'framer-motion'
 import Link from 'next/link'
 import { useState, useEffect } from 'react'
 
+import { navLinks } from '@/constants'
+
 import EchoLogo from '../icons/animated/EchoLogo'
 
 import { AuthLinks } from './AuthLinks'
@@ -39,12 +41,6 @@ const DesktopNav = ({ isScrolled }: { isScrolled: boolean }) => {
 }
 const MobileNav = ({ isScrolled }: { isScrolled: boolean }) => {
   const [isOpen, setIsOpen] = useState(false)
-
-  const navLinks = [
-    { href: '/#features', label: 'Features' },
-    { href: '/plans', label: 'Pricing' },
-    { href: '/#contact', label: 'Contact' },
-  ]
 
   return (
     <motion.div

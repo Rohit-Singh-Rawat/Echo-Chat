@@ -1,27 +1,13 @@
 import { Card } from '@echo/ui/components/ui/card.tsx'
 import { Separator } from '@echo/ui/components/ui/separator.tsx'
-import { LucideIcon } from 'lucide-react'
 import React from 'react'
+
+import { PricingPlan } from '@/types'
 
 import { Badge } from './Badge'
 import { Feature } from './Feature'
 import { IconWrapper } from './IconWrapper'
 import { PricingCardButton } from './PricingCardButton'
-
-export interface PricingFeature {
-  icon: LucideIcon
-  title: string
-  description: string
-}
-
-export interface PricingPlan {
-  name: string
-  icon: LucideIcon
-  description: string
-  price: string
-  badge: string | null
-  features: PricingFeature[]
-}
 
 export function PricingCard({
   name,

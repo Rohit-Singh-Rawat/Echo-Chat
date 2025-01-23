@@ -8,9 +8,8 @@ const Footer = () => {
       <div className="container mx-auto px-4 py-12 sm:px-8 md:px-12 lg:px-20 lg:py-24">
         <div className="flex flex-col space-y-12 lg:flex-row lg:items-start lg:justify-between lg:space-y-0">
           <div className="space-y-3">
-            <Link href="/">
-              <EchoLogo />
-            </Link>
+            <EchoLogo />
+
             <p className="text-sm text-neutral-500">
               copyright &copy; {new Date().getFullYear()} Echo. All rights
               reserved.

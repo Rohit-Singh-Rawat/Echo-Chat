@@ -7,16 +7,18 @@ import Link from 'next/link'
 import { FlaskIcon } from '../icons/animated/Flask'
 import { Button } from '../shared/Button'
 
-import Chatz from './Chatz'
+import DemoChatAnimated from './DemoChatAnimated'
 
 export const Hero = () => {
   return (
-    <section className="relative mx-2 mt-16 space-y-6 overflow-hidden rounded-2xl bg-[#FAF9F8] p-2 py-10 shadow-inner sm:mx-10 sm:mt-20 sm:space-y-10 sm:p-10 sm:py-20">
+    <section
+      id="hero"
+      className="relative mx-2 mt-16 space-y-6 overflow-hidden rounded-2xl bg-[#FAF9F8] p-2 py-10 shadow-inner sm:mx-10 sm:mt-20 sm:space-y-10 sm:p-10 sm:py-20"
+    >
       <div className="relative p-3 sm:p-5">
         <GridPattern
           width={40}
           height={40}
-          s
           className="absolute inset-0 stroke-neutral-200 opacity-50 [mask-image:radial-gradient(900px_circle_at_center,transparent,white)]"
         />
         <div className="relative z-10 mx-auto max-w-7xl px-2 sm:px-4 lg:px-8">
@@ -33,7 +35,7 @@ export const Hero = () => {
               className="mx-auto mb-4 flex justify-center sm:mb-5"
             >
               <span className="bg white flex-center gap-2 rounded-full border bg-gradient-to-b from-white via-white to-neutral-50 px-3 py-1 text-xs font-medium text-black/70 sm:px-5 sm:text-sm">
-                <FlaskIcon />{' '}
+                <FlaskIcon />
                 <motion.p
                   className="bg-clip-text text-transparent"
                   style={{
@@ -130,7 +132,7 @@ export const Hero = () => {
         </div>
       </div>
       <div className="flex-center w-full">
-        <Chatz />
+        <DemoChatAnimated />
       </div>
     </section>
   )

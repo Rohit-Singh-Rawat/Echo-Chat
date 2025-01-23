@@ -8,7 +8,7 @@ import BlurFadeIn from '../ui/BlurFadeIn'
 
 import ChatMessages from './ChatMessages'
 
-const Chatz = () => {
+const DemoChatAnimated = () => {
   return (
     <BlurFadeIn
       delay={0.8}
@@ -45,4 +45,4 @@ const Chatz = () => {
   )
 }
 
-export default Chatz
+export default DemoChatAnimated

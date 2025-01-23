@@ -20,10 +20,12 @@ interface PricingCardButtonProps {
 export function PricingCardButton({ name }: PricingCardButtonProps) {
   const { data, isLoading } = useUser()
   const router = useRouter()
+
   const action =
     name.toLowerCase() === 'pro'
       ? activateProPlanAction
       : activateFreePlanAction
+
   const { executeAsync, isExecuting } = useAction(action, {
     onSuccess: () => {
       toast.success(`Successfully activated ${name} plan`)
@@ -33,6 +35,7 @@ export function PricingCardButton({ name }: PricingCardButtonProps) {
       toast.error('Failed to activate plan')
     },
   })
+
   const isPro = !!data?.user?.subscription?.isPro
   const isSubscription = !!data?.user?.subscription
 
