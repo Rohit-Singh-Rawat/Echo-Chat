@@ -174,7 +174,6 @@ export const getSession = actionClient.action(async () => {
         },
         next: {
           tags: ['user'],
-          revalidate: 60,
         },
         cache: 'force-cache',
       }

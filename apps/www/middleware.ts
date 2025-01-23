@@ -1,10 +1,7 @@
 import { NextResponse } from 'next/server'
 import type { NextRequest } from 'next/server'
 
-import { getSession } from '@/lib/actions/authActions'
-import { User } from '@/types'
-
-const protectedPaths = ['/dashboard', '/history', '/profile']
+const protectedPaths = ['/dashboard', '/history']
 const authPaths = ['/login', '/register']
 
 export async function middleware(request: NextRequest) {
@@ -20,9 +17,13 @@ export async function middleware(request: NextRequest) {
 
   if (token) {
     try {
-      const session = (await getSession()) as { data: { user: User } } | null
+      const response = await fetch(`${process.env.HOST}/api/auth/session`, {
+        headers: {
+          Cookie: `token=${token}`,
+        },
+      })
 
-      if (!session?.data?.user) {
+      if (!response.ok) {
         const response = NextResponse.redirect(
           new URL('/login?error=no_user_found', request.url)
         )
@@ -30,11 +31,9 @@ export async function middleware(request: NextRequest) {
         return response
       }
 
-      if (
-        session.data.user &&
-        !session.data.user.subscription &&
-        request.nextUrl.pathname !== '/plans'
-      ) {
+      const { user } = await response.json()
+
+      if (user && !user.subscription && request.nextUrl.pathname !== '/plans') {
         return NextResponse.redirect(new URL('/plans', request.url))
       }
 

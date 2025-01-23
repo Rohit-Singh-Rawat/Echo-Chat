@@ -1,4 +1,5 @@
 'use server'
+import { revalidateTag } from 'next/cache'
 import { cookies } from 'next/headers'
 
 import { actionClient } from './safe-actions'
@@ -20,6 +21,7 @@ export const activateFreePlanAction = actionClient.action(async () => {
     }
   )
   if (res.ok) {
+    revalidateTag('user')
     return { success: true }
   } else {
     return { success: false }
@@ -43,6 +45,7 @@ export const activateProPlanAction = actionClient.action(async () => {
     }
   )
   if (res.ok) {
+    revalidateTag('user')
     return { success: true }
   } else {
     return { success: false }
