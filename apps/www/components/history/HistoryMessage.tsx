@@ -1,7 +1,5 @@
 'use client'
 
-import { format } from 'date-fns'
-
 import { Reaction } from '@/types'
 
 import { MessageAvatar } from '../ChatRoom/Message/MessageAvatar'
@@ -55,7 +53,10 @@ export function HistoryMessage({
               {message.username}
             </span>
             <span className="text-[10px] text-neutral-500 md:text-xs">
-              {format(message.sentAt, 'h:mm a')}
+              {new Date(message.sentAt).toLocaleTimeString([], {
+                hour: '2-digit',
+                minute: '2-digit',
+              })}
             </span>
           </div>
         )}
