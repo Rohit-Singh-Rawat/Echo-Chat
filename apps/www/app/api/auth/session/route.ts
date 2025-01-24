@@ -6,7 +6,7 @@ export async function GET() {
   const token = cookieStore.get('token')
 
   if (!token) {
-    return NextResponse.json({ user: null })
+    return new NextResponse(null, { status: 404 })
   }
 
   try {
@@ -29,9 +29,9 @@ export async function GET() {
       const data = await response.json()
       return NextResponse.json({ user: data.user })
     } else {
-      return NextResponse.json({ user: null })
+      return new NextResponse(null, { status: 404 })
     }
   } catch (error) {
-    return NextResponse.json({ user: null })
+    return new NextResponse(null, { status: 404 })
   }
 }

@@ -22,7 +22,6 @@ export async function middleware(request: NextRequest) {
           Cookie: `token=${token}`,
         },
       })
-
       if (!response.ok) {
         const response = NextResponse.redirect(
           new URL('/login?error=no_user_found', request.url)
@@ -32,7 +31,13 @@ export async function middleware(request: NextRequest) {
       }
 
       const { user } = await response.json()
-
+      if (!user) {
+        const response = NextResponse.redirect(
+          new URL('/login?error=no_user_found', request.url)
+        )
+        response.cookies.delete('token')
+        return response
+      }
       if (user && !user.subscription && request.nextUrl.pathname !== '/plans') {
         return NextResponse.redirect(new URL('/plans', request.url))
       }

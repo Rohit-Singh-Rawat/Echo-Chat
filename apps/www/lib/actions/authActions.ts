@@ -178,7 +178,6 @@ export const getSession = actionClient.action(async () => {
         cache: 'force-cache',
       }
     )
-    console.log('called')
     if (response.ok) {
       const data = await response.json()
 
