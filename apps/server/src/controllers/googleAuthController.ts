@@ -1,11 +1,11 @@
 import { Request, Response } from 'express'
 import { z } from 'zod'
-import jwt from 'jsonwebtoken'
-import { Secret } from 'jsonwebtoken'
+import jwt, { Secret } from 'jsonwebtoken'
+
 import client from '@echo/db/src'
 import { googleAuthSchema } from '@echo/lib'
-import oauth2Client from '../utils/googleAuth'
 import axios from 'axios'
+import { getGoogleOAuthTokens } from '../utils/getGoogleOuthToken'
 
 export const googleAuth = async (
   req: Request,
@@ -19,11 +19,12 @@ export const googleAuth = async (
     }
 
     const { access_token } = result.data
-    const googleRes = await oauth2Client.getToken(access_token)
-    oauth2Client.setCredentials(googleRes.tokens)
+    console.log('d')
+
+    const tokens = await getGoogleOAuthTokens(access_token)
 
     const userInfoResponse = await axios.get(
-      `https://www.googleapis.com/oauth2/v1/userinfo?alt=json&access_token=${googleRes.tokens.access_token}`
+      `https://www.googleapis.com/oauth2/v1/userinfo?alt=json&access_token=${tokens.access_token}`
     )
 
     const userDataSchema = z.object({
@@ -49,7 +50,7 @@ export const googleAuth = async (
         { userId: existingUser.id, email: existingUser.email },
         process.env.JWT_SECRET as Secret
       )
-      
+
       res.status(200).json({ token, user: existingUser, isNewUser: false })
     } else {
       const newUser = await client.user.create({
