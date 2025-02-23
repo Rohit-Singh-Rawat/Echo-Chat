@@ -1,7 +1,14 @@
 import GridPattern from '@echo/ui/components/ui/GridPattern.tsx'
 import { cn } from '@echo/utils/src'
+import { Metadata } from 'next'
 
 import { PricingPlans } from '@/components/plansComponents/PricingPlans'
+
+export const metadata: Metadata = {
+  title: 'Pricing Plans',
+  description: 'Explore our pricing plans to find the best fit for your needs.',
+  keywords: ['pricing', 'plans', 'subscription', 'echo', 'chat'],
+}
 
 const page = () => {
   return (

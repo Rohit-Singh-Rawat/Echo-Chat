@@ -14,8 +14,9 @@ export const metadata: Metadata = {
     default: 'Echo - Real-time Chat',
     template: '%s | Echo',
   },
-  description: 'Real-time chat powered by Echo',
-  keywords: ['chat', 'real-time', 'communication', 'echo'],
+  description:
+    'Create instant chat rooms for quick collaboration and easy sharing. No signup needed - just seamless communication on demand.',
+  keywords: ['chat', 'real-time', 'communication', 'echo', 'chat rooms'],
   authors: [
     {
       name: 'Rohit Singh Rawat',
@@ -27,14 +28,25 @@ export const metadata: Metadata = {
     locale: 'en_US',
     url: 'https://echo-chat.com',
     title: 'Echo - Real-time Chat',
-    description: 'Real-time chat powered by Echo',
+    description:
+      'Create instant chat rooms for quick collaboration and easy sharing. No signup needed - just seamless communication on demand.',
     siteName: 'Echo',
+    images: [
+      {
+        url: '/images/echo.png',
+        width: 800,
+        height: 600,
+        alt: 'Echo Logo',
+      },
+    ],
   },
   twitter: {
     card: 'summary_large_image',
     title: 'Echo - Real-time Chat',
-    description: 'Real-time chat powered by Echo',
-    creator: '@echo',
+    description:
+      'Create instant chat rooms for quick collaboration and easy sharing. No signup needed - just seamless communication on demand.',
+    creator: '@Spacing_Whale',
+    images: ['/images/echo.png'],
   },
 }
 
@@ -61,12 +73,12 @@ export default function RootLayout({
         />
         <meta name="apple-mobile-web-app-title" content="MyWebSite" />
         <link rel="manifest" href="/site.webmanifest" />
+        <link rel="image/png" href="/images/echo.png" />
       </head>
       <body
         className={`${GeistSans.variable} ${GeistMono.variable} ${GeistSans.className} antialiased`}
       >
         <main>
-          {' '}
           <ReactQueryProvider>{children}</ReactQueryProvider>
         </main>
         <Analytics />

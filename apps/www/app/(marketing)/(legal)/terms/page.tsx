@@ -1,3 +1,12 @@
+import { Metadata } from 'next'
+
+export const metadata: Metadata = {
+  title: 'Terms of Service',
+  description:
+    'Read our Terms of Service to understand the rules and regulations governing the use of our service.',
+  keywords: ['terms of service', 'user agreement', 'echo', 'chat'],
+}
+
 const TermsOfService = () => {
   return (
     <div className="container mx-auto my-16 max-w-2xl space-y-4 px-4 sm:my-20 sm:space-y-5 sm:px-6 lg:px-8">

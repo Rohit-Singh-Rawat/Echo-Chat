@@ -1,5 +1,14 @@
+import type { Metadata } from 'next'
+
 import ForgetPassword from '@/components/auth/ForgetPassword'
 import EchoLogo from '@/components/icons/animated/EchoLogo'
+
+export const metadata: Metadata = {
+  title: 'Forgot Password',
+  description:
+    'Reset your Echo account password to regain access to your account.',
+  keywords: ['forgot password', 'reset password', 'account recovery', 'echo'],
+}
 
 export default function ForgetPasswordPage() {
   return (

@@ -1,3 +1,11 @@
+import { Metadata } from 'next'
+
+export const metadata: Metadata = {
+  title: 'Cookie Policy',
+  description: 'Learn about how Echo uses cookies to improve your experience and provide essential functionality.',
+  keywords: ['cookie policy', 'cookies', 'privacy', 'data', 'echo'],
+}
+
 const CookiePolicy = () => {
   return (
     <div className="container mx-auto my-16 max-w-2xl space-y-4 px-4 sm:my-20 sm:space-y-5 sm:px-6 lg:px-8">
