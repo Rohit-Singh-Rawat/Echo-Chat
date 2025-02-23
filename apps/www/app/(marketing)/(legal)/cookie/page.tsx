@@ -2,7 +2,8 @@ import { Metadata } from 'next'
 
 export const metadata: Metadata = {
   title: 'Cookie Policy',
-  description: 'Learn about how Echo uses cookies to improve your experience and provide essential functionality.',
+  description:
+    'Learn about how Echo uses cookies to improve your experience and provide essential functionality.',
   keywords: ['cookie policy', 'cookies', 'privacy', 'data', 'echo'],
 }
 
