@@ -1,81 +1,78 @@
-# Turborepo starter
+# Echo Chat 
 
-This is an official starter Turborepo.
+![echo](https://github.com/user-attachments/assets/47b1d863-4d1e-4ef7-a8bf-fb297f4cccaa)
 
-## Using this example
+[![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](https://opensource.org/licenses/MIT)
+[![Node.js](https://img.shields.io/badge/Node.js-18%2B-green)](https://nodejs.org/)
+[![PNPM](https://img.shields.io/badge/pnpm-8%2B-orange)](https://pnpm.io/)
 
-Run the following command:
+ <!-- Replace with actual banner image -->
+ ![echo-ss](https://github.com/user-attachments/assets/e058afae-c418-4bbc-8b6a-fc45ea6a745b)
 
-```sh
-npx create-turbo@latest
-```
 
-## What's inside?
+**Real-time chat rooms** for instant collaboration with privacy-first design. No signups, no tracking – just seamless communication.  
+🌐 Live Demo: [https://echo.rsrcraft.me](https://echo.rsrcraft.me)
 
-This Turborepo includes the following packages/apps:
+---
 
-### Apps and Packages
+## ✨ Features
+- **🚀 Instant Rooms**: Create/join rooms in 2 clicks  
+- **🔒 Privacy First**: End-to-end encrypted messages  
+- **🕵️‍♂️ Anonymous**: No personal data collected
 
-- `docs`: a [Next.js](https://nextjs.org/) app
-- `web`: another [Next.js](https://nextjs.org/) app
-- `@repo/ui`: a stub React component library shared by both `web` and `docs` applications
-- `@repo/eslint-config`: `eslint` configurations (includes `eslint-config-next` and `eslint-config-prettier`)
-- `@repo/typescript-config`: `tsconfig.json`s used throughout the monorepo
+- **🚀 Real-Time Messaging**: WebSocket-powered live updates  
+- **🔒 SSL Encryption**: Secured conversations with SSL/TLS encryption  
+- **📅 Message History**: Scroll through past chats  
+- **🕹 Custom Controls**: Set user limits & room expiration  
+- **📤 File Sharing**: AWS S3 + CloudFront CDN integration  
+- **🔑 OAuth Login**: Google/GitHub authentication  
+---
 
-Each package/app is 100% [TypeScript](https://www.typescriptlang.org/).
+## 🛠 Tech Stack
 
-### Utilities
+**Frontend**  
+![Next.js](https://img.shields.io/badge/Next.js-15.0%2B-000000?logo=next.js)
+![TailwindCSS](https://img.shields.io/badge/TailwindCSS-3.3%2B-06B6D4?logo=tailwind-css)
+![Turborepo](https://img.shields.io/badge/Turborepo-1.10%2B-EF4444?logo=turborepo)
 
-This Turborepo has some additional tools already setup for you:
+**Backend**  
+![Express.js](https://img.shields.io/badge/Express.js-4.18%2B-000000?logo=express)
+![Prisma](https://img.shields.io/badge/Prisma-5.5%2B-2D3748?logo=prisma)
+![PostgreSQL](https://img.shields.io/badge/PostgreSQL-16%2B-4169E1?logo=postgresql)
 
-- [TypeScript](https://www.typescriptlang.org/) for static type checking
-- [ESLint](https://eslint.org/) for code linting
-- [Prettier](https://prettier.io) for code formatting
+**Infra**  
+![AWS](https://img.shields.io/badge/AWS-EC2%2FS3-FF9900?logo=amazon-aws)
+![Vercel](https://img.shields.io/badge/Vercel-Deployment-000000?logo=vercel)
+![Nginx](https://img.shields.io/badge/Nginx-1.25%2B-009639?logo=nginx)
 
-### Build
+---
 
-To build all apps and packages, run the following command:
+## 🚀 Quick Start
 
-```
-cd my-turborepo
-pnpm build
-```
+### Prerequisites
+- Node.js v18+
+- PNPM v8+
+- PostgreSQL & Redis
+- AWS CLI configured
+ ```bash
 
-### Develop
+# 1. Clone repository
+git clone https://github.com/Rohit-Singh-Rawat/Echo-Chat.git
+cd Echo-Chat
 
-To develop all apps and packages, run the following command:
+# 2. Install dependencies
+pnpm install
 
-```
-cd my-turborepo
+# 3. Configure environment
+# ========================
+# Frontend: Copy .env.example to .env and update values as needed
+# Backend: Copy apps/server/.env.example to apps/server/.env and update values as needed
+
+# 4. Run database migrations
+npx prisma migrate dev
+
+# 5. Start development servers
 pnpm dev
 ```
-
-### Remote Caching
-
-Turborepo can use a technique known as [Remote Caching](https://turbo.build/repo/docs/core-concepts/remote-caching) to share cache artifacts across machines, enabling you to share build caches with your team and CI/CD pipelines.
-
-By default, Turborepo will cache locally. To enable Remote Caching you will need an account with Vercel. If you don't have an account you can [create one](https://vercel.com/signup), then enter the following commands:
-
-```
-cd my-turborepo
-npx turbo login
-```
-
-This will authenticate the Turborepo CLI with your [Vercel account](https://vercel.com/docs/concepts/personal-accounts/overview).
-
-Next, you can link your Turborepo to your Remote Cache by running the following command from the root of your Turborepo:
-
-```
-npx turbo link
-```
-
-## Useful Links
-
-Learn more about the power of Turborepo:
-
-- [Tasks](https://turbo.build/repo/docs/core-concepts/monorepos/running-tasks)
-- [Caching](https://turbo.build/repo/docs/core-concepts/caching)
-- [Remote Caching](https://turbo.build/repo/docs/core-concepts/remote-caching)
-- [Filtering](https://turbo.build/repo/docs/core-concepts/monorepos/filtering)
-- [Configuration Options](https://turbo.build/repo/docs/reference/configuration)
-- [CLI Usage](https://turbo.build/repo/docs/reference/command-line-reference)
+## 🙋‍♂️ Contributing
+We welcome contributions!
