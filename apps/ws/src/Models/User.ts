@@ -4,7 +4,9 @@ import client from '@echo/db/src'
 import { RoomManager } from './RoomManager'
 import { v4 as uuid } from 'uuid'
 import { WebSocketMessage } from '../types/index.d'
+import * as dotenv from 'dotenv'
 
+dotenv.config()
 export class User {
   public id: string
   public name: string
@@ -76,6 +78,14 @@ export class User {
             },
           })
           if (!room) {
+            this.ws.send(
+              JSON.stringify({
+                type: 'error',
+                payload: {
+                  message: 'Room not found',
+                },
+              })
+            )
             this.ws.close()
             return
           }
@@ -110,6 +120,7 @@ export class User {
                 this.ws.close()
                 return
               }
+
               this.id = user.id
               this.avatar = user.image ?? ''
               this.name = user.name
