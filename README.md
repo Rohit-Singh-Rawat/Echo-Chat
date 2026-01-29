@@ -13,7 +13,7 @@
 **Real-time chat rooms** for instant collaboration with privacy-first design. No signups, no tracking – just seamless communication.  
 🌐 Live Demo: [https://echo.rsrcraft.me](https://echo.rsrcraft.me)
 
----
+----
 
 ## ✨ Features
 - **🚀 Instant Rooms**: Create/join rooms in 2 clicks  
