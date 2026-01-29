@@ -1,5 +1,5 @@
 import { createLogger, format, transports } from 'winston'
-const { combine, timestamp, json, colorize ,cli} = format
+const { combine, timestamp, json, colorize, cli } = format
 
 // Custom format for console logging with colors
 const consoleLogFormat = format.combine(
@@ -16,7 +16,7 @@ const logger = createLogger({
   transports: [
     new transports.Console({
       format: consoleLogFormat,
-    })
+    }),
   ],
 })
 

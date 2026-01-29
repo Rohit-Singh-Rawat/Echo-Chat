@@ -85,7 +85,8 @@ export const verifyPayment = async (
       return
     }
 
-    const { razorpay_order_id, razorpay_payment_id, razorpay_signature } = result.data
+    const { razorpay_order_id, razorpay_payment_id, razorpay_signature } =
+      result.data
     const userId = req.user?.userId
 
     if (!userId) {

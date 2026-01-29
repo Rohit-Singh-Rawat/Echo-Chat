@@ -1,4 +1,4 @@
-# Echo Chat 
+# Echo Chat
 
 ![echo](https://github.com/user-attachments/assets/47b1d863-4d1e-4ef7-a8bf-fb297f4cccaa)
 
@@ -7,25 +7,27 @@
 [![PNPM](https://img.shields.io/badge/pnpm-8%2B-orange)](https://pnpm.io/)
 
  <!-- Replace with actual banner image -->
- ![echo-ss](https://github.com/user-attachments/assets/e058afae-c418-4bbc-8b6a-fc45ea6a745b)
 
+![echo-ss](https://github.com/user-attachments/assets/e058afae-c418-4bbc-8b6a-fc45ea6a745b)
 
 **Real-time chat rooms** for instant collaboration with privacy-first design. No signups, no tracking – just seamless communication.  
 🌐 Live Demo: [https://echo.rsrcraft.me](https://echo.rsrcraft.me)
 
-----
+---
 
 ## ✨ Features
-- **🚀 Instant Rooms**: Create/join rooms in 2 clicks  
-- **🔒 Privacy First**: End-to-end encrypted messages  
+
+- **🚀 Instant Rooms**: Create/join rooms in 2 clicks
+- **🔒 Privacy First**: End-to-end encrypted messages
 - **🕵️‍♂️ Anonymous**: No personal data collected
 
-- **🚀 Real-Time Messaging**: WebSocket-powered live updates  
-- **🔒 SSL Encryption**: Secured conversations with SSL/TLS encryption  
-- **📅 Message History**: Scroll through past chats  
-- **🕹 Custom Controls**: Set user limits & room expiration  
-- **📤 File Sharing**: AWS S3 + CloudFront CDN integration  
-- **🔑 OAuth Login**: Google/GitHub authentication  
+- **🚀 Real-Time Messaging**: WebSocket-powered live updates
+- **🔒 SSL Encryption**: Secured conversations with SSL/TLS encryption
+- **📅 Message History**: Scroll through past chats
+- **🕹 Custom Controls**: Set user limits & room expiration
+- **📤 File Sharing**: AWS S3 + CloudFront CDN integration
+- **🔑 OAuth Login**: Google/GitHub authentication
+
 ---
 
 ## 🛠 Tech Stack
@@ -50,11 +52,13 @@
 ## 🚀 Quick Start
 
 ### Prerequisites
+
 - Node.js v18+
 - PNPM v8+
 - PostgreSQL & Redis
 - AWS CLI configured
- ```bash
+
+```bash
 
 # 1. Clone repository
 git clone https://github.com/Rohit-Singh-Rawat/Echo-Chat.git
@@ -74,5 +78,7 @@ npx prisma migrate dev
 # 5. Start development servers
 pnpm dev
 ```
+
 ## 🙋‍♂️ Contributing
+
 We welcome contributions!

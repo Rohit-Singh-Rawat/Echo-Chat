@@ -27,7 +27,7 @@ export const activateFreePlan = async (
 
     const user = await client.user.findUnique({
       where: { id: userId },
-      select: { email: true, name: true }
+      select: { email: true, name: true },
     })
 
     if (!user) {
@@ -56,7 +56,7 @@ export const activateFreePlan = async (
       message: '',
       tag: 'free_trial_active',
       username: user.name,
-      dashboardLink: `${process.env.FRONTEND_URL}/dashboard`
+      dashboardLink: `${process.env.FRONTEND_URL}/dashboard`,
     })
 
     res.status(200).json({ message: 'Free plan activated successfully' })

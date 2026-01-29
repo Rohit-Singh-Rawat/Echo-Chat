@@ -30,14 +30,16 @@ const DialogOverlay = React.forwardRef<
 DialogOverlay.displayName = DialogPrimitive.Overlay.displayName
 const DialogContent = React.forwardRef<
   React.ElementRef<typeof DialogPrimitive.Content>,
-  React.ComponentPropsWithoutRef<typeof DialogPrimitive.Content> & { showCloseButton?: boolean }
+  React.ComponentPropsWithoutRef<typeof DialogPrimitive.Content> & {
+    showCloseButton?: boolean
+  }
 >(({ className, children, showCloseButton = true, ...props }, ref) => (
   <DialogPortal>
     <DialogOverlay />
     <DialogPrimitive.Content
       ref={ref}
       className={cn(
-        'bg-background data-[state=open] data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0 data-[state=closed]:zoom-out-95 scrollbar-hide animate-scale-in fixed inset-0 z-50 m-auto grid h-fit w-full max-w-screen-lg translate-x-[-50%] translate-y-[-50d%] gap-4 overflow-y-auto border border-gray-200 bg-white p-6 shadow-xl rounded-2xl',
+        'bg-background data-[state=open] data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0 data-[state=closed]:zoom-out-95 scrollbar-hide animate-scale-in fixed inset-0 z-50 m-auto grid h-fit w-full max-w-screen-lg translate-x-[-50%] translate-y-[-50d%] gap-4 overflow-y-auto rounded-2xl border border-gray-200 bg-white p-6 shadow-xl',
         className
       )}
       {...props}

@@ -33,7 +33,7 @@ export const uploadFile = async (
           ? 'temporary=false'
           : 'temporary=true',
     })
-   
+
     const presignedUrl = await getSignedUrl(s3Client, command, {
       expiresIn: 300,
     })

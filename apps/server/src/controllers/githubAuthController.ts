@@ -67,7 +67,7 @@ export const githubAuth = async (
       return
     }
 
-    const userDataSchema = z.object({ 
+    const userDataSchema = z.object({
       name: z.string().nullable(),
       avatar_url: z.string().url(),
       login: z.string(),
@@ -81,7 +81,7 @@ export const githubAuth = async (
     }
 
     const { name, avatar_url, login } = parsedUserData.data
-    
+
     let emails
     try {
       const emailResponse = await axios.get(
@@ -104,8 +104,8 @@ export const githubAuth = async (
     if (!emails || emails.length === 0) {
       return
     }
-    const sortedEmails = emails.sort((a:any, b:any) => b.primary - a.primary)
-   const email = sortedEmails[0].email
+    const sortedEmails = emails.sort((a: any, b: any) => b.primary - a.primary)
+    const email = sortedEmails[0].email
 
     try {
       const existingUser = await client.user.findUnique({

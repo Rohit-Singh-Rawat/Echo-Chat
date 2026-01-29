@@ -1,7 +1,6 @@
 import { cn } from '@echo/utils/src'
 import { AlertCircle, Eye, EyeClosed } from 'lucide-react'
 import React, { useCallback, useState } from 'react'
-
 export interface InputProps
   extends React.InputHTMLAttributes<HTMLInputElement> {
   error?: string

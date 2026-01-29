@@ -11,7 +11,7 @@ export type Options = {
   email?: string
   username?: string
   razorpayId?: string
-  subject:string
+  subject: string
   dateOfActivation?: string
   planId?: string
   planName?: string
